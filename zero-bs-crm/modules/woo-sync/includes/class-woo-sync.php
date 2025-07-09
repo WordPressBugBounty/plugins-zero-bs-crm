@@ -555,8 +555,7 @@ class Woo_Sync {
 	public function register_styles_scripts() {
 
 		// WooCommerce My Account
-		wp_register_style( 'jpcrm-woo-sync-my-account', plugins_url( '/css/jpcrm-woo-sync-my-account'.wp_scripts_get_suffix().'.css', JPCRM_WOO_SYNC_ROOT_FILE ) );
-		wp_register_style( 'jpcrm-woo-sync-fa', plugins_url( '/css/font-awesome.min.css', ZBS_ROOTFILE ) );
+		wp_register_style( 'jpcrm-woo-sync-my-account', plugins_url( '/css/jpcrm-woo-sync-my-account' . wp_scripts_get_suffix() . '.css', JPCRM_WOO_SYNC_ROOT_FILE ) );
 
 	}
 
@@ -2226,7 +2225,7 @@ class Woo_Sync {
 				$new_sync_site = $this->add_sync_site( $data );
 
 			    // verify
-			    if ( is_array( $new_sync_site ) && !empty( $new_sync_site['site_key'] ) && $this->get_active_sync_site( $new_sync_site['site_key'], true ) ){
+			    if ( is_array( $new_sync_site ) && !empty( $new_sync_site['site_key'] ) && $this->get_active_sync_site( $new_sync_site['site_key'] ) ){
 
 			    	// backup and remove old settings
 			    	update_option( 'jpcrm_woosync_52_mig_backup', $settings, false );

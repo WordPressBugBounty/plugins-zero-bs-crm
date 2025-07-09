@@ -1,4 +1,4 @@
-@import '@automattic/jetpack-base-styles/style';
+@use '@automattic/jetpack-base-styles/style';
 
 .container {
 	// We have to allow x overflow since table components arent inherently responsive
@@ -23,5 +23,5 @@
 .header-row {
 	padding: 5px 10px;
 	color: var(--jp-gray-60);
-	border-bottom: 1px solid #EEEEEE;
+	border-bottom: 1px solid #EEE;
 }
