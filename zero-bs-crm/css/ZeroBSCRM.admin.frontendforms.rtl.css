@@ -10,10 +10,8 @@
 .zbs-edit-wrap-form #form-embed,
 .zbs-edit-wrap-form #form-preview {
   min-height: 50px;
-  background: white;
   margin-bottom: 20px;
   border: 1px solid #e5e5e5;
-  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
   background: #fff;
   padding: 10px;
@@ -33,7 +31,7 @@
   margin-bottom: 20px;
   margin-right: 20px;
   margin-left: 20px;
-  background: aliceblue;
+  background: #f0f8ff;
   padding: 12px;
   border: 1px solid #00A0D3;
   border-radius: 4px;
@@ -41,7 +39,7 @@
 .post-type-zerobs_form .zbs_shortcode_message p, .zbscrmFrontEndForm .zbs_shortcode_message p,
 .zbs-edit-wrap-form .zbs_shortcode_message p {
   text-align: center;
-  margin: 0px;
+  margin: 0;
 }
 .post-type-zerobs_form .zbs_shortcode_message .shorty, .zbscrmFrontEndForm .zbs_shortcode_message .shorty,
 .zbs-edit-wrap-form .zbs_shortcode_message .shorty {
@@ -67,11 +65,10 @@
   font-size: 15px;
   text-align: center;
   color: #999;
-  padding: 5px;
   text-transform: uppercase;
   font-weight: 100;
-  padding: 0px;
-  margin: 0px;
+  padding: 0;
+  margin: 0;
   margin-bottom: 24px;
 }
 .post-type-zerobs_form #zbs-field-chooser, .zbscrmFrontEndForm #zbs-field-chooser,
@@ -80,27 +77,19 @@
 }
 .post-type-zerobs_form #zbs-form-pre, .zbscrmFrontEndForm #zbs-form-pre,
 .zbs-edit-wrap-form #zbs-form-pre {
-  white-space: pre;
   display: block;
   unicode-bidi: embed;
-  white-space: pre-wrap; /* css-3 */
-  white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
-  white-space: -pre-wrap; /* Opera 4-6 */
-  white-space: -o-pre-wrap; /* Opera 7 */
-  word-wrap: break-word; /* Internet Explorer 5.5+ */
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
 }
 .post-type-zerobs_form pre, .zbscrmFrontEndForm pre,
 .zbs-edit-wrap-form pre {
   display: block;
-  font: normal 12px/22px Monaco, Monospace !important;
+  font: 400 12px/22px Monaco, monospace !important;
   color: #CFDBEC;
   background-color: #2f2f2f;
-  background-image: -webkit-repeating-linear-gradient(top, #444 0px, #444 22px, #2f2f2f 22px, #2f2f2f 44px);
-  background-image: -moz-repeating-linear-gradient(top, #444 0px, #444 22px, #2f2f2f 22px, #2f2f2f 44px);
-  background-image: -ms-repeating-linear-gradient(top, #444 0px, #444 22px, #2f2f2f 22px, #2f2f2f 44px);
-  background-image: -o-repeating-linear-gradient(top, #444 0px, #444 22px, #2f2f2f 22px, #2f2f2f 44px);
-  background-image: repeating-linear-gradient(top, #444 0px, #444 22px, #2f2f2f 22px, #2f2f2f 44px);
-  padding: 0em 1em;
+  background-image: repeating-linear-gradient(top, #444 0, #444 22px, #2f2f2f 22px, #2f2f2f 44px);
+  padding: 0 1em;
   overflow: auto;
 }
 .post-type-zerobs_form .zbs_msg, .zbscrmFrontEndForm .zbs_msg,
@@ -145,8 +134,8 @@
 }
 .post-type-zerobs_form .third .cgrab .blobby .br, .zbscrmFrontEndForm .third .cgrab .blobby .br,
 .zbs-edit-wrap-form .third .cgrab .blobby .br {
-  color: white;
-  background: white;
+  color: #fff;
+  background: #fff;
 }
 .post-type-zerobs_form .third .cgrab .content, .zbscrmFrontEndForm .third .cgrab .content,
 .zbs-edit-wrap-form .third .cgrab .content {
@@ -161,7 +150,7 @@
 }
 .post-type-zerobs_form .third .cgrab .content h1, .zbscrmFrontEndForm .third .cgrab .content h1,
 .zbs-edit-wrap-form .third .cgrab .content h1 {
-  color: black;
+  color: #000;
   font-size: 20px;
   padding: 5px;
 }
@@ -189,7 +178,7 @@
   text-align: right;
   color: #ccc;
   font-weight: 100;
-  background: white;
+  background: #fff;
 }
 .post-type-zerobs_form .third .cgrab .content .form-wrapper .textarea, .zbscrmFrontEndForm .third .cgrab .content .form-wrapper .textarea,
 .zbs-edit-wrap-form .third .cgrab .content .form-wrapper .textarea {
@@ -201,7 +190,7 @@
   text-align: right;
   color: #ccc;
   font-weight: 100;
-  background: white;
+  background: #fff;
   height: 200px;
   margin-bottom: 10px;
 }
@@ -209,7 +198,7 @@
 .zbs-edit-wrap-form .third .cgrab .content .form-wrapper .send {
   width: 20%;
   background: #0d6db8;
-  color: white;
+  color: #fff;
   height: 30px;
   float: right;
   text-align: center;
@@ -236,8 +225,8 @@
 }
 .post-type-zerobs_form .third .simple .blobby .br, .zbscrmFrontEndForm .third .simple .blobby .br,
 .zbs-edit-wrap-form .third .simple .blobby .br {
-  color: white;
-  background: white;
+  color: #fff;
+  background: #fff;
 }
 .post-type-zerobs_form .third .simple .content, .zbscrmFrontEndForm .third .simple .content,
 .zbs-edit-wrap-form .third .simple .content {
@@ -252,7 +241,7 @@
 }
 .post-type-zerobs_form .third .simple .content h1, .zbscrmFrontEndForm .third .simple .content h1,
 .zbs-edit-wrap-form .third .simple .content h1 {
-  color: black;
+  color: #000;
   font-size: 20px;
   padding: 5px;
 }
@@ -280,13 +269,13 @@
   text-align: right;
   color: #ccc;
   font-weight: 100;
-  background: white;
+  background: #fff;
 }
 .post-type-zerobs_form .third .simple .content .form-wrapper .send, .zbscrmFrontEndForm .third .simple .content .form-wrapper .send,
 .zbs-edit-wrap-form .third .simple .content .form-wrapper .send {
   width: 20%;
   background: #0d6db8;
-  color: white;
+  color: #fff;
   height: 30px;
   float: right;
   text-align: center;
@@ -313,8 +302,8 @@
 }
 .post-type-zerobs_form .third .naked .blobby .br, .zbscrmFrontEndForm .third .naked .blobby .br,
 .zbs-edit-wrap-form .third .naked .blobby .br {
-  color: white;
-  background: white;
+  color: #fff;
+  background: #fff;
 }
 .post-type-zerobs_form .third .naked .content, .zbscrmFrontEndForm .third .naked .content,
 .zbs-edit-wrap-form .third .naked .content {
@@ -342,7 +331,7 @@
 .zbs-edit-wrap-form .third .naked .content .form-wrapper .send {
   width: 20%;
   background: #0d6db8;
-  color: white;
+  color: #fff;
   height: 30px;
   float: right;
   text-align: center;
@@ -350,7 +339,7 @@
 }
 .post-type-zerobs_form iframe, .zbscrmFrontEndForm iframe,
 .zbs-edit-wrap-form iframe {
-  border: 0px solid;
+  border: 0 solid;
 }
 .post-type-zerobs_form .embed .zbs_poweredby, .zbscrmFrontEndForm .embed .zbs_poweredby,
 .zbs-edit-wrap-form .embed .zbs_poweredby {
@@ -384,8 +373,8 @@
 }
 .post-type-zerobs_form .embed .simple .blobby .br, .zbscrmFrontEndForm .embed .simple .blobby .br,
 .zbs-edit-wrap-form .embed .simple .blobby .br {
-  color: white;
-  background: white;
+  color: #fff;
+  background: #fff;
 }
 .post-type-zerobs_form .embed .simple .content, .zbscrmFrontEndForm .embed .simple .content,
 .zbs-edit-wrap-form .embed .simple .content {
@@ -400,7 +389,7 @@
 }
 .post-type-zerobs_form .embed .simple .content h1, .zbscrmFrontEndForm .embed .simple .content h1,
 .zbs-edit-wrap-form .embed .simple .content h1 {
-  color: black;
+  color: #000;
   font-size: 20px;
   padding: 5px;
 }
@@ -431,19 +420,19 @@
   padding: 5px;
   text-align: right;
   font-weight: 100;
-  background: white;
+  background: #fff;
 }
 .post-type-zerobs_form .embed .simple .content .form-wrapper .send, .post-type-zerobs_form .embed .simple .content .form-wrapper input[type=submit], .zbscrmFrontEndForm .embed .simple .content .form-wrapper .send, .zbscrmFrontEndForm .embed .simple .content .form-wrapper input[type=submit],
 .zbs-edit-wrap-form .embed .simple .content .form-wrapper .send,
 .zbs-edit-wrap-form .embed .simple .content .form-wrapper input[type=submit] {
   width: 20%;
   background: #0d6db8;
-  color: white;
+  color: #fff;
   height: 33px;
   float: right;
   text-align: center;
   line-height: 12px;
-  border: 0px;
+  border: 0;
 }
 .post-type-zerobs_form .embed .simple .content .trailer, .zbscrmFrontEndForm .embed .simple .content .trailer,
 .zbs-edit-wrap-form .embed .simple .content .trailer {
@@ -466,8 +455,8 @@
 }
 .post-type-zerobs_form .embed .cgrab .blobby .br, .zbscrmFrontEndForm .embed .cgrab .blobby .br,
 .zbs-edit-wrap-form .embed .cgrab .blobby .br {
-  color: white;
-  background: white;
+  color: #fff;
+  background: #fff;
 }
 .post-type-zerobs_form .embed .cgrab .content, .zbscrmFrontEndForm .embed .cgrab .content,
 .zbs-edit-wrap-form .embed .cgrab .content {
@@ -482,7 +471,7 @@
 }
 .post-type-zerobs_form .embed .cgrab .content h1, .zbscrmFrontEndForm .embed .cgrab .content h1,
 .zbs-edit-wrap-form .embed .cgrab .content h1 {
-  color: black;
+  color: #000;
   font-size: 20px;
   padding: 5px;
 }
@@ -509,7 +498,7 @@
   padding: 5px;
   text-align: right;
   font-weight: 100;
-  background: white;
+  background: #fff;
 }
 .post-type-zerobs_form .embed .cgrab .content .form-wrapper .textarea, .zbscrmFrontEndForm .embed .cgrab .content .form-wrapper .textarea,
 .zbs-edit-wrap-form .embed .cgrab .content .form-wrapper .textarea {
@@ -520,7 +509,7 @@
   padding: 5px;
   text-align: right;
   font-weight: 100;
-  background: white;
+  background: #fff;
   height: 200px;
   margin-bottom: 10px;
 }
@@ -529,12 +518,12 @@
 .zbs-edit-wrap-form .embed .cgrab .content .form-wrapper input[type=submit] {
   width: 20%;
   background: #0d6db8;
-  color: white;
+  color: #fff;
   height: 33px;
   float: right;
   text-align: center;
   line-height: 12px;
-  border: 0px;
+  border: 0;
 }
 .post-type-zerobs_form .embed .cgrab .content .trailer, .zbscrmFrontEndForm .embed .cgrab .content .trailer,
 .zbs-edit-wrap-form .embed .cgrab .content .trailer {
@@ -569,8 +558,8 @@
 }
 .post-type-zerobs_form .embed .naked .blobby .br, .zbscrmFrontEndForm .embed .naked .blobby .br,
 .zbs-edit-wrap-form .embed .naked .blobby .br {
-  color: white;
-  background: white;
+  color: #fff;
+  background: #fff;
 }
 .post-type-zerobs_form .embed .naked .content, .zbscrmFrontEndForm .embed .naked .content,
 .zbs-edit-wrap-form .embed .naked .content {
@@ -598,12 +587,12 @@
 .zbs-edit-wrap-form .embed .naked .content .form-wrapper input[type=submit] {
   width: 20%;
   background: #0d6db8;
-  color: white;
+  color: #fff;
   height: 33px;
   float: right;
   text-align: center;
   line-height: 12px;
-  border: 0px;
+  border: 0;
 }
 .post-type-zerobs_form .clear, .zbscrmFrontEndForm .clear,
 .zbs-edit-wrap-form .clear {

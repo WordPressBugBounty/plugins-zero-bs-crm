@@ -14,14 +14,14 @@
   background: #f2f4ff;
   cursor: move;
 }
-.zbsSortableFieldList ul li:before {
-  font-family: "FontAwesome";
+.zbsSortableFieldList ul li::before {
+  font-family: FontAwesome;
   content: "\f0c9";
   margin: 0 0 0 10px;
   color: #ddd;
 }
-.zbsSortableFieldList ul li.ui-sortable-helper:before {
-  font-family: "FontAwesome";
+.zbsSortableFieldList ul li.ui-sortable-helper::before {
+  font-family: FontAwesome;
   content: "\f0c9";
   margin: 0 0 0 10px;
   color: #000;
@@ -30,7 +30,7 @@
 .zbsSortableFieldList li .zbs-showhide-field {
   float: left;
   text-align: left;
-  line-height: 1em;
+  line-height: 1;
   margin-top: -7px;
 }
 .zbsSortableFieldList li .zbs-showhide-field label {
@@ -39,7 +39,7 @@
   padding-left: 6px;
 }
 .zbsSortableFieldList li .zbs-showhide-field input {
-  line-height: 1em;
+  line-height: 1;
   display: inline-block;
   vertical-align: middle;
 }
