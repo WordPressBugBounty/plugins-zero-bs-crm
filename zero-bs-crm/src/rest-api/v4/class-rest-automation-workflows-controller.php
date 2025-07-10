@@ -2,7 +2,7 @@
 /**
  * Automation REST controller.
  *
- * @package automattic/jetpack-crm
+ * @package Automattic\Jetpack\CRM
  */
 
 namespace Automattic\Jetpack\CRM\REST_API\V4;
@@ -23,6 +23,7 @@ defined( 'ABSPATH' ) || exit( 0 );
 /**
  * REST automation controller.
  *
+ * @package Automattic\Jetpack\CRM
  * @since 6.2.0
  */
 final class REST_Automation_Workflows_Controller extends REST_Base_Controller {

@@ -1,5 +1,6 @@
-<?php // phpcs:ignore WordPress.Files.FileName.NotHyphenatedLowercase
-/**
+<?php
+/*
+!
  * Admin Page: Settings: Licensing settings
  */
 
@@ -8,7 +9,7 @@ if ( ! defined( 'ZEROBSCRM_PATH' ) ) {
 	exit( 0 );
 }
 
-global $zbs;  // } Req
+global $wpdb, $zbs;  // } Req
 
 // } Act on any edits!
 if ( isset( $_POST['editwplflicense'] ) && zeroBSCRM_isZBSAdminOrAdmin() ) {
@@ -36,7 +37,7 @@ if ( isset( $_POST['editwplflicense'] ) && zeroBSCRM_isZBSAdminOrAdmin() ) {
 	$sbupdated = true;
 
 	// } Also, should also recheck the validity of the key and show message if not valid
-	jpcrm_verify_license_with_server();
+	zeroBSCRM_license_check();
 
 }
 

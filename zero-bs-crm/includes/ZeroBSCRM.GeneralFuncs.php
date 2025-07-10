@@ -604,13 +604,19 @@ function zeroBSCRM_retrieveFile( $url, $filepath, $args = array() ) {
 
 					if (file_exists($filepath) && file_exists($expandTo)){
 
-					$archive = new PclZip( $filepath );
-					// @phan-suppress-next-line PhanParamTooMany -- PclZip functions use func_get_args.
-					if ( $archive->extract( PCLZIP_OPT_PATH, $expandTo ) === 0 ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
-						return false;
-					} else {
-						return true;
-					}
+							$archive = new PclZip($filepath);
+
+							if ($archive->extract(PCLZIP_OPT_PATH, $expandTo) == 0) {
+							    
+							    return false;
+
+							} else {
+							    
+							    return true;
+
+							}
+
+
 					}
 
 				} catch (Exception $ex){
@@ -1701,7 +1707,7 @@ function jpcrm_get_mimetype( $file_path ) {
 		$credentials = request_filesystem_credentials( site_url() );
 		wp_filesystem( $credentials );
 	}
-	$lines = $wp_filesystem->get_contents_array( $file_path );
+	$lines = $wp_filesystem->get_contents_array( $file_path, 8 );
 	if ( $lines === false ) {
 		return 'application/octet-stream';
 	}

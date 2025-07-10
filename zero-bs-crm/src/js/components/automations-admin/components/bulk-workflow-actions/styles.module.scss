@@ -1,7 +1,7 @@
-@use '@automattic/jetpack-base-styles/style';
+@import '@automattic/jetpack-base-styles/style';
 
 .dropdown-menu {
-    background: #fff;
+    background: white;
     border: 1px solid var(--jp-gray-10);
     border-radius: 2px;
 	 position: relative;

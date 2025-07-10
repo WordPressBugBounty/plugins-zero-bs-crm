@@ -76,3 +76,9 @@ function jpcrm_render_userprofile_page() {
 </div>
 	<?php
 }
+
+/*
+* As of 7/12/21 unused:
+add_action('zbs_your_profile_cal_pro_promo', 'zeroBSCRM_pages_your_profile_promo');
+function zeroBSCRM_pages_your_profile_promo(){}
+*/

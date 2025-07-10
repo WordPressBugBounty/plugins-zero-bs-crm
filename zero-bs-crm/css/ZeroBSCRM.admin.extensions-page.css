@@ -16,10 +16,10 @@
   padding: 20px;
 }
 .zbs-extensions-manager .zbs-page-wrap .segment {
-  padding: 0;
+  padding: 0px;
 }
 .zbs-extensions-manager .bullie {
-  background: #fff;
+  background: white;
   border: 1px solid #ccc;
   border-radius: 3px;
   padding: 5px;
@@ -45,14 +45,13 @@
 }
 .zbs-extensions-manager .premium-box {
   margin-top: 10px !important;
-  border-bottom: 0 !important;
-  height: 52px;
+  border-bottom: 0px !important;
 }
 .zbs-extensions-manager .upgrade-bullie-box {
   float: right;
   line-height: 20px !important;
   margin-top: 5px !important;
-  color: #fff;
+  color: white;
   opacity: 1;
 }
 .zbs-extensions-manager .free-box {
@@ -70,8 +69,8 @@
 }
 .zbs-extensions-manager .hover {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 0px;
+  left: 0px;
   width: 100%;
   height: 100%;
   text-align: center;
@@ -83,8 +82,8 @@
 }
 .zbs-extensions-manager .hover-link {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 0px;
+  left: 0px;
   width: 100%;
   height: 100%;
   text-align: center;
@@ -118,7 +117,7 @@
   border-top: 1px solid #dededf;
 }
 .zbs-extensions-manager .back {
-  color: #000;
+  color: black;
   width: 100%;
   padding: 10px;
   border-bottom: 1px solid #dededf;
@@ -171,7 +170,7 @@
   margin: 0.5em;
 }
 .zbs-extensions-manager .extension-section h3 {
-  color: #000;
+  color: black;
   font-size: 20px;
   font-weight: 900;
   padding-top: 20px;
@@ -191,6 +190,9 @@
 }
 .zbs-extensions-manager .guides {
   float: right;
+}
+.zbs-extensions-manager .premium-box {
+  height: 52px;
 }
 .zbs-extensions-manager .actions-block {
   float: right;

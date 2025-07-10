@@ -556,9 +556,5 @@ if ( $runningLocally ) {
 
 	</style>
 
-	<?php
-	// phpcs:disable WordPress.WP.EnqueuedResourceParameters.NotInFooter
-	wp_enqueue_script( 'jpcrm-admin-maildelivery', plugins_url( '/js/jpcrm-admin-maildelivery' . wp_scripts_get_suffix() . '.js', ZBS_ROOTFILE ), array(), $zbs::VERSION );
-	// phpcs:enable WordPress.WP.EnqueuedResourceParameters.NotInFooter
-	?>
+<?php wp_enqueue_script( 'jpcrm-admin-maildelivery', plugins_url( '/js/jpcrm-admin-maildelivery' . wp_scripts_get_suffix() . '.js', ZBS_ROOTFILE ), array(), $zbs->version ); ?>
 </div>

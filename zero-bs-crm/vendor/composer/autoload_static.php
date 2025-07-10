@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit06c775433a83ed276f0a1d8ac25f93ba_crmⓥ6_6_0
+class ComposerStaticInit06c775433a83ed276f0a1d8ac25f93ba_crmⓥ6_5_1
 {
     public static $files = array (
         '3773ef3f09c37da5478d578e32b03a4b' => __DIR__ . '/../..' . '/jetpack_vendor/automattic/jetpack-assets/actions.php',
@@ -179,16 +179,7 @@ class ComposerStaticInit06c775433a83ed276f0a1d8ac25f93ba_crmⓥ6_6_0
         'Automattic\\Jetpack\\Composer\\Manager' => __DIR__ . '/..' . '/automattic/jetpack-composer-plugin/src/class-manager.php',
         'Automattic\\Jetpack\\Composer\\Plugin' => __DIR__ . '/..' . '/automattic/jetpack-composer-plugin/src/class-plugin.php',
         'Automattic\\Jetpack\\Constants' => __DIR__ . '/../..' . '/jetpack_vendor/automattic/jetpack-constants/src/class-constants.php',
-        'Automattic\\Jetpack\\CookieState' => __DIR__ . '/../..' . '/jetpack_vendor/automattic/jetpack-status/src/class-cookiestate.php',
-        'Automattic\\Jetpack\\Errors' => __DIR__ . '/../..' . '/jetpack_vendor/automattic/jetpack-status/src/class-errors.php',
-        'Automattic\\Jetpack\\Files' => __DIR__ . '/../..' . '/jetpack_vendor/automattic/jetpack-status/src/class-files.php',
-        'Automattic\\Jetpack\\Modules' => __DIR__ . '/../..' . '/jetpack_vendor/automattic/jetpack-status/src/class-modules.php',
-        'Automattic\\Jetpack\\Paths' => __DIR__ . '/../..' . '/jetpack_vendor/automattic/jetpack-status/src/class-paths.php',
-        'Automattic\\Jetpack\\Status' => __DIR__ . '/../..' . '/jetpack_vendor/automattic/jetpack-status/src/class-status.php',
-        'Automattic\\Jetpack\\Status\\Cache' => __DIR__ . '/../..' . '/jetpack_vendor/automattic/jetpack-status/src/class-cache.php',
-        'Automattic\\Jetpack\\Status\\Host' => __DIR__ . '/../..' . '/jetpack_vendor/automattic/jetpack-status/src/class-host.php',
-        'Automattic\\Jetpack\\Status\\Request' => __DIR__ . '/../..' . '/jetpack_vendor/automattic/jetpack-status/src/class-request.php',
-        'Automattic\\Jetpack\\Status\\Visitor' => __DIR__ . '/../..' . '/jetpack_vendor/automattic/jetpack-status/src/class-visitor.php',
+        'Automattic\\Jetpack_CRM\\Onboarding_Wizard\\Bootstrap' => __DIR__ . '/../..' . '/src/onboarding-wizard/class-bootstrap.php',
         'Automattic\\WooCommerce\\Client' => __DIR__ . '/..' . '/automattic/woocommerce/src/WooCommerce/Client.php',
         'Automattic\\WooCommerce\\HttpClient\\BasicAuth' => __DIR__ . '/..' . '/automattic/woocommerce/src/WooCommerce/HttpClient/BasicAuth.php',
         'Automattic\\WooCommerce\\HttpClient\\HttpClient' => __DIR__ . '/..' . '/automattic/woocommerce/src/WooCommerce/HttpClient/HttpClient.php',
@@ -399,9 +390,9 @@ class ComposerStaticInit06c775433a83ed276f0a1d8ac25f93ba_crmⓥ6_6_0
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit06c775433a83ed276f0a1d8ac25f93ba_crmⓥ6_6_0::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit06c775433a83ed276f0a1d8ac25f93ba_crmⓥ6_6_0::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit06c775433a83ed276f0a1d8ac25f93ba_crmⓥ6_6_0::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit06c775433a83ed276f0a1d8ac25f93ba_crmⓥ6_5_1::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit06c775433a83ed276f0a1d8ac25f93ba_crmⓥ6_5_1::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit06c775433a83ed276f0a1d8ac25f93ba_crmⓥ6_5_1::$classMap;
 
         }, null, ClassLoader::class);
     }

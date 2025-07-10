@@ -11,6 +11,7 @@ a:focus {
 }
 
 .progress {
+  -webkit-box-shadow: none !important;
   background-color: #f5f5f5;
   box-shadow: none !important;
   height: 10px;
@@ -33,20 +34,13 @@ a:focus {
 }
 
 body ::-webkit-scrollbar-track {
-  background: #fff;
+  background: white;
 }
 
-.jpcrm-dashcard-header > :nth-child(1) {
-  text-align: left;
-}
-.jpcrm-dashcard-header > :nth-child(2) {
-  text-align: center;
-}
-.jpcrm-dashcard-header > :nth-child(3) {
-  text-align: right;
-}
-.jpcrm-dashcard-header .day-or-month div.button {
-  margin-bottom: 5px;
+.day-or-month div.button {
+  color: var(--jp-black);
+  border-color: var(--jp-black);
+  background: var(--jp-white);
 }
 
 #settings_dashboard_sales_funnel_display, #settings_dashboard_recent_activity_display {

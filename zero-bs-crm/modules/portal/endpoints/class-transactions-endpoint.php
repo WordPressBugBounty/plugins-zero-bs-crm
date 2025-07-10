@@ -1,20 +1,17 @@
-<?php // phpcs:ignore Squiz.Commenting.FileComment.Missing
+<?php
 namespace Automattic\JetpackCRM;
 
 defined( 'ZEROBSCRM_PATH' ) || exit( 0 );
 
-/**
- * Transactions endpoint
- */
 class Transactions_Endpoint extends Client_Portal_Endpoint {
 
-	public static function register_endpoint( $endpoints, $client_portal ) { // phpcs:ignore Squiz.Commenting.FunctionComment.Missing
+	public static function register_endpoint( $endpoints, $client_portal ) {
 		if ( zeroBSCRM_getSetting( 'feat_transactions' ) > 0 ) {
 			$new_endpoint = new Transactions_Endpoint( $client_portal );
 
 			$new_endpoint->portal                       = $client_portal;
 			$new_endpoint->slug                         = 'transactions';
-			$new_endpoint->name                         = __( 'Transactions', 'zero-bs-crm' );
+			$new_endpoint->name                         = __('Transactions', 'zero-bs-crm');
 			$new_endpoint->hide_from_menu               = false;
 			$new_endpoint->menu_order                   = 4;
 			$new_endpoint->icon                         = 'fa-shopping-cart';

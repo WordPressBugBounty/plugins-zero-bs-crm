@@ -24,7 +24,9 @@
   margin-right: 0.6em;
 }
 .zbs-theme-support-2017 .zbs-field-group, .zbs-theme-support-2017 .zbs-field-group table {
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+  box-sizing: border-box; /* Opera/IE 8+ */
 }
 .zbs-theme-support-2017 .zbs-field-group td div.zbs-text-input, .zbs-theme-support-2017 .zbs-field-group td select, .zbs-theme-support-2017 .zbs-field-group table td div.zbs-text-input, .zbs-theme-support-2017 .zbs-field-group table td select {
   width: 214px;
@@ -134,9 +136,9 @@
   --font-title-small: 24px;
   --font-body: 16px;
   --font-label: 12px;
-  --jp-black: #000;
+  --jp-black: #000000;
   --jp-black-80: #2c3338;
-  --jp-white: #fff;
+  --jp-white: #ffffff;
   --jp-white-off: #f9f9f6;
   --jp-gray: #dcdcde;
   --jp-gray-0: #F6F7F7;
@@ -189,43 +191,22 @@
 .zbs-client-portal-wrap {
   position: relative;
   min-height: 650px !important;
-  display: flex;
 }
 .zbs-client-portal-wrap #zbs-nav-tabs {
   list-style-type: none;
   width: 30%;
   float: left;
+  padding-left: 20px;
   min-height: 650px;
-  margin: 0;
-  padding-left: 0;
-  box-shadow: 0 1px 0 1px #ccc;
-  border-radius: 7px 0 0 7px;
-  padding-top: 7px;
-  flex: 1;
 }
 .zbs-client-portal-wrap #zbs-nav-tabs li {
   list-style: none;
   position: relative;
-  padding: 0;
+  padding: 5px;
 }
 .zbs-client-portal-wrap #zbs-nav-tabs li a {
+  padding: 0.875em 0;
   display: block;
-  padding: 10px;
-  box-shadow: none;
-}
-.zbs-client-portal-wrap #zbs-nav-tabs li a:hover {
-  box-shadow: none;
-  background: #000;
-  color: #fff;
-}
-.zbs-client-portal-wrap #zbs-nav-tabs a {
-  color: #ccc;
-}
-.zbs-client-portal-wrap #zbs-nav-tabs a:hover {
-  color: #ccc !important;
-}
-.zbs-client-portal-wrap #zbs-nav-tabs .fa {
-  margin-right: 0.5em;
 }
 .zbs-client-portal-wrap #zbs_invoice_logos img {
   max-width: 50%;
@@ -254,15 +235,6 @@
   margin-left: auto;
   margin-right: auto;
 }
-.zbs-client-portal-wrap .zbs-portal-wrapper {
-  padding: 20px;
-  box-shadow: 1px 1px 1px 1px #ccc;
-  border-radius: 0 7px 7px 0;
-  min-height: 650px !important;
-  position: relative;
-  flex: 1;
-  flex-grow: 3;
-}
 
 .zbs-client-portal-pro-note {
   background: #000;
@@ -270,7 +242,7 @@
   color: #FFF;
   padding: 1em;
   margin: 2em;
-  font-family: helvetica, sans-serif;
+  font-family: helvetica;
   border-radius: 0.5em;
 }
 .zbs-client-portal-pro-note img, .zbs-client-portal-pro-note a img {
@@ -289,7 +261,7 @@
   font-size: 0.7em;
 }
 .zbs-client-portal-pro-note .small span {
-  color: #00f;
+  color: blue;
 }
 .zbs-client-portal-pro-note .small span:hover {
   cursor: pointer;
@@ -298,7 +270,7 @@
 .zbs_alert {
   padding: 10px;
   background: #8BC34A;
-  color: #fff;
+  color: white;
   display: block;
   text-align: center;
 }
@@ -309,52 +281,9 @@
   float: right;
   width: 70%;
   box-sizing: border-box !important;
-  /* Few tweaks as provided by Alvaro in slack ... wh selectively added those which made sense for multi-theme userbase JIRA-ZBS-531 */
-  /* Fixes for Astra Theme and general poor display on WP.org themes */
 }
 .zbs-portal-wrapper h1 {
-  margin-top: 0;
-}
-.zbs-portal-wrapper .zbs-field-checkbox-wrap .zbs-cf-checkbox {
-  margin-top: 0;
-  margin-bottom: 0;
-}
-.zbs-portal-wrapper .zbs-field-checkbox-wrap .zbs-cf-checkbox label {
-  padding: 0 0 0 23px !important;
-}
-.zbs-portal-wrapper .zbs-field-checkbox-wrap .zbs-cf-checkbox:first-of-type {
-  padding-left: 0 !important;
-}
-.zbs-portal-wrapper .zbs-field-checkbox-wrap .zbs-cf-checkbox label, .zbs-portal-wrapper .zbs-field-checkbox-wrap .zbs-cf-checkbox + label {
-  font-size: 16px !important;
-  font-weight: 400;
-}
-.zbs-portal-wrapper .zbs-field-radio-wrap {
-  text-align: left;
-}
-.zbs-portal-wrapper .zbs-field-radio-wrap .zbs-radio {
-  margin: 0;
-  padding: 0;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  outline: none;
-  vertical-align: baseline;
-  font-style: normal;
-  min-height: 17px;
-  line-height: 17px;
-  min-width: 17px;
-  font-size: 16px !important;
-  font-weight: 400;
-}
-.zbs-portal-wrapper .zbs-portal-login .login-form input[type=text], .zbs-portal-wrapper .zbs-portal-login .login-form input[type=password], .zbs-portal-wrapper .form-control.widetext, .zbs-portal-wrapper .form-control.zbs-tel, .zbs-portal-wrapper .form-control.zbs-email, .zbs-portal-wrapper .form-control.zbs-date, .zbs-portal-wrapper input[type=text], .zbs-portal-wrapper input[type=password], .zbs-portal-wrapper input[type=tel], .zbs-portal-wrapper input[type=email], .zbs-portal-wrapper input.text, .zbs-portal-wrapper input.title, .zbs-portal-wrapper textarea, .zbs-portal-wrapper select {
-  padding-left: 1em;
-  padding-right: 1em;
-  margin-bottom: 1em;
-  width: 100%;
-  height: 50px;
-}
-.zbs-portal-wrapper label {
-  clear: left;
+  margin-top: 0px;
 }
 
 .zbs-portal-wrapper-sin {
@@ -365,7 +294,7 @@
 }
 
 .zbs-portal-wrapper-sin h1 {
-  margin-top: 0;
+  margin-top: 0px;
 }
 
 .zbs-alert-danger {
@@ -400,26 +329,26 @@
   border-radius: 2px;
 }
 .zbs-portal-invoices-list .paid {
-  background: #008000;
-  color: #fff;
+  background: green;
+  color: white;
   font-weight: 700;
   line-height: 21px;
 }
 .zbs-portal-invoices-list .unpaid {
   background: #d0d012;
-  color: #fff;
+  color: white;
   font-weight: 700;
   line-height: 21px;
 }
 .zbs-portal-invoices-list .draft {
   background: #999;
-  color: #fff;
+  color: white;
   font-weight: 700;
   line-height: 21px;
 }
 .zbs-portal-invoices-list .overdue {
-  background: #f00;
-  color: #fff;
+  background: red;
+  color: white;
   font-weight: 700;
   line-height: 21px;
 }
@@ -489,8 +418,8 @@
 }
 .zbs-single-invoice-portal .zbs-invoice-portal-inner .zbs-invoice-box .zbs-invoice-paid {
   position: absolute;
-  right: 0;
-  top: 0;
+  right: 0px;
+  top: 0px;
   padding: 30px;
   margin-right: 50px;
   color: #038d24;
@@ -506,7 +435,7 @@
 }
 .zbs-single-invoice-portal .zbs-invoice-portal-inner .zbs-invoice-box .zbs-portal-label {
   background: #546273;
-  color: #fff;
+  color: white;
   display: inline;
   padding: 5px;
   border-radius: 4px;
@@ -529,6 +458,11 @@
   font-style: italic !important;
 }
 
+.zbs-client-portal-wrap #zbs_invoice_logos img {
+  max-width: 50%;
+  max-height: 100px;
+}
+
 .zbs-fieldgroup-main_address, .zbs-fieldgroup-second_address {
   width: 48%;
   float: left;
@@ -546,7 +480,7 @@
   display: none;
 }
 
-.zbs-fieldgroup-main_address::after {
+.zbs-fieldgroup-main_address:after {
   content: "";
   display: table;
   clear: both;
@@ -561,12 +495,102 @@
   margin-top: 2em;
 }
 
+/* Few tweaks as provided by Alvaro in slack ... wh selectively added those which made sense for multi-theme userbase JIRA-ZBS-531 */
+.zbs-portal-wrapper .zbs-portal-login .login-form input[type=text], .zbs-portal-wrapper .zbs-portal-login .login-form input[type=password], .zbs-portal-wrapper .form-control.widetext, .zbs-portal-wrapper .form-control.zbs-tel, .zbs-portal-wrapper .form-control.zbs-email, .zbs-portal-wrapper .form-control.zbs-date, .zbs-portal-wrapper input[type=text], .zbs-portal-wrapper input[type=password], .zbs-portal-wrapper input[type=tel], .zbs-portal-wrapper input[type=email], .zbs-portal-wrapper input.text, .zbs-portal-wrapper input.title, .zbs-portal-wrapper textarea, .zbs-portal-wrapper select {
+  padding-left: 1em;
+  padding-right: 1em;
+  margin-bottom: 1em;
+  width: 100%;
+  height: 50px;
+}
+
+/* Fixes for Astra Theme and general poor display on WP.org themes */
+.zbs-portal-wrapper label {
+  clear: left;
+}
+
+/* WH added for Your details page additions of checkbox radio buttons 2.98.5 */
+.zbs-portal-wrapper .zbs-field-checkbox-wrap .zbs-cf-checkbox {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.zbs-portal-wrapper .zbs-field-checkbox-wrap .zbs-cf-checkbox label {
+  padding: 0 0 0 23px !important;
+}
+.zbs-portal-wrapper .zbs-field-checkbox-wrap .zbs-cf-checkbox:first-of-type {
+  padding-left: 0 !important;
+}
+.zbs-portal-wrapper .zbs-field-checkbox-wrap .zbs-cf-checkbox label, .zbs-portal-wrapper .zbs-field-checkbox-wrap .zbs-cf-checkbox + label {
+  font-size: 16px !important;
+  font-weight: normal;
+}
+.zbs-portal-wrapper .zbs-field-radio-wrap {
+  text-align: left;
+}
+.zbs-portal-wrapper .zbs-field-radio-wrap .zbs-radio {
+  margin: 0;
+  padding: 0;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  outline: none;
+  vertical-align: baseline;
+  font-style: normal;
+  min-height: 17px;
+  font-size: 1rem;
+  line-height: 17px;
+  min-width: 17px;
+  font-size: 16px !important;
+  font-weight: normal;
+}
+
 .entry-title {
   display: none !important;
 }
 
 .fullW {
   width: 100% !important;
+}
+
+.zbs-client-portal-wrap {
+  display: flex;
+}
+.zbs-client-portal-wrap .zbs-portal-wrapper {
+  padding: 20px;
+  box-shadow: 1px 1px 1px 1px #ccc;
+  border-radius: 0px 7px 7px 0px;
+  min-height: 650px !important;
+  position: relative;
+  flex: 1;
+  flex-grow: 3;
+}
+.zbs-client-portal-wrap #zbs-nav-tabs {
+  margin: 0px;
+  padding-left: 0px;
+  box-shadow: 0px 1px 0px 1px #ccc;
+  border-radius: 7px 0px 0px 7px;
+  padding-top: 7px;
+  flex: 1;
+}
+.zbs-client-portal-wrap #zbs-nav-tabs li {
+  padding: 0px;
+}
+.zbs-client-portal-wrap #zbs-nav-tabs li a {
+  padding: 10px;
+  box-shadow: none;
+}
+.zbs-client-portal-wrap #zbs-nav-tabs li a:hover {
+  box-shadow: none;
+  background: #000;
+  color: white;
+}
+.zbs-client-portal-wrap #zbs-nav-tabs a {
+  color: #ccc;
+}
+.zbs-client-portal-wrap #zbs-nav-tabs a:hover {
+  color: #ccc !important;
+}
+.zbs-client-portal-wrap #zbs-nav-tabs .fa {
+  margin-right: 0.5em;
 }
 
 .zbs-line-info-title {
@@ -621,12 +645,15 @@
     position: relative;
     padding-left: 50%;
   }
-  .zbs-portal-grid .zbs-responsive-table td::before {
+  .zbs-portal-grid .zbs-responsive-table td:before {
     position: absolute;
+    top: 6px;
     left: 6px;
     width: 45%;
     padding-right: 10px;
     white-space: nowrap;
+  }
+  .zbs-portal-grid .zbs-responsive-table td:before {
     content: attr(data-title);
     top: 50%;
     transform: translateY(-50%);
@@ -644,14 +671,14 @@
   max-width: unset !important;
 }
 .zbs-portal-grid .zbs-field-group-label {
-  font-weight: 700;
+  font-weight: bold;
   font-size: 110%;
 }
 .zbs-portal-grid .zbs-portal-nav {
   max-width: 58rem;
 }
 .zbs-portal-grid #zbs-nav-tabs {
-  padding: 0;
+  padding: 0px;
 }
 .zbs-portal-grid #zbs-nav-tabs li {
   list-style: none;
@@ -690,7 +717,7 @@
 }
 .zbs-portal-grid label {
   display: block;
-  margin: 0;
+  margin: 0px;
 }
 .zbs-portal-grid .zbs-radio label, .zbs-portal-grid .zbs-cf-checkbox label {
   white-space: nowrap !important;
@@ -739,19 +766,19 @@
   font-style: normal;
 }
 
-i.icon.child::before {
+i.icon.child:before {
   content: "\f1ae";
   display: inline-block;
   font-family: FontAwesome;
 }
 
-.client-portal-file-upload::before {
+.client-portal-file-upload:before {
   content: "\f0ee";
   display: inline-block;
   font-family: FontAwesome;
 }
 
-.client-portal-file-upload-remove::before {
+.client-portal-file-upload-remove:before {
   content: "\f00d";
   display: inline-block;
   font-family: FontAwesome;
@@ -823,7 +850,7 @@ i.icon.child::before {
   width: 50%;
 }
 #jpcrm-invoice-lineitems .jpcrm-invoice-lineitem-description .title {
-  font-weight: 700;
+  font-weight: bold;
 }
 #jpcrm-invoice-lineitems .jpcrm-invoice-lineitem-description .subtitle {
   font-size: 13px;

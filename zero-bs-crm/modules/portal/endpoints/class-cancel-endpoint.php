@@ -1,19 +1,16 @@
-<?php // phpcs:ignore Squiz.Commenting.FileComment.Missing
+<?php
 namespace Automattic\JetpackCRM;
 
 defined( 'ZEROBSCRM_PATH' ) || exit( 0 );
 
-/**
- * Cancel endpoint
- */
 class Cancel_Endpoint extends Client_Portal_Endpoint {
 
-	public static function register_endpoint( $endpoints, $client_portal ) { // phpcs:ignore Squiz.Commenting.FunctionComment.Missing
+	public static function register_endpoint( $endpoints, $client_portal ) {
 		$new_endpoint = new Cancel_Endpoint( $client_portal );
 
 		$new_endpoint->portal                       = $client_portal;
 		$new_endpoint->slug                         = 'cancel';
-		$new_endpoint->name                         = __( 'Payment Cancelled', 'zero-bs-crm' );
+		$new_endpoint->name                         = __('Payment Cancelled', 'zero-bs-crm');
 		$new_endpoint->hide_from_menu               = true;
 		$new_endpoint->template_name                = 'cancelled.php';
 		$new_endpoint->add_rewrite_endpoint         = true;

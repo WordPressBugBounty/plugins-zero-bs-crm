@@ -113,12 +113,13 @@ function zeroBSCRM_checkSystemFeat( $key = '', $with_info = false ) {
 		global $zbs;
 
 		if (!$withInfo)
-			return $zbs::VERSION;
+			return $zbs->version;
 		else {
-			$enabled     = true;
-			$enabled_str = 'Version ' . $zbs::VERSION;
 
-			return array( $enabled, $enabled_str );
+			$enabled = true;
+			$enabledStr = 'Version ' . $zbs->version;
+
+			return array($enabled, $enabledStr);
 		}
 	}
 

@@ -1,23 +1,20 @@
-<?php
-/**
+<?php 
+/*!
  * Jetpack CRM
  * https://jetpackcrm.com
  *
  * Legacy Learn menu functions
- * This file contains function-based learn menu rendering, where generically rendered learn menus
- * were moved into the new class (`Learn_Menu`), these will need modernising individually
- *
- * @package automattic/jetpack-crm
+ * 	This file contains function-based learn menu rendering, where generically rendered learn menus
+ *	were moved into the new class (`Learn_Menu`), these will need modernising individually
  */
 
-// phpcs:ignore Squiz.Commenting.FunctionComment.MissingParamTag
-/**
- * Wrapper for newly formed Learn_Menu evolution
- *
- * This provides backward compatibility for extensions using this function.
- * ... but is really deprecated
- */
-function zeroBS_genericLearnMenu( // phpcs:ignore WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid
+
+/*
+* Wrapper for newly formed Learn_Menu evolution
+* This provides backward compatibility for extensions using this function.
+* ... but is really deprecated
+*/
+function zeroBS_genericLearnMenu(
 	$page_title = '',
 	$left_buttons = '',
 	$right_buttons = '',
@@ -367,7 +364,7 @@ function jpcrm_taskcalendar_learn_menu( $learn_menu ) {
 	$selected_user_id = ( empty( $_GET['zbsowner'] ) ? -1 : (int) $_GET['zbsowner'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	$task_users       = zeroBS_getPossibleCustomerOwners();
 	$task_users_html  = '';
-	if ( count( $task_users ) > 0 && zeroBSCRM_perms_tasks() ) {
+	if ( count( $task_users ) > 0 && zeroBSCRM_isZBSAdminOrAdmin() ) {
 		$task_users_html .= '<select id="zerobscrm-owner">';
 		$task_users_html .= '<option value="-1">' . __( 'All Users', 'zero-bs-crm' ) . '</option>';
 		foreach ( $task_users as $user ) {
@@ -453,7 +450,7 @@ function jpcrm_settings_learn_menu( $learn_menu ) {
 		$learn_menu['right_buttons'] = ' <a href="' . zeroBSCRM_getAdminURL( $zbs->slugs['modules'] ) . '" class="jpcrm-button white-bg font-14px" id="manage-features">' . __( 'Manage modules', 'zero-bs-crm' ) . '</a>';
 	}
 
-	$learn_menu['extra_js'] = 'if (typeof hopscotch != "undefined" && (hopscotch.getState() === "zbs-welcome-tour:10" || hopscotch.getState() === "zbs-welcome-tour:10:5")) { hopscotch.startTour(zbsTour);}';
+	$learn_menu['extra_js'] = 'if (typeof hopscotch != "undefined" && (hopscotch.getState() === "zbs-welcome-tour:10" || hopscotch.getState() === "zbs-welcome-tour:10:5")) { hopscotch.startTour(window.zbsTour);}';
 	return $learn_menu;
 }
 
@@ -515,7 +512,7 @@ function jpcrm_delete_learn_menu() {
  * @return array
  */
 function jpcrm_notifications_learn_menu( $learn_menu ) {
-	$learn_menu['extra_js'] = 'if (typeof hopscotch != "undefined" && hopscotch.getState() === "zbs-welcome-tour:4") { hopscotch.startTour(zbsTour);}';
+	$learn_menu['extra_js'] = 'if (typeof hopscotch != "undefined" && hopscotch.getState() === "zbs-welcome-tour:4") { hopscotch.startTour(window.zbsTour);}';
 	return $learn_menu;
 }
 
@@ -527,7 +524,7 @@ function jpcrm_notifications_learn_menu( $learn_menu ) {
  * @return array
  */
 function jpcrm_extensions_learn_menu( $learn_menu ) {
-	$learn_menu['extra_js'] = 'if (hopscotch && (hopscotch.getState() === "zbs-welcome-tour:9" || hopscotch.getState() === "zbs-welcome-tour:9:5")) { hopscotch.startTour(zbsTour);}';
+	$learn_menu['extra_js'] = 'if (hopscotch && (hopscotch.getState() === "zbs-welcome-tour:9" || hopscotch.getState() === "zbs-welcome-tour:9:5")) { hopscotch.startTour(window.zbsTour);}';
 	return $learn_menu;
 }
 

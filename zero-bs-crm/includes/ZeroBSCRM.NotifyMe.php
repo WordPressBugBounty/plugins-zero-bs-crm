@@ -62,38 +62,39 @@ function zeroBSCRM_notifyme_createDBtable(){
 
 
 function zeroBSCRM_notifyme_scripts(){
-	global $zbs;
-	wp_enqueue_script( 'jquery' );
-	wp_enqueue_script( 'notifyme-front', ZEROBSCRM_URL . 'js/jpcrm-notifyme-front' . wp_scripts_get_suffix() . '.js', array( 'jquery' ), $zbs::VERSION ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NotInFooter
-	wp_enqueue_style( 'notifyme-css', ZEROBSCRM_URL . 'css/jpcrm-notifyme-front' . wp_scripts_get_suffix() . '.css', array(), $zbs::VERSION );
 
-	#} this does the browser notifications
-	wp_register_script( 'notifyme_push', ZEROBSCRM_URL . 'build/lib/push.js/push.min.js', array(), $zbs::VERSION, true );
-	wp_enqueue_script( 'notifyme_push' );
+    global $zbs;
+    wp_enqueue_script("jquery");
+    wp_enqueue_script('notifyme-front', ZEROBSCRM_URL . 'js/lib/notifyme-front.min.js',array('jquery'), $zbs->version );
+    wp_enqueue_style('notifyme-css',  ZEROBSCRM_URL . 'css/lib/notifyme-front.min.css', array(), $zbs->version );
 
-	#} this stores things in cookies, so not to keep notifying
-	wp_register_script( 'notifyme_cookie', ZEROBSCRM_URL . 'build/lib/js-cookie/js.cookie.min.js', array(), $zbs::VERSION, true );
-	wp_enqueue_script( 'notifyme_cookie' );
+    #} this does the browser notifications
+    wp_register_script( 'notifyme_push', ZEROBSCRM_URL . 'js/lib/push.min.js', array( 'jquery' ) , $zbs->version, true ); 
+    wp_enqueue_script( 'notifyme_push' );
 
-	#} this is the browser notification icon.
-	$notify_logo = jpcrm_get_logo();
+    #} this stores things in cookies, so not to keep notifying 
+    wp_register_script( 'notifyme_cookie', ZEROBSCRM_URL . 'js/lib/cookie.min.js', array( 'jquery' ) , $zbs->version, true ); 
+    wp_enqueue_script( 'notifyme_cookie' );
 
-	#} this is which user to notify for..
-	$cid = get_current_user_id();
+    #} this is the browser notification icon.
+    $notify_logo = jpcrm_get_logo();
 
-	#} we want to browser notify our users :-)
-	$notification_meta = array( 'browser_push' => 1 );
+    #} this is which user to notify for..
+    $cid = get_current_user_id();
 
-	$args = array(
-		'ph_notify_logo'        => $notify_logo,
-		'current_user'          => $cid,
-		'notification_nonce'    => wp_create_nonce( 'notifyme_nonce' ),
-		'notification_settings' => $notification_meta,
-		'ajaxurl'               => admin_url( 'admin-ajax.php' ),
-	);
-	wp_localize_script( 'notifyme_push', 'notifyme', $args );
+    #} we want to browser notify our users :-)
+    $notification_meta['browser_push'] = 1;
+    $args = array(
+            'ph_notify_logo' =>  $notify_logo,
+            'current_user' => $cid,
+            'notification_nonce' => wp_create_nonce( "notifyme_nonce" ),
+            'notification_settings' => $notification_meta,
+            'ajaxurl'  => admin_url( 'admin-ajax.php' )
+    );
+    wp_localize_script('notifyme_push','notifyme',$args);
 }
 add_action( 'zbs-global-admin-styles', 'zeroBSCRM_notifyme_scripts' );
+
 
 //ADD ANY CORE FUNCTIONS FOR THE PLUGIN HERE
 function zeroBSCRM_notify_me(){
@@ -529,3 +530,80 @@ function zeroBSCRM_notifyme_get_notifications_ajax(){
       echo json_encode($res,true);
 	die( 0 );
 }
+
+
+
+#} no need to send email from this. Only want CRM wide (i.e. from WP admin, bell icon in new UI top menu)
+/*
+function notifyme_sendemail($recipient_id, $sender_id, $type, $reference_id){
+
+
+    $notification_meta = get_user_meta($recipient_id, 'notifyme_user_settings', true);
+    if($notification_meta == ''){
+          $notification_meta['email_comment'] = 1;
+          $notification_meta['email_upvote'] = 1;
+          $notification_meta['email_follow'] = 1;
+          $notification_meta['email_follows_post'] = 1;    
+    }
+
+    #} NOTE - LONGSTANDING ANNOYINB BUG HERE IN NOTIFY ME IN MY $message where it's not sending links, it's sending the actual
+    #} HTML, i.e. <a href = ...   will fix as moving into Jetpack CRM, and then possibly fix it in Notify Me
+
+    $site_title = get_bloginfo( 'name' );
+    $recipitent = get_user_by('id' , $recipient_id);
+    $sender     = get_user_by('id' , $sender_id);
+    $sender_url = get_author_posts_url($sender_id);
+    $to = $recipitent->user_email;
+    switch ($type) {
+    case 'post.vote':
+        if($notification_meta['email_upvote'] == 1){
+          $post_title = get_the_title($reference_id); //reference_id is the post ID.
+          $subject = __($site_title . ": " . $post_title . " has been upvoted", 'zero-bs-crm');
+          $post_link = get_permalink($reference_id);
+          $message = __("View the post here <a href='". esc_url($post_link) ."'>" . $post_title . "</a>", 'zero-bs-crm');
+          wp_mail( $to, $subject, $message);
+          write_log('to ' . $to . ' subject ' . $subject . ' message ' . $message);
+        }
+        break;
+    case 'comment.new':
+        if($notification_meta['email_comment'] == 1){        
+          $post_title = get_the_title($reference_id); //reference_id is the post ID.
+          $subject = __($site_title .  ": " . $post_title . " has received a comment", 'zero-bs-crm');
+          $post_link = get_permalink($reference_id);
+          $message = __("View the post here <a href='". esc_url($post_link) ."'>" . $post_title . "</a>", 'zero-bs-crm');
+          wp_mail( $to, $subject, $message);
+          write_log('comment new to ' . $to . ' subject ' . $subject . ' message ' . $message);
+        }
+        break;
+    case 'comment.reply':
+        if($notification_meta['email_comment'] == 1){
+          $post_title = get_the_title($reference_id); //reference_id is the post ID.
+          $subject = __($site_title .  ": " . $post_title . " has received a comment", 'zero-bs-crm');
+          $post_link = get_permalink($reference_id);
+          $message = __("View the post here <a href='". esc_url($post_link) ."'>" . $post_title . "</a>", 'zero-bs-crm');
+          wp_mail( $to, $subject, $message);
+          write_log('comment reply to ' . $to . ' subject ' . $subject . ' message ' . $message);
+        }
+        break;
+    case 'user.follow':
+        if($notification_meta['email_follow'] == 1){
+          $subject = __($site_title .  ": " . ucfirst($sender->user_nicename). " has started tof follow you", 'zero-bs-crm');
+          $message = __("View them here <a href='". esc_url($sender_url) ."'>" . ucfirst($sender->user_nicename) . "</a>", 'zero-bs-crm');
+          wp_mail( $to, $subject, $message);
+          write_log('user follow' . $to . ' subject ' . $subject . ' message ' . $message);
+        }
+        break;
+    case 'follower.post':
+        if($notification_meta['email_follows_post'] == 1){
+          $post_title = get_the_title($reference_id); //reference_id is the post ID.
+          $subject = __($site_title .  ": " . ucfirst($sender->user_nicename) . " has posted" . $post_tile, 'zero-bs-crm');
+          $post_link = get_permalink($reference_id);
+          $message = __("View the post here <a href='". esc_url($post_link) ."'>" . $post_title . "</a>", 'zero-bs-crm');
+          wp_mail( $to, $subject, $message);
+          write_log('follower post to ' . $to . ' subject ' . $subject . ' message ' . $message);
+        }
+        break;
+    default:
+    }
+}
+*/

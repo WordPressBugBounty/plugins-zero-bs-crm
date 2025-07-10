@@ -4649,9 +4649,7 @@ function zeroBSCRM_invoicing_getInvoiceData( $invID = -1 ) {
 			// refine this too.
 
 			// SETTINGS array (process from main ZBS settings object)
-			// Add our custom setting here
-			$settings['invoicing_disable_partial_payments'] = zeroBSCRM_getSetting( 'invoicing_disable_partial_payments' );
-			$data['invoiceObj']['settings']                 = $settings;
+			$data['invoiceObj']['settings'] = $settings;
 
 			// WH shim - converts DAL3 single record attrs into an array as MS expects?
 			$data['invoiceObj']['totals'] = array();

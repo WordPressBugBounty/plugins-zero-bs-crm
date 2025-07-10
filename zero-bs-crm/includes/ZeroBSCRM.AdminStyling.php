@@ -215,7 +215,7 @@ function jpcrm_footer_credit_version( $content ) {
 	global $zbs;
 	$showpoweredby_admin = $zbs->settings->get( 'showpoweredby_admin' ) === 1 ? true : false;
 	if ( $showpoweredby_admin ) {
-		return sprintf( 'Jetpack CRM v%s', $zbs::VERSION );
+		return sprintf( 'Jetpack CRM v%s', $zbs->version );
 	}
 	##/WLREMOVE
 
@@ -245,8 +245,18 @@ function zbs_color_grabber() {
 	$zbsadmincolors = $_wp_admin_css_colors[ $current_color ]->colors;
 	?>
 	<style>
+		.ranges li{
+			color: <?php echo esc_html( $zbsadmincolors[0] ); ?>;
+		}
 		.max_this{
 			color: <?php echo esc_html( $zbsadmincolors[0] ); ?> !important;
+		}
+		.ranges li:hover, .ranges li.active {
+			background: <?php echo esc_html( $zbsadmincolors[0] ); ?> !important;
+			border: 1px solid <?php echo esc_html( $zbsadmincolors[0] ); ?> !important;
+		}
+		.daterangepicker td.active{
+			background-color: <?php echo esc_html( $zbsadmincolors[0] ); ?> !important;
 		}
 		.zerobs_customer{
 			background-color: <?php echo esc_html( $zbsadmincolors[0] ); ?> !important;

@@ -951,11 +951,6 @@ function zeroBSCRM_DB_canInnoDB(){
  */
 function jpcrm_database_engine( $pretty = false ) {
 	global $zbs;
-
-	if ( ! $zbs ) {
-		return 'unknown';
-	}
-
 	if ( $pretty ) {
 		return $zbs->database_server_info['db_engine_label'];
 	}

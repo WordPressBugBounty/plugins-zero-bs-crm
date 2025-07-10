@@ -2,9 +2,9 @@
 /**
  * Jetpack CRM Core
  *
- * @author  Woody Hayday, Mike Stott
- * @package automattic/jetpack-crm
- * @since   2.27
+ * @author   Woody Hayday, Mike Stott
+ * @package  ZeroBSCRM
+ * @since    2.27
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -20,26 +20,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 final class ZeroBSCRM {
 
 	/**
-	 * Jetpack CRM version.
+	 * ZeroBSCRM version.
 	 *
 	 * @var string
 	 */
-	const VERSION = '6.6.0';
-
-	/**
-	 * Jetpack CRM version (used in various extensions as of January 2025).
-	 *
-	 * @deprecated
-	 * @var string
-	 */
-	public $version = '';
+	public $version = '6.5.1';
 
 	/**
 	 * WordPress version tested with.
 	 *
 	 * @var string
 	 */
-	public $wp_tested = '6.8';
+	public $wp_tested = '6.7';
 
 	/**
 	 * WordPress update API version.
@@ -553,8 +545,6 @@ final class ZeroBSCRM {
 	 * Jetpack CRM Constructor.
 	 */
 	public function __construct() {
-		// @phan-suppress-next-line PhanDeprecatedProperty - Define old property for backward compatibility.
-		$this->version = $this::VERSION;
 
 		// Simple global definitions without loading any core files...
 		// required for verify_minimum_requirements()
@@ -573,11 +563,20 @@ final class ZeroBSCRM {
 			// urls, slugs, (post inc.)
 			$this->setupUrlsSlugsEtc();
 
-			// Install stuff
-			$this->install();
-
 			// } Initialisation
 			$this->init_hooks();
+
+			/**
+			 * Feature flag to hide the new onboarding wizard page.
+			 *
+			 * @ignore
+			 * @since TBD
+			 *
+			 * @param bool Determine if we should initialize the new OBW logic.
+			 */
+			if ( apply_filters( 'jetpack_crm_feature_flag_onboarding_wizard_v2', false ) ) {
+				Automattic\Jetpack_CRM\Onboarding_Wizard\Bootstrap::get_instance();
+			}
 
 			// } Post Init hook
 			do_action( 'zerobscrm_loaded' );
@@ -620,10 +619,10 @@ final class ZeroBSCRM {
 			$this->setupUrlsSlugsEtc();
 
 			// build message
-			$message_html = '<p>' . sprintf( esc_html__( 'This version of CRM (%1$s) requires an upgraded database (3.0). Your database is using an older version than this (%2$s). To use CRM you will need to install version 4 of CRM and run the database upgrade.', 'zero-bs-crm' ), $this::VERSION, $this->dal_version ) . '</p>'; // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
+			$message_html = '<p>' . sprintf( esc_html__( 'This version of CRM (%1$s) requires an upgraded database (3.0). Your database is using an older version than this (%2$s). To use CRM you will need to install version 4 of CRM and run the database upgrade.', 'zero-bs-crm' ), $this->version, $this->dal_version ) . '</p>'; // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
 
 			##WLREMOVE
-			$message_html  = '<p>' . sprintf( esc_html__( 'This version of Jetpack CRM (%1$s) requires an upgraded database (3.0). Your database is using an older version than this (%2$s). To use Jetpack CRM you will need to install version 4 of Jetpack CRM and run the database upgrade.', 'zero-bs-crm' ), $this::VERSION, $this->dal_version ) . '</p>'; // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
+			$message_html  = '<p>' . sprintf( esc_html__( 'This version of Jetpack CRM (%1$s) requires an upgraded database (3.0). Your database is using an older version than this (%2$s). To use Jetpack CRM you will need to install version 4 of Jetpack CRM and run the database upgrade.', 'zero-bs-crm' ), $this->version, $this->dal_version ) . '</p>'; // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
 			$message_html .= '<p><a href="' . esc_url( $this->urls['kb-pre-v5-migration-todo'] ) . '" target="_blank" class="button">' . __( 'Read the guide on migrating', 'zero-bs-crm' ) . '</a></p>';
 			##/WLREMOVE
 
@@ -640,7 +639,7 @@ final class ZeroBSCRM {
 		} elseif ( ! function_exists( 'openssl_get_cipher_methods' ) ) {
 
 			// build message
-			$message_html  = '<p>' . sprintf( __( 'Jetpack CRM uses the OpenSSL extension for PHP to properly protect sensitive data. Most PHP environments have this installed by default, but it seems yours does not; we recommend contacting your host for further help.', 'zero-bs-crm' ), $this::VERSION, $this->dal_version ) . '</p>';
+			$message_html  = '<p>' . sprintf( __( 'Jetpack CRM uses the OpenSSL extension for PHP to properly protect sensitive data. Most PHP environments have this installed by default, but it seems yours does not; we recommend contacting your host for further help.', 'zero-bs-crm' ), $this->version, $this->dal_version ) . '</p>';
 			$message_html .= '<p><a href="' . esc_url( 'https://www.php.net/manual/en/book.openssl.php' ) . '" target="_blank" class="button">' . __( 'PHP docs on OpenSSL', 'zero-bs-crm' ) . '</a></p>';
 
 			$this->add_wp_admin_notice(
@@ -1230,11 +1229,11 @@ final class ZeroBSCRM {
 
 		// } Metaboxes v3.0
 
-		// Root classes
-		require_once ZEROBSCRM_INCLUDE_PATH . 'ZeroBSCRM.MetaBox.php';
-		require_once ZEROBSCRM_INCLUDE_PATH . 'ZeroBSCRM.MetaBoxes3.Logs.php';
-		require_once ZEROBSCRM_INCLUDE_PATH . 'ZeroBSCRM.MetaBoxes3.Tags.php';
-		require_once ZEROBSCRM_INCLUDE_PATH . 'ZeroBSCRM.MetaBoxes3.ExternalSources.php';
+			// Root classes
+			require_once ZEROBSCRM_INCLUDE_PATH . 'ZeroBSCRM.MetaBox.php';
+			require_once ZEROBSCRM_INCLUDE_PATH . 'ZeroBSCRM.MetaBoxes3.Logs.php';
+			require_once ZEROBSCRM_INCLUDE_PATH . 'ZeroBSCRM.MetaBoxes3.Tags.php';
+			require_once ZEROBSCRM_INCLUDE_PATH . 'ZeroBSCRM.MetaBoxes3.ExternalSources.php';
 
 		require_once ZEROBSCRM_INCLUDE_PATH . 'ZeroBSCRM.MetaBoxes3.Contacts.php';
 		require_once ZEROBSCRM_INCLUDE_PATH . 'ZeroBSCRM.MetaBoxes3.Companies.php';
@@ -1327,6 +1326,9 @@ final class ZeroBSCRM {
 		// } Put Plugin update message (notifications into the transient /wp-admin/plugins.php) page.. that way the nag message is not needed at the top of pages (and will always show, not need to be dismissed)
 		require_once ZEROBSCRM_INCLUDE_PATH . 'ZeroBSCRM.PluginUpdates.php';
 
+		// v3.0 update coming, warning
+		require_once ZEROBSCRM_INCLUDE_PATH . 'ZeroBSCRM.PluginUpdates.ImminentRelease.php';
+
 		// } FROM PLUGIN HUNT THEME - LOT OF USEFUL CODE IN HERE.
 		require_once ZEROBSCRM_INCLUDE_PATH . 'ZeroBSCRM.NotifyMe.php';
 
@@ -1356,8 +1358,19 @@ final class ZeroBSCRM {
 	 */
 	private function init_hooks() {
 
+		// General activation hook: DB check, role creation
+		register_activation_hook( ZBS_ROOTFILE, array( $this, 'install' ) );
+
+		add_action( 'activated_plugin', array( $this, 'activated_plugin' ) );
+
 		// Pre-init Hook
 		do_action( 'before_zerobscrm_init' );
+
+		// After all the plugins have loaded (THESE FIRE BEFORE INIT)
+		add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) ); // } Translations
+		// this moved to post_init_plugins_loaded below, needs to be post init: add_action('plugins_loaded', array($this, 'after_active_plugins_loaded') );
+
+		// Initialise
 
 		// our 'pre-init', this is the last step before init
 		// ... and loads settings :)
@@ -1372,6 +1385,9 @@ final class ZeroBSCRM {
 
 		// Admin init - should condition this per page..
 		add_action( 'admin_init', array( $this, 'admin_init' ) );
+
+		// Add thumbnail support?
+		add_action( 'after_setup_theme', array( $this, 'setup_environment' ) );
 
 		// Extension links
 		add_filter( 'plugin_action_links_' . plugin_basename( ZBS_ROOTFILE ), array( $this, 'add_action_links' ) );
@@ -1496,6 +1512,10 @@ final class ZeroBSCRM {
 		// ====================================================================
 	}
 
+	public function setup_environment() {
+		// Don't think we need this $this->add_thumbnail_support();  //add thumbnail support
+	}
+
 	public function add_action_links( $links ) {
 		global $zbs;
 
@@ -1576,7 +1596,7 @@ final class ZeroBSCRM {
 
 		// } Setup Config (centralises version numbers temp)
 		global $zeroBSCRM_Conf_Setup;
-		$zeroBSCRM_Conf_Setup['conf_pluginver']   = $this::VERSION; // phpcs:ignore WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
+		$zeroBSCRM_Conf_Setup['conf_pluginver']   = $this->version;
 		$zeroBSCRM_Conf_Setup['conf_plugindbver'] = $this->db_version;
 
 		// Not needed yet :) do_action( 'before_zerobscrm_settings_init' );
@@ -1663,6 +1683,9 @@ final class ZeroBSCRM {
 		// } ^^ can probably include this via free extension manager class (longer term tidier?)
 		// WH addition: this was firing PRE init (you weren't seeing because no PHP warnings...needs to fire after)
 
+		// Retrieve settings
+		// $zbsCRMTempSettings = $zbs->settings->getAll(); use zeroBSCRM_isExtensionInstalled
+
 		// } free extensions setup (needs to be post settings)
 		zeroBSCRM_freeExtensionsInit();
 
@@ -1728,10 +1751,13 @@ final class ZeroBSCRM {
 		// } As well where extensions put their settings too
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 
+		// } WH MOVED these from being added on init_hooks, to just calling them here, was legacy mess.
+		// no longer used (now notifyme) add_action('init', array($this,'admin_noticies') ); #} load the admin noticies etc..
+		// add_action('init', array($this,'include_updater') ); #} load the auto-updater class
 		$this->include_updater();
-		// Admin unlock for ZBS users if WooCommerce installed
+		// add_action('init', 'zeroBSCRM_wooCommerceRemoveBlock'); #}  Admin unlock for ZBS users if WooCommerce installed
 		zeroBSCRM_wooCommerceRemoveBlock();
-		// Registers stuff that needs settings etc.
+		// add_action('init', array($this, 'post_init_plugins_loaded')); #} Registers stuff that needs settings etc.
 		$this->post_init_plugins_loaded();
 
 		// run migrations
@@ -1746,6 +1772,10 @@ final class ZeroBSCRM {
 			// This function outputs JSON-encoded companies and exits.
 			zeroBSCRM_cojson();
 		}
+
+		// } Brutal override for inv previews
+		// No longer req. v3.0 + this is delivered via HASH URL
+		// if (isset($_GET['zbs_invid']) && wp_verify_nonce($_GET['_wpnonce'], 'zbsinvpreview') && is_user_logged_in() && zeroBSCRM_permsInvoices()){ exit(zeroBSCRM_invoice_generateInvoiceHTML((int)sanitize_text_field($_GET['zbs_invid']),false)); }
 
 		// } Catch Dashboard + redir (if override mode)
 		// } but not for wp admin (wptakeovermodeforall)
@@ -2003,30 +2033,19 @@ final class ZeroBSCRM {
 	}
 
 	public function uninstall() {
+
 		// Deactivate all the extensions
 		zeroBSCRM_extensions_deactivateAll();
 
 		// Skip the deactivation feedback if it's a JSON/AJAX request or via WP-CLI
-		if ( wp_doing_ajax() || wp_is_json_request() || ( defined( 'WP_CLI' ) && WP_CLI ) || wp_is_xml_request() ) {
+		if ( wp_is_json_request() || wp_doing_ajax() || ( defined( 'WP_CLI' ) && WP_CLI ) || wp_is_xml_request() ) {
 			return;
 		}
 
-		##WLREMOVE
+			##WLREMOVE
 
-		// Remove roles :)
-		zeroBSCRM_clearUserRoles();
-
-		// Skip redirect if it's a bulk deactivation with more than one plugin.
-		if (
-			// phpcs:disable WordPress.Security.NonceVerification.Recommended,WordPress.Security.NonceVerification.Missing -- This is safe.
-			isset( $_POST['action'] )
-			&& $_POST['action'] === 'deactivate-selected'
-			&& isset( $_POST['checked'] )
-			&& count( $_POST['checked'] ) > 1
-			// phpcs:enable WordPress.Security.NonceVerification.Recommended,WordPress.Security.NonceVerification.Missing -- This is safe.
-		) {
-			return;
-		}
+			// Remove roles :)
+			zeroBSCRM_clearUserRoles();
 
 			$feedbackAlready = get_option( 'zbsfeedback' );
 
@@ -2079,6 +2098,27 @@ final class ZeroBSCRM {
 
 		// roles +
 		zeroBSCRM_addUserRoles();
+	}
+
+	/**
+	 * Handle the redirection on JPCRM plugin activation
+	 *
+	 * @param $filename
+	 */
+	public function activated_plugin( $filename ) {
+
+		// Skip the re-direction if it's a JSON/AJAX request or via WP-CLI
+		if ( wp_is_json_request() || wp_doing_ajax() || ( defined( 'WP_CLI' ) && WP_CLI ) || wp_is_xml_request() ) {
+			return;
+		}
+
+		if ( $filename == ZBS_ROOTPLUGIN ) {
+			// Send the user to the Dash board
+			global $zbs;
+			if ( wp_redirect( zeroBSCRM_getAdminURL( $zbs->slugs['dash'] ) ) ) {
+				exit( 0 );
+			}
+		}
 	}
 
 	// this func runs on admin_init and xxxx
@@ -2152,8 +2192,8 @@ final class ZeroBSCRM {
 				$this->update_api_version,
 				ZBS_ROOTFILE,
 				array(
-					'version' => $this::VERSION,
-					'license' => false, // license initiated to false..
+					'version' => $this->version,
+					'license' => false,                   // license initiated to false..
 				)
 			);
 		}
@@ -2260,6 +2300,37 @@ final class ZeroBSCRM {
 	 * Include required frontend files.
 	 */
 	public function frontend_includes() {
+	}
+
+	/**
+	 * Load Localisation files.
+	 *
+	 * Note: the first-loaded translation file overrides any following ones if the same translation is present.
+	 *
+	 * Locales found in:
+	 *      - WP_LANG_DIR/woocommerce/woocommerce-LOCALE.mo
+	 *      - WP_LANG_DIR/plugins/woocommerce-LOCALE.mo
+	 */
+
+	public function load_textdomain() {
+
+		// ====================================================================
+		// ==================== General Perf Testing ==========================
+		if ( defined( 'ZBSPERFTEST' ) ) {
+			zeroBSCRM_performanceTest_startTimer( 'loadtextdomain' );
+		}
+		// =================== / General Perf Testing =========================
+		// ====================================================================
+
+		load_plugin_textdomain( 'zero-bs-crm', false, ZBS_LANG_DIR ); // basename( dirname( ZBS_ROOTFILE ) ) . '/languages' ); //plugin_dir_path( ZBS_ROOTFILE ) .'/languages'
+
+		// ====================================================================
+		// ==================== General Perf Testing ==========================
+		if ( defined( 'ZBSPERFTEST' ) ) {
+			zeroBSCRM_performanceTest_closeGlobalTest( 'loadtextdomain' );
+		}
+		// =================== / General Perf Testing =========================
+		// ====================================================================
 	}
 
 	/**

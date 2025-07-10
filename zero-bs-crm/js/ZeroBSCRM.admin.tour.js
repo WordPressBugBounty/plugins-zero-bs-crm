@@ -137,9 +137,10 @@ const zbsTour = {
 				window.location = window.zbs_tour.admin_url + 'admin.php?page=zerobscrm-plugin-settings';
 			},
 			//show cta :)
-			showCTAButton: ! window.zbs_tour.has_valid_license,
+			showCTAButton: true,
 			ctaLabel: window.zbs_tour.lang.step9.cta_label,
 			onCTA: function () {
+				//window.location = zbs_tour.cta_url;
 				window.open( window.zbs_tour.cta_url, '_blank', '' );
 			},
 		},

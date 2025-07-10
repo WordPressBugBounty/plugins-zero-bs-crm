@@ -10,7 +10,6 @@ import { useCallback } from 'react';
 import { store } from 'crm/state/store';
 import styles from './styles.module.scss';
 import type { AttributeDefinition, AttributeValue } from 'crm/state/automations-admin/types';
-import type { FC } from 'react';
 
 type AttributeConfigProps = {
 	workflowId: number;
@@ -21,7 +20,7 @@ type AttributeConfigProps = {
 
 type NewValue = string | number | boolean;
 
-export const AttributeConfig: FC< AttributeConfigProps > = ( {
+export const AttributeConfig: React.FC< AttributeConfigProps > = ( {
 	workflowId,
 	stepId,
 	value,

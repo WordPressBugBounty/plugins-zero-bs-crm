@@ -5,14 +5,13 @@ import { WorkflowTableHeader } from '../workflow-table-header';
 import styles from './styles.module.scss';
 import { SortDirection, SortableWorkflowTableColumn } from './types';
 import { sortWorkflows } from './util';
-import type { FC } from 'react';
 
 type WorkflowTableProps = {
 	workflows: Workflow[];
 	refetchWorkflows: () => void;
 };
 
-export const WorkflowTable: FC< WorkflowTableProps > = props => {
+export const WorkflowTable: React.FC< WorkflowTableProps > = props => {
 	const { workflows, refetchWorkflows } = props;
 
 	const [ sortedColumn, setSortedColumn ] = useState< SortableWorkflowTableColumn >( 'name' );

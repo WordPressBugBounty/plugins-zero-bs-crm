@@ -2,20 +2,19 @@ import { Button, IconTooltip, ToggleControl } from '@automattic/jetpack-componen
 import { dispatch, useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import { useCallback } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import { useMutateAutomationWorkflows } from 'crm/data/hooks/mutations';
 import { Trigger, Workflow } from 'crm/state/automations-admin/types';
 import { store } from 'crm/state/store';
 import { Checkbox } from '../checkbox';
 import styles from './styles.module.scss';
-import type { FC } from 'react';
 
 type WorkflowRowProps = {
 	workflow: Workflow;
 	refetchWorkflows: () => void;
 };
 
-export const WorkflowRow: FC< WorkflowRowProps > = props => {
+export const WorkflowRow: React.FC< WorkflowRowProps > = props => {
 	const { workflow, refetchWorkflows } = props;
 
 	const selectedWorkflows = useSelect( select => select( store ).getSelectedWorkflows(), [] );

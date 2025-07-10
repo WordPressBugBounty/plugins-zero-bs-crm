@@ -38,7 +38,6 @@
 .post-type-zerobs_invoice #billing-to,
 #zerobs-invoice-edit-box #billing-to {
   width: 90% !important;
-  float: left;
 }
 .post-type-zerobs_invoice #billing-to .inv-to-form,
 #zerobs-invoice-edit-box #billing-to .inv-to-form {
@@ -68,17 +67,11 @@
 #zerobs-invoice-edit-box #billing-to input.typeahead {
   max-width: 100%;
 }
-.post-type-zerobs_invoice #billing-to th,
-#zerobs-invoice-edit-box #billing-to th {
-  vertical-align: middle;
-  font-size: 18px;
-  font-weight: 100;
-}
 .post-type-zerobs_invoice #zbs-add-new-row,
 #zerobs-invoice-edit-box #zbs-add-new-row {
   padding: 8px;
   background: #f5f5f5;
-  color: #000;
+  color: black;
   cursor: pointer;
   text-align: center;
   border: 1px solid #ddd;
@@ -341,7 +334,7 @@
 #zerobs-invoice-edit-box .zbs-invoice-row .remove-row {
   font-size: 15px;
   margin-top: 10px;
-  color: #000;
+  color: black;
 }
 .post-type-zerobs_invoice .zbs-invoice-row .third,
 #zerobs-invoice-edit-box .zbs-invoice-row .third {
@@ -384,9 +377,11 @@
 .post-type-zerobs_invoice .mark-as-paid,
 #zerobs-invoice-edit-box .mark-as-paid {
   margin-left: 10px;
-  background-color: #008000;
-  color: #fff;
+  background-color: green;
+  text-transform: uppercase;
+  color: white;
   padding: 7px;
+  font-weight: 900;
   font-size: 25px;
   text-transform: uppercase;
   font-weight: 900;
@@ -424,6 +419,17 @@
 #zerobs-invoice-edit-box #zbs_invoice_send_test2:focus {
   outline: 0 !important;
 }
+.post-type-zerobs_invoice #billing-to,
+#zerobs-invoice-edit-box #billing-to {
+  width: 50%;
+  float: left;
+}
+.post-type-zerobs_invoice #billing-to th,
+#zerobs-invoice-edit-box #billing-to th {
+  vertical-align: middle;
+  font-size: 18px;
+  font-weight: 100;
+}
 .post-type-zerobs_invoice #assign-to,
 #zerobs-invoice-edit-box #assign-to {
   width: 50%;
@@ -453,9 +459,9 @@
 .post-type-zerobs_invoice #zbs_invoice_alerts #zbs_success,
 #zerobs-invoice-edit-box #zbs_invoice_alerts #zbs_success {
   display: none;
-  background: #008000;
+  background: green;
   padding: 10px;
-  color: #fff;
+  color: white;
   font-weight: 100;
   font-size: 14px;
 }
@@ -476,9 +482,9 @@
 #zerobs-invoice-edit-box #zbs_invoice_test_alerts #zbs_success,
 #zerobs-invoice-edit-box #zbs_invoice_test_alerts #zbs_test_success {
   display: none;
-  background: #008000;
+  background: green;
   padding: 10px;
-  color: #fff;
+  color: white;
   font-weight: 100;
   font-size: 14px;
 }
@@ -529,8 +535,8 @@
 }
 .post-type-zerobs_invoice #zbs-business-info-wrapper .business-info .zbs-table td,
 #zerobs-invoice-edit-box #zbs-business-info-wrapper .business-info .zbs-table td {
-  border: 0;
-  padding: 0;
+  border: 0px;
+  padding: 0px;
 }
 .post-type-zerobs_invoice #zbs-business-info-wrapper .business-info .edit-or-add,
 #zerobs-invoice-edit-box #zbs-business-info-wrapper .business-info .edit-or-add {
@@ -578,7 +584,7 @@
 #zerobs-invoice-edit-box #invoice_totals .zbs_grand_total .bord,
 #zerobs-invoice-edit-box #partials .zbs_grand_total .bord {
   background: #f5f5f5;
-  color: #000;
+  color: black;
   font-weight: 800;
   border-bottom: 2px solid #ccc;
 }
@@ -613,7 +619,6 @@
 #zerobs-invoice-edit-box #invoice_totals .bord-l,
 #zerobs-invoice-edit-box #partials .bord-l {
   text-align: right;
-  border-left: 2px solid #ccc !important;
 }
 .post-type-zerobs_invoice #invoice_totals td.bord, .post-type-zerobs_invoice #partials td.bord,
 #zerobs-invoice-edit-box #invoice_totals td.bord,
@@ -625,11 +630,16 @@
 #zerobs-invoice-edit-box #invoice_totals .row-amount,
 #zerobs-invoice-edit-box #partials .row-amount {
   background: #f5f5f5;
-  color: #000;
+  color: black;
   font-weight: 400;
   height: 20px;
   text-align: right;
   border-right: 2px solid #ccc !important;
+}
+.post-type-zerobs_invoice #invoice_totals .bord-l, .post-type-zerobs_invoice #partials .bord-l,
+#zerobs-invoice-edit-box #invoice_totals .bord-l,
+#zerobs-invoice-edit-box #partials .bord-l {
+  border-left: 2px solid #ccc !important;
 }
 .post-type-zerobs_invoice #zbs-invoice-items .first,
 #zerobs-invoice-edit-box #zbs-invoice-items .first {
@@ -660,7 +670,7 @@
 }
 .post-type-zerobs_invoice #zbs-invoice-items .zbs-item-block .tapad,
 #zerobs-invoice-edit-box #zbs-invoice-items .zbs-item-block .tapad {
-  padding: 0 0 0 10px;
+  padding: 0px 0px 0px 10px;
 }
 .post-type-zerobs_invoice #zbs-invoice-items .zbs-item-block input[type=number],
 #zerobs-invoice-edit-box #zbs-invoice-items .zbs-item-block input[type=number] {
@@ -672,7 +682,7 @@
 .post-type-zerobs_invoice #zbs-invoice-items .row-amount,
 #zerobs-invoice-edit-box #zbs-invoice-items .row-amount {
   background: #f5f5f5;
-  color: #000;
+  color: black;
   font-weight: 800;
   text-align: right;
   height: 35px;
@@ -680,11 +690,6 @@
 .post-type-zerobs_invoice #zbs-invoice-items .zbs-row-actions,
 #zerobs-invoice-edit-box #zbs-invoice-items .zbs-row-actions {
   cursor: pointer;
-  border: 1px solid #ccc;
-  color: #999;
-  font-size: 13px;
-  font-weight: 100;
-  text-align: center;
 }
 .post-type-zerobs_invoice #zbs-invoice-items .padding,
 #zerobs-invoice-edit-box #zbs-invoice-items .padding {
@@ -698,7 +703,7 @@
 #zerobs-invoice-edit-box #zbs-invoice-items .zbs-item-name {
   width: 100%;
   height: 28px;
-  border: 0;
+  border: 0px;
   box-shadow: none;
 }
 .post-type-zerobs_invoice #zbs-invoice-items .top-row, .post-type-zerobs_invoice #zbs-invoice-items .bottom-row,
@@ -729,11 +734,19 @@
 #zerobs-invoice-edit-box #zbs-invoice-items .table > tfoot > tr > th,
 #zerobs-invoice-edit-box #zbs-invoice-items .table > thead > tr > td,
 #zerobs-invoice-edit-box #zbs-invoice-items .table > thead > tr > th {
-  border-top: 0 solid #fff !important;
+  border-top: 0px solid white !important;
 }
 .post-type-zerobs_invoice #zbs-invoice-items .add-row,
 #zerobs-invoice-edit-box #zbs-invoice-items .add-row {
-  border-left: 0 solid #fff;
+  border-left: 0px solid white;
+}
+.post-type-zerobs_invoice #zbs-invoice-items .zbs-row-actions,
+#zerobs-invoice-edit-box #zbs-invoice-items .zbs-row-actions {
+  border: 1px solid #ccc;
+  color: #999;
+  font-size: 13px;
+  font-weight: 100;
+  text-align: center;
 }
 .post-type-zerobs_invoice #zbs_invoice_actions,
 #zerobs-invoice-edit-box #zbs_invoice_actions {
@@ -755,7 +768,7 @@
 #zerobs-invoice-edit-box #zbs_invoice_actions .zbs-invoice-status .draft {
   background-color: #ddd;
   text-transform: uppercase;
-  color: #fff;
+  color: white;
   padding: 7px;
   font-weight: 900;
   font-size: 25px;
@@ -764,25 +777,25 @@
 #zerobs-invoice-edit-box #zbs_invoice_actions .zbs-invoice-status .unpaid {
   background-color: #ffd800;
   text-transform: uppercase;
-  color: #fff;
+  color: white;
   padding: 7px;
   font-weight: 900;
   font-size: 25px;
 }
 .post-type-zerobs_invoice #zbs_invoice_actions .zbs-invoice-status .paid,
 #zerobs-invoice-edit-box #zbs_invoice_actions .zbs-invoice-status .paid {
-  background-color: #008000;
+  background-color: green;
   text-transform: uppercase;
-  color: #fff;
+  color: white;
   padding: 7px;
   font-weight: 900;
   font-size: 25px;
 }
 .post-type-zerobs_invoice #zbs_invoice_actions .zbs-invoice-status .overdue,
 #zerobs-invoice-edit-box #zbs_invoice_actions .zbs-invoice-status .overdue {
-  background-color: #f00;
+  background-color: red;
   text-transform: uppercase;
-  color: #fff;
+  color: white;
   padding: 7px;
   font-weight: 900;
   font-size: 25px;
@@ -795,8 +808,9 @@
 #zerobs-invoice-edit-box #zbs_invoice_actions .btn-primary {
   color: #fff;
   background-color: #428bca;
+  border-color: #428bca;
   border: 1px solid #428bca;
-  border-width: 0;
+  border-width: 0px;
   font-size: 15px;
   padding: 7px;
   font-weight: 300;
@@ -805,8 +819,9 @@
 .post-type-zerobs_invoice #zbs_invoice_actions .btn-secondary,
 #zerobs-invoice-edit-box #zbs_invoice_actions .btn-secondary {
   background: #ddd;
+  border-color: #ddd;
   border: 1px solid #ddd;
-  border-width: 0;
+  border-width: 0px;
   font-size: 15px;
   padding: 7px;
   font-weight: 300;
@@ -836,7 +851,7 @@
 .post-type-zerobs_invoice #submitdiv .handlediv,
 #zerobs-invoice-edit-box #submitdiv .handlediv {
   display: none;
-  border-bottom: 0 solid #fff;
+  border-bottom: 0px solid white;
 }
 .post-type-zerobs_invoice #postbox-container-1,
 #zerobs-invoice-edit-box #postbox-container-1 {
@@ -887,9 +902,6 @@
   width: 100%;
   position: relative;
   display: none;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  margin-left: 12px;
 }
 .post-type-zerobs_invoice .wh-logo-set .zbs-remove, .post-type-zerobs_invoice .wh-logo-set .zbs-update,
 #zerobs-invoice-edit-box .wh-logo-set .zbs-remove,
@@ -915,6 +927,12 @@
   margin: 3px;
   padding: 2px 4px;
 }
+.post-type-zerobs_invoice .wh-logo-set,
+#zerobs-invoice-edit-box .wh-logo-set {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 12px;
+}
 .post-type-zerobs_invoice .wh-logo-set:hover .zbs-logo-options,
 #zerobs-invoice-edit-box .wh-logo-set:hover .zbs-logo-options {
   display: block;
@@ -932,7 +950,7 @@
 }
 .post-type-zerobs_invoice .wh-logo .fa,
 #zerobs-invoice-edit-box .wh-logo .fa {
-  color: #000;
+  color: black;
   margin-right: 5px;
   margin-bottom: 10px;
   font-size: 40px;
@@ -941,7 +959,7 @@
 .post-type-zerobs_invoice .wh-logo .wh-logo-text,
 #zerobs-invoice-edit-box .wh-logo .wh-logo-text {
   font-weight: 300;
-  color: #000;
+  color: black;
   font-size: 18px;
   margin-left: 20px;
   position: absolute;
@@ -989,7 +1007,7 @@
 }
 #zbswhPDFNotice .zbsCloseThisAndLog:hover {
   cursor: pointer;
-  color: #008000;
+  color: green;
 }
 
 .zbs-invoice-actions-bottom {
@@ -1048,13 +1066,15 @@
   background-image: none;
   border: 1px solid #ccc;
   border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
 .zbs-invoice-email-modal-field input[type=checkbox] {
   margin-right: 0.7em;
   vertical-align: middle;
-  line-height: 1;
+  line-height: 1em;
 }
 .zbs-invoice-email-modal-field label {
   margin-bottom: 0;

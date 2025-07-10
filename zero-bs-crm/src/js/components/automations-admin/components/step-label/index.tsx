@@ -1,7 +1,6 @@
 import { _x } from '@wordpress/i18n';
 import clsx from 'clsx';
 import styles from './styles.module.scss';
-import type { FC } from 'react';
 
 type StepLabelProps = {
 	type: LabelType;
@@ -10,7 +9,7 @@ type StepLabelProps = {
 
 type LabelType = 'trigger' | 'condition' | 'action';
 
-export const StepLabel: FC< StepLabelProps > = ( { type, className } ) => {
+export const StepLabel: React.FC< StepLabelProps > = ( { type, className } ) => {
 	let label;
 
 	switch ( type ) {

@@ -7,47 +7,47 @@ $baseDir   = dirname($vendorDir);
 
 return array(
 	'Autoloader' => array(
-		'version' => '5.0.8',
+		'version' => '5.0.1',
 		'path'    => $vendorDir . '/automattic/jetpack-autoloader/src/class-autoloader.php'
 	),
 	'Autoloader_Handler' => array(
-		'version' => '5.0.8',
+		'version' => '5.0.1',
 		'path'    => $vendorDir . '/automattic/jetpack-autoloader/src/class-autoloader-handler.php'
 	),
 	'Autoloader_Locator' => array(
-		'version' => '5.0.8',
+		'version' => '5.0.1',
 		'path'    => $vendorDir . '/automattic/jetpack-autoloader/src/class-autoloader-locator.php'
 	),
 	'Automattic\\Jetpack\\Assets' => array(
-		'version' => '4.1.1.0',
+		'version' => '4.0.3.0',
 		'path'    => $baseDir . '/jetpack_vendor/automattic/jetpack-assets/src/class-assets.php'
 	),
 	'Automattic\\Jetpack\\Assets\\Script_Data' => array(
-		'version' => '4.1.1.0',
+		'version' => '4.0.3.0',
 		'path'    => $baseDir . '/jetpack_vendor/automattic/jetpack-assets/src/class-script-data.php'
 	),
 	'Automattic\\Jetpack\\Assets\\Semver' => array(
-		'version' => '4.1.1.0',
+		'version' => '4.0.3.0',
 		'path'    => $baseDir . '/jetpack_vendor/automattic/jetpack-assets/src/class-semver.php'
 	),
 	'Automattic\\Jetpack\\Autoloader\\AutoloadFileWriter' => array(
-		'version' => '5.0.8',
+		'version' => '5.0.1',
 		'path'    => $vendorDir . '/automattic/jetpack-autoloader/src/AutoloadFileWriter.php'
 	),
 	'Automattic\\Jetpack\\Autoloader\\AutoloadGenerator' => array(
-		'version' => '5.0.8',
+		'version' => '5.0.1',
 		'path'    => $vendorDir . '/automattic/jetpack-autoloader/src/AutoloadGenerator.php'
 	),
 	'Automattic\\Jetpack\\Autoloader\\AutoloadProcessor' => array(
-		'version' => '5.0.8',
+		'version' => '5.0.1',
 		'path'    => $vendorDir . '/automattic/jetpack-autoloader/src/AutoloadProcessor.php'
 	),
 	'Automattic\\Jetpack\\Autoloader\\CustomAutoloaderPlugin' => array(
-		'version' => '5.0.8',
+		'version' => '5.0.1',
 		'path'    => $vendorDir . '/automattic/jetpack-autoloader/src/CustomAutoloaderPlugin.php'
 	),
 	'Automattic\\Jetpack\\Autoloader\\ManifestGenerator' => array(
-		'version' => '5.0.8',
+		'version' => '5.0.1',
 		'path'    => $vendorDir . '/automattic/jetpack-autoloader/src/ManifestGenerator.php'
 	),
 	'Automattic\\Jetpack\\CRM\\Automation\\Action' => array(
@@ -455,56 +455,20 @@ return array(
 		'path'    => $baseDir . '/src/rest-api/v4/class-rest-contacts-controller.php'
 	),
 	'Automattic\\Jetpack\\Composer\\Manager' => array(
-		'version' => '4.0.5.0',
+		'version' => '4.0.0.0',
 		'path'    => $vendorDir . '/automattic/jetpack-composer-plugin/src/class-manager.php'
 	),
 	'Automattic\\Jetpack\\Composer\\Plugin' => array(
-		'version' => '4.0.5.0',
+		'version' => '4.0.0.0',
 		'path'    => $vendorDir . '/automattic/jetpack-composer-plugin/src/class-plugin.php'
 	),
 	'Automattic\\Jetpack\\Constants' => array(
-		'version' => '3.0.8.0',
+		'version' => '3.0.1.0',
 		'path'    => $baseDir . '/jetpack_vendor/automattic/jetpack-constants/src/class-constants.php'
 	),
-	'Automattic\\Jetpack\\CookieState' => array(
-		'version' => '5.3.1.0',
-		'path'    => $baseDir . '/jetpack_vendor/automattic/jetpack-status/src/class-cookiestate.php'
-	),
-	'Automattic\\Jetpack\\Errors' => array(
-		'version' => '5.3.1.0',
-		'path'    => $baseDir . '/jetpack_vendor/automattic/jetpack-status/src/class-errors.php'
-	),
-	'Automattic\\Jetpack\\Files' => array(
-		'version' => '5.3.1.0',
-		'path'    => $baseDir . '/jetpack_vendor/automattic/jetpack-status/src/class-files.php'
-	),
-	'Automattic\\Jetpack\\Modules' => array(
-		'version' => '5.3.1.0',
-		'path'    => $baseDir . '/jetpack_vendor/automattic/jetpack-status/src/class-modules.php'
-	),
-	'Automattic\\Jetpack\\Paths' => array(
-		'version' => '5.3.1.0',
-		'path'    => $baseDir . '/jetpack_vendor/automattic/jetpack-status/src/class-paths.php'
-	),
-	'Automattic\\Jetpack\\Status' => array(
-		'version' => '5.3.1.0',
-		'path'    => $baseDir . '/jetpack_vendor/automattic/jetpack-status/src/class-status.php'
-	),
-	'Automattic\\Jetpack\\Status\\Cache' => array(
-		'version' => '5.3.1.0',
-		'path'    => $baseDir . '/jetpack_vendor/automattic/jetpack-status/src/class-cache.php'
-	),
-	'Automattic\\Jetpack\\Status\\Host' => array(
-		'version' => '5.3.1.0',
-		'path'    => $baseDir . '/jetpack_vendor/automattic/jetpack-status/src/class-host.php'
-	),
-	'Automattic\\Jetpack\\Status\\Request' => array(
-		'version' => '5.3.1.0',
-		'path'    => $baseDir . '/jetpack_vendor/automattic/jetpack-status/src/class-request.php'
-	),
-	'Automattic\\Jetpack\\Status\\Visitor' => array(
-		'version' => '5.3.1.0',
-		'path'    => $baseDir . '/jetpack_vendor/automattic/jetpack-status/src/class-visitor.php'
+	'Automattic\\Jetpack_CRM\\Onboarding_Wizard\\Bootstrap' => array(
+		'version' => 'dev-trunk',
+		'path'    => $baseDir . '/src/onboarding-wizard/class-bootstrap.php'
 	),
 	'Automattic\\WooCommerce\\Client' => array(
 		'version' => '3.1.0.0',
@@ -539,7 +503,7 @@ return array(
 		'path'    => $vendorDir . '/automattic/woocommerce/src/WooCommerce/HttpClient/Response.php'
 	),
 	'Container' => array(
-		'version' => '5.0.8',
+		'version' => '5.0.1',
 		'path'    => $vendorDir . '/automattic/jetpack-autoloader/src/class-container.php'
 	),
 	'Dompdf\\Adapter\\CPDF' => array(
@@ -971,15 +935,15 @@ return array(
 		'path'    => $vendorDir . '/phenx/php-font-lib/src/FontLib/WOFF/TableDirectoryEntry.php'
 	),
 	'Hook_Manager' => array(
-		'version' => '5.0.8',
+		'version' => '5.0.1',
 		'path'    => $vendorDir . '/automattic/jetpack-autoloader/src/class-hook-manager.php'
 	),
 	'Latest_Autoloader_Guard' => array(
-		'version' => '5.0.8',
+		'version' => '5.0.1',
 		'path'    => $vendorDir . '/automattic/jetpack-autoloader/src/class-latest-autoloader-guard.php'
 	),
 	'Manifest_Reader' => array(
-		'version' => '5.0.8',
+		'version' => '5.0.1',
 		'path'    => $vendorDir . '/automattic/jetpack-autoloader/src/class-manifest-reader.php'
 	),
 	'Masterminds\\HTML5' => array(
@@ -1063,183 +1027,183 @@ return array(
 		'path'    => $vendorDir . '/masterminds/html5/src/HTML5/Serializer/Traverser.php'
 	),
 	'PHP_Autoloader' => array(
-		'version' => '5.0.8',
+		'version' => '5.0.1',
 		'path'    => $vendorDir . '/automattic/jetpack-autoloader/src/class-php-autoloader.php'
 	),
 	'Path_Processor' => array(
-		'version' => '5.0.8',
+		'version' => '5.0.1',
 		'path'    => $vendorDir . '/automattic/jetpack-autoloader/src/class-path-processor.php'
 	),
 	'Plugin_Locator' => array(
-		'version' => '5.0.8',
+		'version' => '5.0.1',
 		'path'    => $vendorDir . '/automattic/jetpack-autoloader/src/class-plugin-locator.php'
 	),
 	'Plugins_Handler' => array(
-		'version' => '5.0.8',
+		'version' => '5.0.1',
 		'path'    => $vendorDir . '/automattic/jetpack-autoloader/src/class-plugins-handler.php'
 	),
 	'Sabberworm\\CSS\\CSSList\\AtRuleBlockList' => array(
-		'version' => '8.8.0.0',
+		'version' => '8.7.0.0',
 		'path'    => $vendorDir . '/sabberworm/php-css-parser/src/CSSList/AtRuleBlockList.php'
 	),
 	'Sabberworm\\CSS\\CSSList\\CSSBlockList' => array(
-		'version' => '8.8.0.0',
+		'version' => '8.7.0.0',
 		'path'    => $vendorDir . '/sabberworm/php-css-parser/src/CSSList/CSSBlockList.php'
 	),
 	'Sabberworm\\CSS\\CSSList\\CSSList' => array(
-		'version' => '8.8.0.0',
+		'version' => '8.7.0.0',
 		'path'    => $vendorDir . '/sabberworm/php-css-parser/src/CSSList/CSSList.php'
 	),
 	'Sabberworm\\CSS\\CSSList\\Document' => array(
-		'version' => '8.8.0.0',
+		'version' => '8.7.0.0',
 		'path'    => $vendorDir . '/sabberworm/php-css-parser/src/CSSList/Document.php'
 	),
 	'Sabberworm\\CSS\\CSSList\\KeyFrame' => array(
-		'version' => '8.8.0.0',
+		'version' => '8.7.0.0',
 		'path'    => $vendorDir . '/sabberworm/php-css-parser/src/CSSList/KeyFrame.php'
 	),
 	'Sabberworm\\CSS\\Comment\\Comment' => array(
-		'version' => '8.8.0.0',
+		'version' => '8.7.0.0',
 		'path'    => $vendorDir . '/sabberworm/php-css-parser/src/Comment/Comment.php'
 	),
 	'Sabberworm\\CSS\\Comment\\Commentable' => array(
-		'version' => '8.8.0.0',
+		'version' => '8.7.0.0',
 		'path'    => $vendorDir . '/sabberworm/php-css-parser/src/Comment/Commentable.php'
 	),
 	'Sabberworm\\CSS\\OutputFormat' => array(
-		'version' => '8.8.0.0',
+		'version' => '8.7.0.0',
 		'path'    => $vendorDir . '/sabberworm/php-css-parser/src/OutputFormat.php'
 	),
 	'Sabberworm\\CSS\\OutputFormatter' => array(
-		'version' => '8.8.0.0',
+		'version' => '8.7.0.0',
 		'path'    => $vendorDir . '/sabberworm/php-css-parser/src/OutputFormatter.php'
 	),
 	'Sabberworm\\CSS\\Parser' => array(
-		'version' => '8.8.0.0',
+		'version' => '8.7.0.0',
 		'path'    => $vendorDir . '/sabberworm/php-css-parser/src/Parser.php'
 	),
 	'Sabberworm\\CSS\\Parsing\\Anchor' => array(
-		'version' => '8.8.0.0',
+		'version' => '8.7.0.0',
 		'path'    => $vendorDir . '/sabberworm/php-css-parser/src/Parsing/Anchor.php'
 	),
 	'Sabberworm\\CSS\\Parsing\\OutputException' => array(
-		'version' => '8.8.0.0',
+		'version' => '8.7.0.0',
 		'path'    => $vendorDir . '/sabberworm/php-css-parser/src/Parsing/OutputException.php'
 	),
 	'Sabberworm\\CSS\\Parsing\\ParserState' => array(
-		'version' => '8.8.0.0',
+		'version' => '8.7.0.0',
 		'path'    => $vendorDir . '/sabberworm/php-css-parser/src/Parsing/ParserState.php'
 	),
 	'Sabberworm\\CSS\\Parsing\\SourceException' => array(
-		'version' => '8.8.0.0',
+		'version' => '8.7.0.0',
 		'path'    => $vendorDir . '/sabberworm/php-css-parser/src/Parsing/SourceException.php'
 	),
 	'Sabberworm\\CSS\\Parsing\\UnexpectedEOFException' => array(
-		'version' => '8.8.0.0',
+		'version' => '8.7.0.0',
 		'path'    => $vendorDir . '/sabberworm/php-css-parser/src/Parsing/UnexpectedEOFException.php'
 	),
 	'Sabberworm\\CSS\\Parsing\\UnexpectedTokenException' => array(
-		'version' => '8.8.0.0',
+		'version' => '8.7.0.0',
 		'path'    => $vendorDir . '/sabberworm/php-css-parser/src/Parsing/UnexpectedTokenException.php'
 	),
 	'Sabberworm\\CSS\\Property\\AtRule' => array(
-		'version' => '8.8.0.0',
+		'version' => '8.7.0.0',
 		'path'    => $vendorDir . '/sabberworm/php-css-parser/src/Property/AtRule.php'
 	),
 	'Sabberworm\\CSS\\Property\\CSSNamespace' => array(
-		'version' => '8.8.0.0',
+		'version' => '8.7.0.0',
 		'path'    => $vendorDir . '/sabberworm/php-css-parser/src/Property/CSSNamespace.php'
 	),
 	'Sabberworm\\CSS\\Property\\Charset' => array(
-		'version' => '8.8.0.0',
+		'version' => '8.7.0.0',
 		'path'    => $vendorDir . '/sabberworm/php-css-parser/src/Property/Charset.php'
 	),
 	'Sabberworm\\CSS\\Property\\Import' => array(
-		'version' => '8.8.0.0',
+		'version' => '8.7.0.0',
 		'path'    => $vendorDir . '/sabberworm/php-css-parser/src/Property/Import.php'
 	),
 	'Sabberworm\\CSS\\Property\\KeyframeSelector' => array(
-		'version' => '8.8.0.0',
+		'version' => '8.7.0.0',
 		'path'    => $vendorDir . '/sabberworm/php-css-parser/src/Property/KeyframeSelector.php'
 	),
 	'Sabberworm\\CSS\\Property\\Selector' => array(
-		'version' => '8.8.0.0',
+		'version' => '8.7.0.0',
 		'path'    => $vendorDir . '/sabberworm/php-css-parser/src/Property/Selector.php'
 	),
 	'Sabberworm\\CSS\\Renderable' => array(
-		'version' => '8.8.0.0',
+		'version' => '8.7.0.0',
 		'path'    => $vendorDir . '/sabberworm/php-css-parser/src/Renderable.php'
 	),
 	'Sabberworm\\CSS\\RuleSet\\AtRuleSet' => array(
-		'version' => '8.8.0.0',
+		'version' => '8.7.0.0',
 		'path'    => $vendorDir . '/sabberworm/php-css-parser/src/RuleSet/AtRuleSet.php'
 	),
 	'Sabberworm\\CSS\\RuleSet\\DeclarationBlock' => array(
-		'version' => '8.8.0.0',
+		'version' => '8.7.0.0',
 		'path'    => $vendorDir . '/sabberworm/php-css-parser/src/RuleSet/DeclarationBlock.php'
 	),
 	'Sabberworm\\CSS\\RuleSet\\RuleSet' => array(
-		'version' => '8.8.0.0',
+		'version' => '8.7.0.0',
 		'path'    => $vendorDir . '/sabberworm/php-css-parser/src/RuleSet/RuleSet.php'
 	),
 	'Sabberworm\\CSS\\Rule\\Rule' => array(
-		'version' => '8.8.0.0',
+		'version' => '8.7.0.0',
 		'path'    => $vendorDir . '/sabberworm/php-css-parser/src/Rule/Rule.php'
 	),
 	'Sabberworm\\CSS\\Settings' => array(
-		'version' => '8.8.0.0',
+		'version' => '8.7.0.0',
 		'path'    => $vendorDir . '/sabberworm/php-css-parser/src/Settings.php'
 	),
 	'Sabberworm\\CSS\\Value\\CSSFunction' => array(
-		'version' => '8.8.0.0',
+		'version' => '8.7.0.0',
 		'path'    => $vendorDir . '/sabberworm/php-css-parser/src/Value/CSSFunction.php'
 	),
 	'Sabberworm\\CSS\\Value\\CSSString' => array(
-		'version' => '8.8.0.0',
+		'version' => '8.7.0.0',
 		'path'    => $vendorDir . '/sabberworm/php-css-parser/src/Value/CSSString.php'
 	),
 	'Sabberworm\\CSS\\Value\\CalcFunction' => array(
-		'version' => '8.8.0.0',
+		'version' => '8.7.0.0',
 		'path'    => $vendorDir . '/sabberworm/php-css-parser/src/Value/CalcFunction.php'
 	),
 	'Sabberworm\\CSS\\Value\\CalcRuleValueList' => array(
-		'version' => '8.8.0.0',
+		'version' => '8.7.0.0',
 		'path'    => $vendorDir . '/sabberworm/php-css-parser/src/Value/CalcRuleValueList.php'
 	),
 	'Sabberworm\\CSS\\Value\\Color' => array(
-		'version' => '8.8.0.0',
+		'version' => '8.7.0.0',
 		'path'    => $vendorDir . '/sabberworm/php-css-parser/src/Value/Color.php'
 	),
 	'Sabberworm\\CSS\\Value\\LineName' => array(
-		'version' => '8.8.0.0',
+		'version' => '8.7.0.0',
 		'path'    => $vendorDir . '/sabberworm/php-css-parser/src/Value/LineName.php'
 	),
 	'Sabberworm\\CSS\\Value\\PrimitiveValue' => array(
-		'version' => '8.8.0.0',
+		'version' => '8.7.0.0',
 		'path'    => $vendorDir . '/sabberworm/php-css-parser/src/Value/PrimitiveValue.php'
 	),
 	'Sabberworm\\CSS\\Value\\RuleValueList' => array(
-		'version' => '8.8.0.0',
+		'version' => '8.7.0.0',
 		'path'    => $vendorDir . '/sabberworm/php-css-parser/src/Value/RuleValueList.php'
 	),
 	'Sabberworm\\CSS\\Value\\Size' => array(
-		'version' => '8.8.0.0',
+		'version' => '8.7.0.0',
 		'path'    => $vendorDir . '/sabberworm/php-css-parser/src/Value/Size.php'
 	),
 	'Sabberworm\\CSS\\Value\\URL' => array(
-		'version' => '8.8.0.0',
+		'version' => '8.7.0.0',
 		'path'    => $vendorDir . '/sabberworm/php-css-parser/src/Value/URL.php'
 	),
 	'Sabberworm\\CSS\\Value\\Value' => array(
-		'version' => '8.8.0.0',
+		'version' => '8.7.0.0',
 		'path'    => $vendorDir . '/sabberworm/php-css-parser/src/Value/Value.php'
 	),
 	'Sabberworm\\CSS\\Value\\ValueList' => array(
-		'version' => '8.8.0.0',
+		'version' => '8.7.0.0',
 		'path'    => $vendorDir . '/sabberworm/php-css-parser/src/Value/ValueList.php'
 	),
 	'Shutdown_Handler' => array(
-		'version' => '5.0.8',
+		'version' => '5.0.1',
 		'path'    => $vendorDir . '/automattic/jetpack-autoloader/src/class-shutdown-handler.php'
 	),
 	'Svg\\CssLength' => array(
@@ -1359,11 +1323,11 @@ return array(
 		'path'    => $vendorDir . '/phenx/php-svg-lib/src/Svg/Tag/UseTag.php'
 	),
 	'Version_Loader' => array(
-		'version' => '5.0.8',
+		'version' => '5.0.1',
 		'path'    => $vendorDir . '/automattic/jetpack-autoloader/src/class-version-loader.php'
 	),
 	'Version_Selector' => array(
-		'version' => '5.0.8',
+		'version' => '5.0.1',
 		'path'    => $vendorDir . '/automattic/jetpack-autoloader/src/class-version-selector.php'
 	),
 );

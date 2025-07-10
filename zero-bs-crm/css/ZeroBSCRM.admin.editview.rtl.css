@@ -49,26 +49,35 @@
   outline: none;
   border: none;
   vertical-align: baseline;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-  margin: 0 0 0 0.25em;
+  color: rgba(0, 0, 0, 0.6);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif;
+  margin: 0em 0em 0em 0.25em;
   padding: 0.78571429em 1.5em 0.78571429em;
-  line-height: 1;
+  text-transform: none;
+  text-shadow: none;
+  font-weight: bold;
+  line-height: 1em;
   font-style: normal;
   text-align: center;
   text-decoration: none;
+  border-radius: 0.28571429rem;
+  box-shadow: 0px 0px 0px 1px transparent inset, 0px 0em 0px 0px rgba(34, 36, 38, 0.15) inset;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  -webkit-transition: opacity 0.1s ease, background-color 0.1s ease, color 0.1s ease, box-shadow 0.1s ease, background 0.1s ease;
   transition: opacity 0.1s ease, background-color 0.1s ease, color 0.1s ease, box-shadow 0.1s ease, background 0.1s ease;
   will-change: "";
   -webkit-tap-highlight-color: transparent;
   font-size: 1rem;
-  font-weight: 400;
+  color: rgba(0, 0, 0, 0.6) !important;
+  font-weight: normal;
   border-radius: 0.28571429rem;
   text-transform: none;
   text-shadow: none !important;
-  box-shadow: 0 0 0 1px #21BA45 inset !important;
+  box-shadow: 0px 0px 0px 1px rgba(34, 36, 38, 0.15) inset;
+  box-shadow: 0px 0px 0px 1px #21BA45 inset !important;
   color: #21BA45 !important;
   background: #FFF !important;
 }
@@ -110,7 +119,7 @@
   margin-bottom: 5em;
   margin-top: 4em;
   margin-right: auto;
-  margin-left: auto;
+  margin-left: Auto;
 }
 
 .zbs-generic-save-wrap {
@@ -161,7 +170,7 @@ table#zbs-tag-manager td, table#zbs-tag-manager td .label, #zbs-tags-wrap span, 
 }
 .zbs-social-acc .zbs-social-acc-input {
   font-size: 14px !important;
-  line-height: 1.4 !important;
+  line-height: 1.4em !important;
   height: 36px !important;
   max-width: 100%;
   width: 75%;
@@ -193,7 +202,7 @@ table#zbs-tag-manager td, table#zbs-tag-manager td .label, #zbs-tags-wrap span, 
 
 .zbs-aka-alias-input {
   font-size: 14px !important;
-  line-height: 1.4 !important;
+  line-height: 1.4em !important;
   height: 36px !important;
   max-width: 100%;
   width: 100%;

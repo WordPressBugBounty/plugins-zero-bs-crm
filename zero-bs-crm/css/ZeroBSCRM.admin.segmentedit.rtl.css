@@ -40,7 +40,7 @@
   display: block;
 }
 #zbs-segment-editor .ui.centralsimple .field > label {
-  color: #000;
+  color: black;
   font-size: 1em;
 }
 #zbs-segment-editor .ui.centralsimple .ui p {

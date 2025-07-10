@@ -13,7 +13,7 @@
 /*-- GENERAL STYLES
 ------------------------------*/
 .zbs-timeline {
-  line-height: 1.4;
+  line-height: 1.4em;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -55,8 +55,8 @@
   left: 0;
   width: 15px;
 }
-.zbs-timeline-marker::before {
-  background: #000;
+.zbs-timeline-marker:before {
+  background: #000000;
   border: 3px solid transparent;
   border-radius: 100%;
   content: "";
@@ -68,7 +68,7 @@
   width: 15px;
   transition: background 0.3s ease-in-out, border 0.3s ease-in-out;
 }
-.zbs-timeline-marker::after {
+.zbs-timeline-marker:after {
   content: "";
   width: 3px;
   background: #d7d7d8;
@@ -78,7 +78,7 @@
   bottom: 0;
   left: 6px;
 }
-.zbs-timeline-item:last-child .zbs-timeline-marker::after {
+.zbs-timeline-item:last-child .zbs-timeline-marker:after {
   content: none;
 }
 
@@ -117,8 +117,8 @@
   left: 0;
   width: 15px;
 }
-.zbs-timeline-item-contd .zbs-timeline-marker::before {
-  background: #000;
+.zbs-timeline-item-contd .zbs-timeline-marker:before {
+  background: #000000;
   border: 1px solid transparent;
   border-radius: 100%;
   content: "";
@@ -131,7 +131,7 @@
   transition: background 0.3s ease-in-out, border 0.3s ease-in-out;
   z-index: 10000;
 }
-.zbs-timeline-item-contd .zbs-timeline-marker::after {
+.zbs-timeline-item-contd .zbs-timeline-marker:after {
   content: "";
   width: 3px;
   background: #d7d7d8;
@@ -141,7 +141,7 @@
   bottom: 0;
   left: 6px;
 }
-.zbs-timeline-item:last-child .zbs-timeline-item-contd .zbs-timeline-marker::after {
+.zbs-timeline-item:last-child .zbs-timeline-item-contd .zbs-timeline-marker:after {
   content: none;
 }
 .zbs-timeline-item-notitle {
@@ -163,7 +163,7 @@
 .period .zbs-timeline-info {
   display: none;
 }
-.period .zbs-timeline-marker::before {
+.period .zbs-timeline-marker:before {
   background: transparent;
   content: "";
   width: 15px;
@@ -176,7 +176,7 @@
   border-top: 3px solid #CCD5DB;
   border-bottom: 3px solid #CCD5DB;
 }
-.period .zbs-timeline-marker::after {
+.period .zbs-timeline-marker:after {
   content: "";
   height: 32px;
   top: auto;
@@ -192,29 +192,32 @@
     MOD: TIMELINE SPLIT
 ----------------------------------------------*/
 @media (min-width: 768px) {
-  .zbs-timeline-centered .zbs-timeline {
+  .zbs-timeline-split .zbs-timeline, .zbs-timeline-centered .zbs-timeline {
     display: table;
   }
-  .zbs-timeline-centered .zbs-timeline-item {
+  .zbs-timeline-split .zbs-timeline-item, .zbs-timeline-centered .zbs-timeline-item {
     display: table-row;
     padding: 0;
   }
-  .zbs-timeline-centered .zbs-timeline-info,
+  .zbs-timeline-split .zbs-timeline-info, .zbs-timeline-centered .zbs-timeline-info,
+  .zbs-timeline-split .zbs-timeline-marker,
   .zbs-timeline-centered .zbs-timeline-marker,
-  .zbs-timeline-centered .zbs-timeline-content {
+  .zbs-timeline-split .zbs-timeline-content,
+  .zbs-timeline-centered .zbs-timeline-content,
+  .zbs-timeline-split .period .zbs-timeline-info {
     display: table-cell;
     vertical-align: top;
   }
-  .zbs-timeline-centered .zbs-timeline-marker {
+  .zbs-timeline-split .zbs-timeline-marker, .zbs-timeline-centered .zbs-timeline-marker {
     position: relative;
   }
-  .zbs-timeline-centered .zbs-timeline-content {
+  .zbs-timeline-split .zbs-timeline-content, .zbs-timeline-centered .zbs-timeline-content {
     padding-left: 30px;
   }
-  .zbs-timeline-centered .zbs-timeline-info {
+  .zbs-timeline-split .zbs-timeline-info, .zbs-timeline-centered .zbs-timeline-info {
     padding-right: 30px;
   }
-  .zbs-timeline-centered .period .zbs-timeline-title {
+  .zbs-timeline-split .period .zbs-timeline-title, .zbs-timeline-centered .period .zbs-timeline-title {
     position: relative;
     left: -45px;
   }
@@ -275,7 +278,7 @@
   .zbs-timeline-centered .zbs-timeline-item.period {
     padding: 50px 0 90px;
   }
-  .zbs-timeline-centered .period .zbs-timeline-marker::after {
+  .zbs-timeline-centered .period .zbs-timeline-marker:after {
     height: 30px;
     bottom: 0;
     top: auto;
@@ -288,12 +291,12 @@
 /*----------------------------------------------
     MOD: MARKER OUTLINE
 ----------------------------------------------*/
-.marker-outline .zbs-timeline-marker::before {
+.marker-outline .zbs-timeline-marker:before {
   background: transparent;
-  border-color: #000;
+  border-color: #000000;
 }
-.marker-outline .zbs-timeline-item:hover .zbs-timeline-marker::before {
-  background: #000;
+.marker-outline .zbs-timeline-item:hover .zbs-timeline-marker:before {
+  background: #000000;
 }
 
 #wpwrap .update-nag {
@@ -327,12 +330,11 @@
   margin-left: 0.1em;
 }
 .zbs-view-card .zbs-sentence {
+  font-size: 1.1em;
+  color: #5d4949;
+  padding-left: 2em;
   padding-top: 0.2em;
   padding-bottom: 0.2em;
-  padding-left: 0;
-  color: #000;
-  margin-top: 5px;
-  font-size: 14px;
 }
 .zbs-view-card .action-wrap {
   display: block;
@@ -347,27 +349,37 @@
   outline: none;
   border: none;
   vertical-align: baseline;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-  margin: 0 0.25em 0 0;
+  background: #E0E1E2 none;
+  color: rgba(0, 0, 0, 0.6);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif;
+  margin: 0em 0.25em 0em 0em;
   padding: 0.78571429em 1.5em 0.78571429em;
-  line-height: 1;
+  text-transform: none;
+  text-shadow: none;
+  font-weight: bold;
+  line-height: 1em;
   font-style: normal;
   text-align: center;
   text-decoration: none;
+  border-radius: 0.28571429rem;
+  box-shadow: 0px 0px 0px 1px transparent inset, 0px 0em 0px 0px rgba(34, 36, 38, 0.15) inset;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  -webkit-transition: opacity 0.1s ease, background-color 0.1s ease, color 0.1s ease, box-shadow 0.1s ease, background 0.1s ease;
   transition: opacity 0.1s ease, background-color 0.1s ease, color 0.1s ease, box-shadow 0.1s ease, background 0.1s ease;
   will-change: "";
   -webkit-tap-highlight-color: transparent;
   font-size: 1rem;
   background: transparent none !important;
-  font-weight: 400;
+  color: rgba(0, 0, 0, 0.6) !important;
+  font-weight: normal;
   border-radius: 0.28571429rem;
   text-transform: none;
   text-shadow: none !important;
-  box-shadow: 0 0 0 1px #21BA45 inset !important;
+  box-shadow: 0px 0px 0px 1px rgba(34, 36, 38, 0.15) inset;
+  box-shadow: 0px 0px 0px 1px #21BA45 inset !important;
   color: #21BA45 !important;
 }
 
@@ -432,7 +444,7 @@ i.zbs-hide-longdesc {
 
 #zbs-company-panel #zbs-company-view-vitals-contacts .zbs-default-avatar {
   font-size: 1em !important;
-  margin: 0 0.75em 0 0 !important;
+  margin: 0em 0.75em 0em 0em !important;
 }
 
 .zbs-last-item .zbs-timeline-content {
@@ -440,7 +452,7 @@ i.zbs-hide-longdesc {
 }
 
 .zbs-social-buttons a {
-  color: #fff;
+  color: white;
 }
 
 .zbs-social-buttons .zbs-social-acc {
@@ -450,8 +462,8 @@ i.zbs-hide-longdesc {
 }
 
 .zbs-social-buttons .icon {
-  margin: 0 !important;
-  color: #fff;
+  margin: 0px !important;
+  color: white;
   font-size: 14px;
 }
 
@@ -464,9 +476,15 @@ i.zbs-hide-longdesc {
   display: none !important;
 }
 
+.zbs-view-card .zbs-sentence {
+  padding-left: 0px;
+  color: #000;
+  margin-top: 5px;
+  font-size: 14px;
+}
+
 .zbs-sentence {
   line-height: 21px;
-  width: 80%;
 }
 
 .zbs-contact-owner {
@@ -491,6 +509,10 @@ i.zbs-hide-longdesc {
 .zbs-mini-tag {
   margin-top: 10px !important;
   margin-right: 10px !important;
+}
+
+.zbs-sentence {
+  width: 80%;
 }
 
 #jpcrm-pinned-logs-header {
