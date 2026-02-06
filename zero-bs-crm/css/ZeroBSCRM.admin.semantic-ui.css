@@ -10,11 +10,15 @@
  * Jetpack CRM
  * https://jetpackcrm.com
  */
-.wp-core-ui .button, .wp-core-ui .button-primary, .wp-core-ui .button-secondary {
+.wp-core-ui .button,
+.wp-core-ui .button-primary,
+.wp-core-ui .button-secondary {
   height: auto;
 }
 
-#adminmenu ul li, #adminmenu ul li a, #adminmenu div {
+#adminmenu ul li,
+#adminmenu ul li a,
+#adminmenu div {
   font-family: sans-serif;
 }
 
@@ -24,7 +28,8 @@
   margin-top: 2em;
 }
 
-.quicktags.icon, .search.icon {
+.quicktags.icon,
+.search.icon {
   background-color: transparent !important;
 }
 
@@ -32,7 +37,8 @@
   padding-top: 0 !important;
 }
 
-ul#adminmenu a.wp-has-current-submenu::after, ul#adminmenu > li.current > a.current::after {
+ul#adminmenu a.wp-has-current-submenu::after,
+ul#adminmenu > li.current > a.current::after {
   border-right-color: none !important;
 }
 
@@ -83,7 +89,9 @@ div [class*="right floated"] {
   margin-right: 0.25em;
 }
 
-.button-primary.right, .button-secondary.right, .button.right {
+.button-primary.right,
+.button-secondary.right,
+.button.right {
   float: none;
 }
 
@@ -124,7 +132,8 @@ i.alternate {
   height: auto;
 }
 
-.ui[class*="right labeled"].input input, .ui.fluid.input > input {
+.ui[class*="right labeled"].input input,
+.ui.fluid.input > input {
   height: auto !important;
 }
 
@@ -133,7 +142,8 @@ i.alternate {
     padding: 6px 12px !important;
     line-height: 1.42857 !important;
 } */
-/* stylelint-disable-next-line no-invalid-position-at-import-rule -- this is an intentional override */
+/* stylelint-disable-next-line no-invalid-position-at-import-rule
+-- this is an intentional override */
 /*!
  * Jetpack CRM: Modal style overrides
  */
@@ -141,7 +151,8 @@ i.alternate {
   z-index: 999999;
 }
 
-.ui.modals.page .modal, .ui.modals.page .ui.modal {
+.ui.modals.page .modal,
+.ui.modals.page .ui.modal {
   /* max-width: 500px; */
   max-width: 1400px !important;
   padding: 0 !important;
@@ -195,17 +206,17 @@ i.alternate {
 .ui.modals.page .jpcrm-modal-body .jpcrm-modal-illustration img {
   /*
 
-  original:
-  max-width: 1094px;
-  max-height: 1029px;
+      original:
+      max-width: 1094px;
+      max-height: 1029px;
 
-  1/2
-  max-width: 515px;
-  max-height: 515px;
+      1/2
+      max-width: 515px;
+      max-height: 515px;
 
-  40%
+      40%
 
-  */
+      */
   max-width: 438px;
   max-height: 412px;
   vertical-align: middle;
@@ -216,7 +227,7 @@ i.alternate {
   position: fixed;
   bottom: 0;
   left: 0;
-  background-color: #F9F9F6;
+  background-color: #f9f9f6;
   padding-top: 50px;
   padding-bottom: 50px;
 }
@@ -279,7 +290,6 @@ i.alternate {
   overflow-x: hidden;
 }
 
-/* Fix an apparent bug in Semantic UI CSS, which had the width larger than the screen min-width */
 @media only screen and (min-width: 768px) and (max-width: 1199px) {
   #jpcrm-first-use-dash.ui.large.modal {
     height: 720px;
@@ -417,12 +427,13 @@ div.hopscotch-bubble.tour-zbs-welcome-tour {
   left: auto !important;
 }
 
-.ui.inverted.menu .active.item, .ui.inverted.menu .active.item:hover {
+.ui.inverted.menu .active.item,
+.ui.inverted.menu .active.item:hover {
   color: #000 !important;
 }
 
 .ui.button.white {
-  background: #FFF !important;
+  background: #fff !important;
   border: 1px solid #000 !important;
   color: #000 !important;
 }
@@ -434,7 +445,7 @@ div.hopscotch-bubble.tour-zbs-welcome-tour {
 
 .ui.button.woopink {
   background: #674399 !important;
-  color: #FFF !important;
+  color: #fff !important;
   border: 0 !important;
 }
 

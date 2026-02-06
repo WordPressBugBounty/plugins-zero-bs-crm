@@ -100,7 +100,7 @@ class Woo_Sync_Background_Sync_Job {
 		}
 
 		// good to go?
-		if ( empty( $this->site_key ) || !is_array( $this->site_info ) ){
+		if ( ! is_array( $this->site_info ) ) {
 
 			return false;
 
@@ -523,7 +523,7 @@ class Woo_Sync_Background_Sync_Job {
 			// error if X-WP-TotalPages header doesn't exist
 			if ( !isset( $lc_response_headers['x-wp-totalpages'] ) ) {
 
-				echo json_encode(
+				wp_send_json(
 					array(
 						'status'               => 'error',
 						'status_short_text'    => 'woo_api_missing_headers',
@@ -533,7 +533,6 @@ class Woo_Sync_Background_Sync_Job {
 						'percentage_completed' => 0,
 					)
 				);
-				exit( 0 );
 			}
 
 			// cache values
@@ -612,20 +611,6 @@ class Woo_Sync_Background_Sync_Job {
 
 			$this->debug( 'Sync Failed in `import_orders_from_api()`, WooCommerce REST API error: ' . $e->getMessage() );
 
-			/* 
-			echo json_encode(
-				array(
-
-					'status'               => 'error',
-					'status_short_text'    => 'woo_client_error',
-					'status_long_text'     => $this->woosync()->process_error( $e->getMessage() ),
-					'page_no'              => $page_no,
-					'orders_imported'      => 0,
-					'percentage_completed' => 0,
-
-				)
-			); */
-
 			// log connection error (3x = auto-pause)
 			$this->log_connection_error();
 
@@ -643,21 +628,6 @@ class Woo_Sync_Background_Sync_Job {
 			}
 
 			$this->debug( 'Sync Failed in `import_orders_from_api()` due to missing settings against `' . $this->site_key . '` (could not, therefore, load WooCommerce API Connection): ' . $e->getMessage() . $missing_string );
-
-			/* 
-			echo json_encode(
-				array(
-
-					'status'               => 'error',
-					'status_short_text'    => 'woo_client_error',
-					'status_long_text'     => $this->woosync()->process_error( $e->getMessage() ),
-					'page_no'              => $page_no,
-					'orders_imported'      => 0,
-					'percentage_completed' => 0,
-
-				)
-			);
-			*/
 
 			// log connection error (3x = auto-pause)
 			$this->log_connection_error();
@@ -1261,8 +1231,8 @@ class Woo_Sync_Background_Sync_Job {
 						// name
 						$tax_label === $tax_rate_detail['name']
 	        			&&
-	        			// rate
-	        			$tax_rate == $tax_rate_detail['rate']
+						// rate - compare with full precision to preserve accuracy
+						(float) $tax_rate === (float) $tax_rate_detail['rate']
 	        			
 	        			){
 
@@ -1306,34 +1276,31 @@ class Woo_Sync_Background_Sync_Job {
 
         // /=== Tax
 
-	    // ==== Contact
+		// ==== Contact
 
-	    // Always use contact email, not billing email:
-	    // We've hit issues based on adding a Jetpack CRM contact based on billing email if they have a WP user attached
-	    // with a different email. The $order_data['customer_id'] will = 0 for guest or +tive for users. This way we will always
-	    // store the contact against the contact email (and not the billing email)
-	    $contact_email = '';
-	    $billing_email = '';
+		// Always use contact email, not billing email:
+		// We've hit issues based on adding a Jetpack CRM contact based on billing email if they have a WP user attached
+		// with a different email. The $order_data['customer_id'] will = 0 for guest or +tive for users. This way we will always
+		// store the contact against the contact email (and not the billing email)
+		$contact_email = '';
+		$billing_email = '';
 
-	    if ( isset( $order_data['customer_id']) && $order_data['customer_id'] > 0 ) {
-				// then we have an existing user. Get the WP email
-				$user          = get_user_by( 'id', $order_data['customer_id'] );
+		if ( isset( $order_data['customer_id'] ) && $order_data['customer_id'] > 0 ) {
+			// then we have an existing user. Get the WP email
+				$user = get_user_by( 'id', $order_data['customer_id'] );
+			if ( $user ) {
 				$contact_email = $user->user_email;
-				if ( isset($order_data['billing']['email'] ) ) {
-					$billing_email = $order_data['billing']['email'];
-				}
+			}
+			if ( isset( $order_data['billing']['email'] ) ) {
+				$billing_email = $order_data['billing']['email'];
+			}
 
-				// pass WP ID to contact
-				$data['contact']['wpid'] = $order_data['customer_id'];
-
-	    } else {
-
-	        if ( isset( $order_data['billing']['email'] ) ) {
-	            $billing_email = $order_data['billing']['email'];
-	            $contact_email = $billing_email;
-	        }
-
-	    }
+			// pass WP ID to contact
+			$data['contact']['wpid'] = $order_data['customer_id'];
+		} elseif ( isset( $order_data['billing']['email'] ) ) {
+			$billing_email = $order_data['billing']['email'];
+			$contact_email = $billing_email;
+		}
 
 		// we only add a contact whom has an email
 		if ( !empty( $contact_email ) ) {
@@ -1956,8 +1923,8 @@ class Woo_Sync_Background_Sync_Job {
 			if ( isset( $shipping_tax_id ) && ! empty( $shipping_tax_id ) ) {
 				$data['invoice']['shipping_taxes'] = $shipping_tax_id;
 			}
-			if ( isset( $data['tax'] ) && isset( $order_data['discount_tax'] ) ) {
-				$data['tax'] -= $order_data['discount_tax'];
+			if ( isset( $data['invoice']['tax'] ) && isset( $order_data['discount_tax'] ) ) {
+				$data['invoice']['tax'] -= $order_data['discount_tax'];
 			}
 
 			if ( is_array( $extra_meta ) && count( $extra_meta ) > 0 ) {

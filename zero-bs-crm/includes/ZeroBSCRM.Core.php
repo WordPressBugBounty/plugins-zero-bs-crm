@@ -24,7 +24,7 @@ final class ZeroBSCRM {
 	 *
 	 * @var string
 	 */
-	const VERSION = '6.6.1';
+	const VERSION = '6.7.2';
 
 	/**
 	 * Jetpack CRM version (used in various extensions as of January 2025).
@@ -338,7 +338,7 @@ final class ZeroBSCRM {
 	public $encryption = null;
 
 	/**
-	 * Included Array (means we can not 'reinclude' stripe etc.)
+	 * Included Array (means we cannot 'reinclude' stripe etc.)
 	 */
 	public $included = array(
 
@@ -2425,7 +2425,7 @@ final class ZeroBSCRM {
 	/**
 	 * Get Globalised ZBS Vars
 	 *
-	 * @return str/int/bool
+	 * @return string|int|bool
 	 */
 	public function zbsvar( $key = '' ) {
 
@@ -2578,7 +2578,7 @@ final class ZeroBSCRM {
 
 		$currentUserID = get_current_user_id();
 
-		if ( ! $pageKey || empty( $pageKey ) ) {
+		if ( ! $pageKey ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
 
 			// actually just use a global for now :) - so just set global $zbs->pageKey on page :)
 			$pageKeyCheck = apply_filters( 'zbs_pagekey', $this->pageKey );
