@@ -1,6 +1,5 @@
 <?php
 /*
-!
  * Admin Page: Settings: Client Portal settings
  */
 
@@ -40,6 +39,8 @@ if ( isset( $_POST['editwplf'] ) && zeroBSCRM_isZBSAdminOrAdmin() ) {
 	// check nonce
 	check_admin_referer( 'zbs-update-settings-clients' );
 
+	$updatedSettings = array();
+
 	$updatedSettings['portalusers'] = 0;
 	if ( isset( $_POST['wpzbscrm_portalusers'] ) && ! empty( $_POST['wpzbscrm_portalusers'] ) ) {
 		$updatedSettings['portalusers'] = 1;
@@ -47,7 +48,7 @@ if ( isset( $_POST['editwplf'] ) && zeroBSCRM_isZBSAdminOrAdmin() ) {
 
 	$updatedSettings['portalpage'] = 0;
 	if ( isset( $_POST['wpzbscrm_portalpage'] ) && ! empty( $_POST['wpzbscrm_portalpage'] ) ) {
-		$updatedSettings['portalpage'] = (int) sanitize_text_field( $_POST['wpzbscrm_portalpage'] );
+		$updatedSettings['portalpage'] = (int) $_POST['wpzbscrm_portalpage'];
 	}
 
 	// any extra roles to assign?
@@ -79,14 +80,14 @@ if ( isset( $_POST['editwplf'] ) && zeroBSCRM_isZBSAdminOrAdmin() ) {
 	$zbsStatusSettingPotential = array();
 	$zbsStatuses               = explode( ',', $zbsStatusStr );
 
-		foreach ( $zbsStatuses as $statusStr ) {
+	foreach ( $zbsStatuses as $statusStr ) {
 
-			// permify
-			$statusKey = strtolower( str_replace( ' ', '_', str_replace( ':', '_', $statusStr ) ) );
+		// permify
+		$statusKey = strtolower( str_replace( ' ', '_', str_replace( ':', '_', $statusStr ) ) );
 
-			// check post
-			if ( isset( $_POST[ 'wpzbscrm_portaluser_group_' . $statusKey ] ) ) {
-				$zbsStatusSettingPotential[] = $statusKey;
+		// check post
+		if ( isset( $_POST[ 'wpzbscrm_portaluser_group_' . $statusKey ] ) ) {
+			$zbsStatusSettingPotential[] = $statusKey;
 		}
 	}
 
@@ -114,7 +115,7 @@ if ( isset( $_POST['editwplf'] ) && zeroBSCRM_isZBSAdminOrAdmin() ) {
 	// } 2.86 ms
 	$updatedSettings['portalpage'] = 0;
 	if ( isset( $_POST['wpzbscrm_portalpage'] ) && ! empty( $_POST['wpzbscrm_portalpage'] ) ) {
-		$updatedSettings['portalpage'] = (int) sanitize_text_field( $_POST['wpzbscrm_portalpage'] );
+		$updatedSettings['portalpage'] = (int) $_POST['wpzbscrm_portalpage'];
 	}
 
 	// } 3.0 - Easy Access Links (hash urls)
@@ -145,7 +146,7 @@ if ( isset( $_POST['editwplf'] ) && zeroBSCRM_isZBSAdminOrAdmin() ) {
 }
 
 ##WLREMOVE
-if ( current_user_can( 'admin_zerobs_manage_options' ) && ! zeroBSCRM_isExtensionInstalled( 'clientportalpro' ) ) {
+if ( jpcrm_perms_manage_options() && ! zeroBSCRM_isExtensionInstalled( 'clientportalpro' ) ) {
 
 	// upsell button
 	?>

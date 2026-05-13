@@ -1,6 +1,5 @@
 <?php
 /*
-!
  * Jetpack CRM
  * https://jetpackcrm.com
  * V1.20
@@ -72,7 +71,7 @@ function zeroBSCRM_improvedPostMsgsCustomers( $messages ) {
 		3  => __( 'Contact field deleted.', 'zero-bs-crm' ),
 		4  => __( 'Contact updated.', 'zero-bs-crm' ),
 		/* translators: %s: date and time of the revision */
-		5  => isset( $_GET['revision'] ) ? sprintf( __( 'Contact restored to revision from %s', 'zero-bs-crm' ), wp_post_revision_title( (int) sanitize_text_field( $_GET['revision'] ), false ) ) : false, // phpcs:ignore WordPress.Security.NonceVerification.Recommended,WordPress.Security.ValidatedSanitizedInput.MissingUnslash
+		5  => isset( $_GET['revision'] ) ? sprintf( __( 'Contact restored to revision from %s', 'zero-bs-crm' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false, // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		6  => sprintf(
 			/* Translators: %s: link to the main Contacts page */
 			__( 'Contact added. <a href="%s">Back to Contacts</a>', 'zero-bs-crm' ),
@@ -240,7 +239,7 @@ function zbs_color_grabber() {
 	// } Information here to get the colors
 	global $_wp_admin_css_colors, $zbsadmincolors;
 	$current_color = get_user_option( 'admin_color' );
-	echo '<script type="text/javascript">var zbsJS_admcolours = ' . json_encode( $_wp_admin_css_colors[ $current_color ] ) . ';</script>';
+	echo '<script type="text/javascript">var zbsJS_admcolours = ' . wp_json_encode( $_wp_admin_css_colors[ $current_color ], JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP ) . ';</script>';
 	echo '<script type="text/javascript">var zbsJS_unpaid = "' . esc_html__( 'unpaid', 'zero-bs-crm' ) . '";</script>';
 	$zbsadmincolors = $_wp_admin_css_colors[ $current_color ]->colors;
 	?>
@@ -261,7 +260,7 @@ function zbs_color_grabber() {
 			background-color: <?php echo esc_html( $zbsadmincolors[1] ); ?> !important;
 		}
 		.zerobs_quote{
-			background-color: <?php echo esc_html( $zbsadmincolors[3] ); ?> !important;
+			background-color: <?php echo esc_html( $zbsadmincolors[3] ?? $zbsadmincolors[2] ); ?> !important;
 		}
 		.graph-box .view-me, .rev{
 			color: <?php echo esc_html( $zbsadmincolors[0] ); ?> !important;
@@ -322,7 +321,7 @@ function zeroBSCRM_catchDashboard() {
 			// $screen = get_current_screen();
 
 			// } Does:
-			global $pagenow,$zbs;
+			global $pagenow, $zbs;
 
 			if ( $pagenow == 'profile.php' || $pagenow == 'index.php' ) {// $screen->base == 'dashboard' ) {
 

@@ -10,7 +10,7 @@
 /* eslint-disable jsdoc/require-param-type */
 /* eslint-disable jsdoc/require-param-description */
 /* eslint-disable jsdoc/require-description */
-/* global zbsCustomTagInitFunc, ajaxurl, swal, zbscrm_JS_addDirty */
+/* global zbsCustomTagInitFunc, ajaxurl, swal, zbscrm_JS_addDirty, jpcrm */
 
 /**
  * Build tags
@@ -58,14 +58,16 @@ function zeroBSCRMJS_buildTagsInput() {
  * @param tagID
  */
 function zbsJS_drawTag( tagStr, tagID ) {
-	const html =
-		'<div class="ui small basic label black" data-id="' +
-		tagID +
-		'"><i class="window close icon zbs-remove-tag"></i> <span>' +
-		tagStr +
-		'</span></div>';
-
-	jQuery( '#zbs-tags-wrap' ).append( html );
+	document
+		.getElementById( 'zbs-tags-wrap' )
+		.insertAdjacentHTML(
+			'beforeend',
+			'<div class="ui small basic label black" data-id="' +
+				jpcrm.esc_attr( tagID ) +
+				'"><i class="window close icon zbs-remove-tag"></i> <span>' +
+				jpcrm.esc_html( tagStr ) +
+				'</span></div>'
+		);
 
 	setTimeout( function () {
 		zbsJS_bindTags();
@@ -208,18 +210,25 @@ function zbsJS_bindTagManagerInit() {
 						jQuery( '#zbs-add-tag-value' ).val( '' );
 
 						// add to table
-						const tagTR =
-							'<tr><td><span class="ui large label">' +
-							ltag +
-							'</span></td><td>' +
-							newTagSlug +
-							'</td><td class="center aligned">0</td><td class="center aligned"><button type="button" class="ui mini button black zbs-delete-tag" data-tagid="' +
-							newTagID +
-							'"><i class="trash alternate icon"></i> ' +
-							window.zbsTagListLang.delete +
-							'</button></td></tr>';
-						jQuery( '#zbs-tag-manager tbody' ).append( tagTR );
-
+						document
+							.querySelector( '#zbs-tag-manager tbody' )
+							.insertAdjacentHTML(
+								'beforeend',
+								'<tr>' +
+									'<td><span class="ui large label">' +
+									jpcrm.esc_html( ltag ) +
+									'</span></td>' +
+									'<td>' +
+									jpcrm.esc_html( newTagSlug ) +
+									'</td>' +
+									'<td class="center aligned">0</td>' +
+									'<td class="center aligned"><button type="button" class="ui mini button black zbs-delete-tag" data-tagid="' +
+									jpcrm.esc_attr( newTagID ) +
+									'"><i class="trash alternate icon"></i> ' +
+									jpcrm.esc_html( window.zbsTagListLang.delete ) +
+									'</button></td>' +
+									'</tr>'
+							);
 						// rebind
 						setTimeout( function () {
 							zeroBSCRMJS_tagManager_bindTagEditButtons();
@@ -319,14 +328,14 @@ function zeroBSCRMJS_tagManager_bindTagEditButtons() {
 
 			if ( tagID > 0 ) {
 				swal( {
-					title: window.zbsTagListLang.deleteswaltitle,
+					titleText: window.zbsTagListLang.deleteswaltitle,
 					text: window.zbsTagListLang.deleteswaltext,
 					type: 'warning',
 					showCancelButton: true,
 					confirmButtonColor: '#000',
 					cancelButtonColor: '#fff',
 					cancelButtonText: '<span style="color: #000">Cancel</span>',
-					confirmButtonText: window.zbsTagListLang.deleteswalconfirm,
+					confirmButtonText: jpcrm.esc_html( window.zbsTagListLang.deleteswalconfirm ),
 					allowOutsideClick: false,
 				} ).then( function ( result ) {
 					if ( result.value ) {
@@ -335,7 +344,6 @@ function zeroBSCRMJS_tagManager_bindTagEditButtons() {
 
 						const data = {
 							action: 'zbs_delete_tag',
-							// don't need, is unique id 'objtype': <?php echo $this->typeInt; ?>,
 							tagid: lTagID,
 							sec: window.zbscrmjs_secToken,
 						};
@@ -348,21 +356,21 @@ function zeroBSCRMJS_tagManager_bindTagEditButtons() {
 							dataType: 'json',
 							timeout: 20000,
 							success: function () {
-								swal(
-									window.zbsTagListLang.tagdeleted,
-									window.zbsTagListLang.tagremoved,
-									'success'
-								);
+								swal( {
+									titleText: window.zbsTagListLang.tagdeleted,
+									text: window.zbsTagListLang.tagremoved,
+									type: 'success',
+								} );
 
 								// reload page
 								location.reload();
 							},
 							error: function () {
-								swal(
-									window.zbsTagListLang.tagnotdeleted,
-									window.zbsTagListLang.tagnotremoved,
-									'warning'
-								);
+								swal( {
+									titleText: window.zbsTagListLang.tagnotdeleted,
+									text: window.zbsTagListLang.tagnotremoved,
+									type: 'warning',
+								} );
 							},
 						} );
 					}

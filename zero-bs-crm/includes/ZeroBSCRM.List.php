@@ -1,5 +1,5 @@
-<?php 
-/*!
+<?php
+/*
  * Jetpack CRM
  * https://jetpackcrm.com
  * V1.0
@@ -11,24 +11,24 @@
 
 defined( 'ZEROBSCRM_PATH' ) || exit( 0 );
 
-class zeroBSCRM_list{
+class zeroBSCRM_list {
 
-    private $objType = false;
-    private $objTypeID = false; // Will be set in v3.0+ - is autogenned from $objType ^^
-    private $singular = false;
-    private $plural = false;
-    private $tag = false;
-    private $postType = false;
-    private $postPage = false;
-    private $langLabels = false;
-    private $bulkActions = false;
-    private $sortables = false;
-    private $unsortables = false;
-    private $extraBoxes = '';
-    private $extraJS = '';
-    private $messages = false;
-        #} All messages need params to match this func: 
-        #} ... zeroBSCRM_UI2_messageHTML($msgClass='',$msgHeader='',$msg='',$iconClass='',$id='')
+	private $objType     = false;
+	private $objTypeID   = false; // Will be set in v3.0+ - is autogenned from $objType ^^
+	private $singular    = false;
+	private $plural      = false;
+	private $tag         = false;
+	private $postType    = false;
+	private $postPage    = false;
+	private $langLabels  = false;
+	private $bulkActions = false;
+	private $sortables   = false;
+	private $unsortables = false;
+	private $extraBoxes  = '';
+	private $extraJS     = '';
+	private $messages    = false;
+		#} All messages need params to match this func:
+		#} ... zeroBSCRM_UI2_messageHTML($msgClass='',$msgHeader='',$msg='',$iconClass='',$id='')
 
 	/**
 	 * Construct function
@@ -119,68 +119,78 @@ class zeroBSCRM_list{
 		}
 	}
 
-    public function drawListView(){
+	public function drawListView() {
 
-        if (empty($this->objType) || empty($this->postType) || empty($this->postPage) || empty($this->singular) || empty($this->plural)){
+		if ( empty( $this->objType ) || empty( $this->postType ) || empty( $this->postPage ) || empty( $this->singular ) || empty( $this->plural ) ) {
 
-            return 'Error.';
-        }
+			return 'Error.';
+		}
 
-        global $zbs;
+		global $zbs;
 
+		#} Retrieve all passed filters (tags, etc.)
+		$listViewFilters = array(); if ( isset( $_GET['zbs_tag'] ) ) {
 
-        #} Retrieve all passed filters (tags, etc.)
-        $listViewFilters = array(); if (isset($_GET['zbs_tag'])){
-
-            $possibleTag = (int)sanitize_text_field($_GET['zbs_tag']);
+			$possibleTag = (int) sanitize_text_field( $_GET['zbs_tag'] );
 
 			$possibleTagObj = $zbs->DAL->getTag( $possibleTag, array( 'objtype' => $this->objTypeID ) ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase,WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 
 			if ( isset( $possibleTagObj['id'] ) ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
 				$listViewFilters['tags'] = array( $possibleTagObj ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
 			}
-        }
-        if (isset($_GET['s']) && !empty($_GET['s'])){
+		}
+		if ( isset( $_GET['s'] ) && ! empty( $_GET['s'] ) ) {
 
-            $listViewFilters['s'] = sanitize_text_field($_GET['s']);
+			$listViewFilters['s'] = sanitize_text_field( $_GET['s'] );
 
-        }
-        if (isset($_GET['quickfilters']) && !empty($_GET['quickfilters'])){
+		}
+		if ( isset( $_GET['quickfilters'] ) && ! empty( $_GET['quickfilters'] ) ) {
 
-            // set it whether legit? what'll this do on error urls people make up?
-            // v2.2+ hone this + add multi-filter
-            // v2.99.5 - ALWAYS lowercase :) 
+			// set it whether legit? what'll this do on error urls people make up?
+			// v2.2+ hone this + add multi-filter
+			// v2.99.5 - ALWAYS lowercase :)
 					$possible_quick_filters          = sanitize_text_field( $_GET['quickfilters'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 					$listViewFilters['quickfilters'] = array( $possible_quick_filters ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
 
-        }
+		}
 
+		#} Paging
+		$currentPage = 1;
+		if ( isset( $_GET['paged'] ) ) {
+			$currentPage = (int) sanitize_text_field( $_GET['paged'] );
+		}
 
-        #} Paging
-        $currentPage = 1; if (isset($_GET['paged'])) $currentPage = (int)sanitize_text_field($_GET['paged']);
+		#} Sort
+		$sort = false;
+		if ( isset( $_GET['sort'] ) && ! empty( $_GET['sort'] ) ) {
+			$sort = sanitize_text_field( $_GET['sort'] );
+		}
+		$sortOrder = false;
+		if ( isset( $_GET['sortdirection'] ) && ( $_GET['sortdirection'] == 'asc' || $_GET['sortdirection'] == 'desc' ) ) {
+			$sortOrder = sanitize_text_field( $_GET['sortdirection'] );
+		}
 
-        #} Sort
-        $sort = false; if (isset($_GET['sort']) && !empty($_GET['sort'])) $sort = sanitize_text_field($_GET['sort']);
-        $sortOrder = false; if (isset($_GET['sortdirection']) && ($_GET['sortdirection'] == 'asc' || $_GET['sortdirection'] == 'desc')) $sortOrder = sanitize_text_field($_GET['sortdirection']);
+		# SCAFFOLDING - TO BE RE-ARRANGED :)
+		#} NOTE SECOND FIELD IN THESE ARE NOW IGNORED!?!? (30/7)
 
+			#} Centralised into ZeroBSCRM.List.Columns.php 30/7/17
+			$columnVar      = 'zeroBSCRM_columns_' . $this->objType; // $zeroBSCRM_columns_transaction;
+			$defaultColumns = $GLOBALS[ $columnVar ]['default'];
+			$allColumns     = $GLOBALS[ $columnVar ]['all'];
 
-        # SCAFFOLDING - TO BE RE-ARRANGED :) 
-        #} NOTE SECOND FIELD IN THESE ARE NOW IGNORED!?!? (30/7)
+		global $zbs;
+		$usingOwnership = $zbs->settings->get( 'perusercustomers' );
 
-            #} Centralised into ZeroBSCRM.List.Columns.php 30/7/17
-            $columnVar = 'zeroBSCRM_columns_'.$this->objType; //$zeroBSCRM_columns_transaction;
-            $defaultColumns = $GLOBALS[ $columnVar ]['default'];
-            $allColumns = $GLOBALS[ $columnVar ]['all'];
+		#} Retrieve columns settings
+		$customViews = $zbs->settings->get( 'customviews2' );
 
-
-        global $zbs;
-        $usingOwnership = $zbs->settings->get('perusercustomers');
-
-        #} Retrieve columns settings
-        $customViews = $zbs->settings->get('customviews2');
-
-        $currentColumns = false; if (isset($customViews) && isset($customViews[$this->objType])) $currentColumns = $customViews[$this->objType];
-        if ($currentColumns == false) $currentColumns = $defaultColumns;
+		$currentColumns = false;
+		if ( isset( $customViews ) && isset( $customViews[ $this->objType ] ) ) {
+			$currentColumns = $customViews[ $this->objType ];
+		}
+		if ( $currentColumns == false ) {
+			$currentColumns = $defaultColumns;
+		}
 
 		// add all columns to sortables :)
 		if ( is_array( $currentColumns ) ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
@@ -199,132 +209,145 @@ class zeroBSCRM_list{
 			$per_page = 20;
 		}
 
-        #} Refresh 2
-        ?>
+		#} Refresh 2
+		?>
 
-            <!-- title + edit ico -->
+			<!-- title + edit ico -->
 
-            <!-- col editor -->
+			<!-- col editor -->
 						<div id="zbs-list-col-editor" class="hidden">
 
-                <h4 class="ui horizontal divider header">
-                  <i class="list layout icon"></i>
-                  <?php echo esc_html( sprintf(__('%s List View Options',"zero-bs-crm"),$this->singular) ); ?>
-                </h4>
-    
-                <?php if (zeroBSCRM_isZBSAdminOrAdmin()){ // only admin can manage columns (globally) ?>
-                <div id="zbs-list-view-options-wrap" class="ui divided grid">
+				<h4 class="ui horizontal divider header">
+					<i class="list layout icon"></i>
+					<?php echo esc_html( sprintf( __( '%s List View Options', 'zero-bs-crm' ), $this->singular ) ); ?>
+				</h4>
+	
+				<?php if ( zeroBSCRM_isZBSAdminOrAdmin() ) { // only admin can manage columns (globally) ?>
+				<div id="zbs-list-view-options-wrap" class="ui divided grid">
 
-                  <div class="ui active inverted dimmer hidden" id="zbs-col-manager-loading" style="display:none">
-                    <div class="ui text loader"><?php esc_html_e('Loading',"zero-bs-crm");?></div>
-                  </div>
+					<div class="ui active inverted dimmer hidden" id="zbs-col-manager-loading" style="display:none">
+					<div class="ui text loader"><?php esc_html_e( 'Loading', 'zero-bs-crm' ); ?></div>
+					</div>
 
-                    <div class="row">
-                        <div class="ten wide column">
+					<div class="row">
+						<div class="ten wide column">
 
-                            <h4><?php esc_html_e('Current Columns',"zero-bs-crm"); ?></h4>
-
-
-                            <div id="zbs-column-manager-current-cols" class="ui segment zbs-column-manager-connected"> 
-                                <?php if (is_array($currentColumns)) foreach ($currentColumns as $colKey => $col){
-
-                                    ?><div id="zbs-column-manager-col-<?php echo esc_attr( $colKey ); ?>" class="ui compact tiny basic button zbs-column-manager-col" data-key="<?php echo esc_attr( $colKey ); ?>"><?php esc_html_e($col[0],"zero-bs-crm"); ?></div><?php
-
-                                } ?>
-                            </div>
-
-                        </div>
-                        <div class="six wide column">
-
-                            <h4><?php esc_html_e('Available Columns',"zero-bs-crm"); ?></h4>
-
-                            <div id="zbs-column-manager-available-cols" class="ui segment"> 
-                                <?php if (is_array($allColumns)) {
-
-                                    // here we split them into groups, where there is. This allows a seperation of 'base fields' and compute fields (e.g. total value)
-                                    $allColumnsSorted = array('basefields'=>array(),'other'=>array());
-                                    $hasMultiColumnGroups = 0;
-
-                                    foreach ($allColumns as $colKey => $col){
-
-                                        if (!array_key_exists($colKey, $currentColumns)){
-
-                                            // split em up
-                                            if (isset($col[2]) && $col[2] == 'basefield'){
-                                                $allColumnsSorted['basefields'][$colKey] = $col;
-                                                $hasMultiColumnGroups = true;
-                                            } else
-                                                $allColumnsSorted['other'][$colKey] = $col;
-
-                                        }
-
-                                    }
-
-                                    // now we put them out sequentially
-                                    $colGroupCount = 0;
-                                    foreach ($allColumnsSorted as $sortGroup => $columns){
-
-                                        if (is_array($columns) && count($columns) > 0){
-
-                                            // put out a grouper + title
-                                            echo '<div>';
-
-                                            if ($hasMultiColumnGroups){
-
-                                                // header - <i class="list layout icon"></i>
-
-                                                $title = ''; $extraStyles = '';
-                                                switch ($sortGroup){
-
-                                                    case 'basefields':
-                                                        $title = __('Fields','zero-bs-crm');
-                                                        break;
-
-                                                    default: 
-                                                        $title = __('Extra Fields','zero-bs-crm');
-                                                        break;
-                                                }
-
-                                                if ($colGroupCount > 0) $extraStyles = 'margin-top: 1em;';
-
-                                                if (!empty($title)) echo '<h4 class="ui horizontal divider header" style="'. esc_attr( $extraStyles ) .'">'. esc_html( $title ) .'</h4>';
-                                            }
-
-                                            echo '<div class="zbs-column-manager-connected">';
-
-                                            foreach ($columns as $colKey => $col){
-
-                                                if (!array_key_exists($colKey, $currentColumns)){
-                                                    
-                                                    ?><div id="zbs-column-manager-col-<?php echo esc_attr( $colKey ); ?>" class="ui compact tiny basic button zbs-column-manager-col" data-key="<?php echo esc_attr( $colKey ); ?>"><?php esc_html_e($col[0],"zero-bs-crm"); ?></div><?php
-
-                                                }
-
-                                            }
-
-                                            echo '</div></div>';
-
-                                            $colGroupCount++;
-                                        }
-
-                                    }
-
-                                    // if NONE output, we need to always have smt to drop to, so put empty:
-                                    if ($colGroupCount == 0){
-                                        echo '<div class="zbs-column-manager-connected">';
-                                        echo '</div>';
-                                    }
+							<h4><?php esc_html_e( 'Current Columns', 'zero-bs-crm' ); ?></h4>
 
 
-                                } ?>
-                            </div>
+							<div id="zbs-column-manager-current-cols" class="ui segment zbs-column-manager-connected"> 
+								<?php
+								if ( is_array( $currentColumns ) ) {
+									foreach ( $currentColumns as $colKey => $col ) {
 
-                        </div>
-                    </div>
-                </div>
+										?>
+									<div id="zbs-column-manager-col-<?php echo esc_attr( $colKey ); ?>" class="ui compact tiny basic button zbs-column-manager-col" data-key="<?php echo esc_attr( $colKey ); ?>"><?php esc_html_e( $col[0], 'zero-bs-crm' ); ?></div>
+										<?php
 
-                <div class="ui divider"></div>
-                <?php } // if admin/can manage columns ?>
+									}
+								}
+								?>
+							</div>
+
+						</div>
+						<div class="six wide column">
+
+							<h4><?php esc_html_e( 'Available Columns', 'zero-bs-crm' ); ?></h4>
+
+							<div id="zbs-column-manager-available-cols" class="ui segment"> 
+								<?php
+								if ( is_array( $allColumns ) ) {
+
+									// here we split them into groups, where there is. This allows a seperation of 'base fields' and compute fields (e.g. total value)
+									$allColumnsSorted     = array(
+										'basefields' => array(),
+										'other'      => array(),
+									);
+									$hasMultiColumnGroups = 0;
+
+									foreach ( $allColumns as $colKey => $col ) {
+
+										if ( ! array_key_exists( $colKey, $currentColumns ) ) {
+
+											// split em up
+											if ( isset( $col[2] ) && $col[2] == 'basefield' ) {
+												$allColumnsSorted['basefields'][ $colKey ] = $col;
+												$hasMultiColumnGroups                      = true;
+											} else {
+												$allColumnsSorted['other'][ $colKey ] = $col;
+											}
+										}
+									}
+
+									// now we put them out sequentially
+									$colGroupCount = 0;
+									foreach ( $allColumnsSorted as $sortGroup => $columns ) {
+
+										if ( is_array( $columns ) && count( $columns ) > 0 ) {
+
+											// put out a grouper + title
+											echo '<div>';
+
+											if ( $hasMultiColumnGroups ) {
+
+												// header - <i class="list layout icon"></i>
+
+												$title       = '';
+												$extraStyles = '';
+												switch ( $sortGroup ) {
+
+													case 'basefields':
+														$title = __( 'Fields', 'zero-bs-crm' );
+														break;
+
+													default:
+														$title = __( 'Extra Fields', 'zero-bs-crm' );
+														break;
+												}
+
+												if ( $colGroupCount > 0 ) {
+													$extraStyles = 'margin-top: 1em;';
+												}
+
+												if ( ! empty( $title ) ) {
+													echo '<h4 class="ui horizontal divider header" style="' . esc_attr( $extraStyles ) . '">' . esc_html( $title ) . '</h4>';
+												}
+											}
+
+											echo '<div class="zbs-column-manager-connected">';
+
+											foreach ( $columns as $colKey => $col ) {
+
+												if ( ! array_key_exists( $colKey, $currentColumns ) ) {
+
+													?>
+													<div id="zbs-column-manager-col-<?php echo esc_attr( $colKey ); ?>" class="ui compact tiny basic button zbs-column-manager-col" data-key="<?php echo esc_attr( $colKey ); ?>"><?php esc_html_e( $col[0], 'zero-bs-crm' ); ?></div>
+													<?php
+
+												}
+											}
+
+											echo '</div></div>';
+
+											++$colGroupCount;
+										}
+									}
+
+									// if NONE output, we need to always have smt to drop to, so put empty:
+									if ( $colGroupCount == 0 ) {
+										echo '<div class="zbs-column-manager-connected">';
+										echo '</div>';
+									}
+								}
+								?>
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+				<div class="ui divider"></div>
+				<?php } // if admin/can manage columns ?>
 
 								<div id="zbs-list-options-base-wrap" class="ui grid">
 
@@ -350,7 +373,7 @@ class zeroBSCRM_list{
 								</div>
 
 
-            </div>
+			</div>
 
 			<div class="jpcrm-listview">
 				<?php
@@ -364,11 +387,31 @@ class zeroBSCRM_list{
 				<div id="zbs-list-warnings-wrap">
 					<?php
 					// Preloaded error messages
-					// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped,WordPress.WP.I18n.MissingTranslatorsComment,WordPress.WP.I18n.UnorderedPlaceholdersText
+					// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped,WordPress.WP.I18n.MissingTranslatorsComment
 					echo zeroBSCRM_UI2_messageHTML( 'warning hidden', sprintf( __( 'Error retrieving %s', 'zero-bs-crm' ), $this->plural ), sprintf( __( 'There has been a problem retrieving your %s. If this issue persists, please contact support.', 'zero-bs-crm' ), $this->plural ), 'disabled warning sign', 'zbsCantLoadData' );
 					echo zeroBSCRM_UI2_messageHTML( 'warning hidden', sprintf( __( 'Error updating columns %s', 'zero-bs-crm' ), $this->plural ), __( 'There has been a problem saving your column configuration. If this issue persists, please contact support.', 'zero-bs-crm' ), 'disabled warning sign', 'zbsCantSaveCols' );
 					echo zeroBSCRM_UI2_messageHTML( 'warning hidden', sprintf( __( 'Error updating columns %s', 'zero-bs-crm' ), $this->plural ), __( 'There has been a problem saving your filter button configuration. If this issue persists, please contact support.', 'zero-bs-crm' ), 'disabled warning sign', 'zbsCantSaveButtons' ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
-					echo zeroBSCRM_UI2_messageHTML( 'info hidden', sprintf( __( 'No %s Found', 'zero-bs-crm' ), $this->plural ), sprintf( __( 'There are no %s here. Do you want to <a href="%s">create one</a>?', 'zero-bs-crm' ), $this->plural, jpcrm_esc_link( 'create', -1, $this->postType ) ), 'disabled warning sign', 'zbsNoResults' ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+					$no_results_msg = sprintf( __( 'There are no %1$s here. Do you want to <a href="%2$s">create one</a>?', 'zero-bs-crm' ), $this->plural, jpcrm_esc_link( 'create', -1, $this->postType ) );
+					$doc_links      = array(
+						'transaction' => array(
+							'url'  => 'https://kb.jetpackcrm.com/knowledge-base/how-do-i-create-a-transaction/',
+							'text' => __( 'Learn more about <a href="%1$s" target="_blank">how to create a transaction</a>.', 'zero-bs-crm' ),
+						),
+						'invoice'     => array(
+							'url'  => 'https://kb.jetpackcrm.com/knowledge-base/how-to-use-the-invoice-builder/',
+							'text' => __( 'Learn more about <a href="%1$s" target="_blank">how to create an invoice</a>.', 'zero-bs-crm' ),
+						),
+						'quote'       => array(
+							'url'  => 'https://kb.jetpackcrm.com/knowledge-base/how-do-i-create-a-quote/',
+							'text' => __( 'Learn more about <a href="%1$s" target="_blank">how to create a quote</a>.', 'zero-bs-crm' ),
+						),
+					);
+					// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+					if ( isset( $doc_links[ $this->objType ] ) ) {
+						$link            = $doc_links[ $this->objType ];
+						$no_results_msg .= ' ' . sprintf( $link['text'], esc_url( $link['url'] ) );
+					}
+					echo zeroBSCRM_UI2_messageHTML( 'info hidden', sprintf( __( 'No %s Found', 'zero-bs-crm' ), $this->plural ), $no_results_msg, 'disabled warning sign', 'zbsNoResults' ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 
 					// any additional messages?
 					if ( isset( $this->messages ) && is_array( $this->messages ) && count( $this->messages ) > 0 ) {
@@ -377,7 +420,7 @@ class zeroBSCRM_list{
 							echo zeroBSCRM_UI2_messageHTML( $message[0], $message[1], $message[2], $message[3], $message[4] );
 						}
 					}
-					// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped,WordPress.WP.I18n.MissingTranslatorsComment,WordPress.WP.I18n.UnorderedPlaceholdersText
+					// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped,WordPress.WP.I18n.MissingTranslatorsComment
 					?>
 				</div>
 			</div>
@@ -396,190 +439,150 @@ class zeroBSCRM_list{
 
 			?>
 
-        <script type="text/javascript">
-					<?php
-					// phpcs:disable Squiz.PHP.EmbeddedPhp.ContentBeforeOpen
-					// phpcs:disable Squiz.PHP.EmbeddedPhp.ContentAfterEnd
-					?>
-            // expose log types (For columns)
-            var zbsLogTypes = <?php global $zeroBSCRM_logTypes; echo json_encode($zeroBSCRM_logTypes); ?>;
+		<?php // phpcs:disable Generic.WhiteSpace.ScopeIndent.IncorrectExact, Generic.Formatting.DisallowMultipleStatements.SameLine, Squiz.PHP.EmbeddedPhp -- mixed PHP/JS context
+		global $zeroBSCRM_logTypes;
+		?>
+		<script type="text/javascript">
+			// expose log types (For columns)
+			var zbsLogTypes = <?php echo wp_json_encode( $zeroBSCRM_logTypes, JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP ); ?>;
 
-            <?php
+			<?php
 
-            $allowinlineedits = ( zeroBSCRM_getSetting('allowinlineedits') == "1" );
-            $inlineEditStr = array();
-            $columns = array();
+			$allowinlineedits = ( zeroBSCRM_getSetting( 'allowinlineedits' ) == '1' );
+			$inlineEditStr    = array();
+			$columns          = array();
 
-            #} Current cols
-            if ( is_array( $currentColumns ) ) {
-	            foreach ( $currentColumns as $colKey => $col ) {
+			#} Current cols
+			if ( is_array( $currentColumns ) ) {
+				foreach ( $currentColumns as $colKey => $col ) {
 
-		            // set column title
-		            $column_title = __($col[0],"zero-bs-crm");
+					// set column title
+					$column_title = __( $col[0], 'zero-bs-crm' );
 
-		            // overrides
+					// overrides
 
-		            // Invoicing: Ref
-		            if ( $this->objType == 'invoice' && $colKey == 'ref' ) {
-			            $column_title = $zbs->settings->get('reflabel');
-		            }
+					// Invoicing: Ref
+					if ( $this->objType == 'invoice' && $colKey == 'ref' ) {
+						$column_title = $zbs->settings->get( 'reflabel' );
+					}
 
-		            // can column be inline edited?
-		            $inline = '-1';
-		            if ( isset( $allColumns[$colKey] ) && isset( $allColumns[$colKey]['editinline'] ) && $allColumns[$colKey]['editinline'] ) {
-			            $inline = '1';
-		            }
+					// can column be inline edited?
+					$inline = '-1';
+					if ( isset( $allColumns[ $colKey ] ) && isset( $allColumns[ $colKey ]['editinline'] ) && $allColumns[ $colKey ]['editinline'] ) {
+						$inline = '1';
+					}
 
-		            $columns[] = array(
-			            'namestr'  => esc_html( zeroBSCRM_slashOut($column_title,true) ),
-			            'fieldstr' => esc_html( zeroBSCRM_slashOut($colKey,true) ),
-			            'inline'   => (int) $inline,
-		            );
+					$columns[] = array(
+						'namestr'  => esc_html( zeroBSCRM_slashOut( $column_title, true ) ),
+						'fieldstr' => esc_html( zeroBSCRM_slashOut( $colKey, true ) ),
+						'inline'   => (int) $inline,
+					);
 
-		            $inlineEditStr[ $colKey ] = (int) $inline;
-	            }
-            }
+					$inlineEditStr[ $colKey ] = (int) $inline;
+				}
+			}
 
-            // build options objects
-            $list_view_settings = array(
+			// build options objects
+			$list_view_settings = array(
 
-                'objdbname' => $this->objType,
-                'search' => true,
-                'filters' => true,
-                'tags' => true,
-                'c2c' => true,
-                'editinline' => $allowinlineedits
+				'objdbname'  => $this->objType,
+				'search'     => true,
+				'filters'    => true,
+				'tags'       => true,
+				'c2c'        => true,
+				'editinline' => $allowinlineedits,
 
-            );
+			);
 
-            $list_view_parameters = array(
+			$list_view_parameters = array(
 
-                'listtype' => $this->objType,
-                'columns' => $columns,
-                'editinline' => $inlineEditStr,
-                'retrieved' => false,
-                'count' => (int)$per_page,
-                'pagination' => true,
-                'paged' => (int)$currentPage,
+				'listtype'   => $this->objType,
+				'columns'    => $columns,
+				'editinline' => $inlineEditStr,
+				'retrieved'  => false,
+				'count'      => (int) $per_page,
+				'pagination' => true,
+				'paged'      => (int) $currentPage,
 
 				// cast to object so an empty array is {} instead of [] when encoded as JSON
 				'filters'    => (object) $listViewFilters, // phpcs:ignore WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
-                'sort' => ( !empty( $sort ) ? esc_html( $sort ) : false ),
-                'sortorder' => ( !empty( $sortOrder ) ?  esc_html( $sortOrder ) : 'desc' ),
+				'sort'       => ( ! empty( $sort ) ? esc_html( $sort ) : false ),
+				'sortorder'  => ( ! empty( $sortOrder ) ? esc_html( $sortOrder ) : 'desc' ),
 
-                // expose page key (used to retrieve data with screen opts - perpage)
-                'pagekey' => ( isset( $zbs->pageKey ) ? esc_html( $zbs->pageKey ) : '' ),
+				// expose page key (used to retrieve data with screen opts - perpage)
+				'pagekey'    => ( isset( $zbs->pageKey ) ? esc_html( $zbs->pageKey ) : '' ),
 
-            );
+			);
 
-            ?>
+			switch ( $this->postType ) {
+				case 'zerobs_customer':
+					$zbs_list_view_obj_name = __( 'Contact', 'zero-bs-crm' );
+					break;
+				case 'zerobs_company':
+					$zbs_list_view_obj_name = jpcrm_label_company();
+					break;
+				case 'zerobs_quote':
+					$zbs_list_view_obj_name = __( 'Quote', 'zero-bs-crm' );
+					break;
+				case 'zerobs_invoice':
+					$zbs_list_view_obj_name = __( 'Invoice', 'zero-bs-crm' );
+					break;
+				case 'zerobs_transaction':
+					$zbs_list_view_obj_name = __( 'Transaction', 'zero-bs-crm' );
+					break;
+				case 'zerobs_form':
+					$zbs_list_view_obj_name = __( 'Form', 'zero-bs-crm' );
+					break;
+				case 'zerobs_quotetemplate':
+					$zbs_list_view_obj_name = __( 'Quote Template', 'zero-bs-crm' );
+					break;
+				default:
+					$zbs_list_view_obj_name = __( 'Item', 'zero-bs-crm' );
+					break;
+			}
 
-            // General options for listview
-            var zbsListViewSettings = <?php echo wp_json_encode( $list_view_settings ) ?>;
+			?>
 
-            // Vars for zbs list view drawer
-            var zbsListViewParams = <?php echo wp_json_encode( $list_view_parameters ) ?>;
+			// General options for listview
+			var zbsListViewSettings = <?php echo wp_json_encode( $list_view_settings, JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP ); ?>;
 
-            var zbsSortables = [<?php 
+			// Vars for zbs list view drawer
+			var zbsListViewParams = <?php echo wp_json_encode( $list_view_parameters, JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP ); ?>;
 
-                $c = 0; if (count($this->sortables) > 0) foreach ($this->sortables as $sortableStr) {
+			var zbsSortables = <?php echo wp_json_encode( $this->sortables, JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP ); ?>; // for v2.2 this is only lot that will show sort, until we redo db this'll be hard
+			var zbsBulkActions = <?php echo wp_json_encode( $this->bulkActions, JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP ); ?>; // :D
+			var zbsListViewData = []; var zbsListViewCount = 0;
+			var zbsDrawListViewBlocker = false;
+			var zbsDrawListViewAJAXBlocker = false;
+			var zbsDrawListViewColUpdateBlocker = false;
+			var zbsDrawListViewColUpdateAJAXBlocker = false;
 
-                            if ($c > 0) echo ',';
+			var zbsObjectEmailLinkPrefix = <?php echo wp_json_encode( jpcrm_esc_link( 'email', -1, 'zerobs_customer', true ), JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP ); ?>; /* this assumes is contact for now, just sends to prefill - perhaps later add mailto: optional (wh wants lol) */
+			var zbsObjectViewLinkPrefixCustomer = <?php echo wp_json_encode( jpcrm_esc_link( 'view', -1, 'zerobs_customer', true ), JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP ); ?>;
+			var zbsObjectViewLinkPrefixCompany = <?php echo wp_json_encode( jpcrm_esc_link( 'view', -1, 'zerobs_company', true ), JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP ); ?>;
+			var zbsObjectViewLinkPrefixQuote = <?php echo wp_json_encode( jpcrm_esc_link( 'edit', -1, 'zerobs_quote', true ), JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP ); ?>;
+			var zbsObjectViewLinkPrefixInvoice = <?php echo wp_json_encode( jpcrm_esc_link( 'edit', -1, 'zerobs_invoice', true ), JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP ); ?>;
+			var zbsObjectViewLinkPrefixTransaction = <?php echo wp_json_encode( jpcrm_esc_link( 'edit', -1, 'zerobs_transaction', true ), JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP ); ?>;
+			var zbsObjectViewLinkPrefixForm = <?php echo wp_json_encode( jpcrm_esc_link( 'edit', -1, ZBS_TYPE_FORM, true ), JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP ); ?>;
+			var zbsObjectViewLinkPrefixSegment = <?php echo wp_json_encode( jpcrm_esc_link( 'edit', -1, ZBS_TYPE_SEGMENT, true ), JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP ); ?>;
+			var zbsObjectViewLinkPrefixTask = <?php echo wp_json_encode( jpcrm_esc_link( 'edit', -1, ZBS_TYPE_TASK, true ), JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP ); ?>;
 
-                            echo "'". esc_html( $sortableStr ) ."'";
+			var zbsObjectEditLinkPrefixCustomer = <?php echo wp_json_encode( jpcrm_esc_link( 'edit', -1, 'zerobs_customer', true ), JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP ); ?>;
+			var zbsObjectEditLinkPrefixCompany = <?php echo wp_json_encode( jpcrm_esc_link( 'edit', -1, 'zerobs_company', true ), JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP ); ?>;
+			var zbsObjectEditLinkPrefixQuote = <?php echo wp_json_encode( jpcrm_esc_link( 'edit', -1, 'zerobs_quote', true ), JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP ); ?>;
+			var zbsObjectEditLinkPrefixQuoteTemplate = <?php echo wp_json_encode( jpcrm_esc_link( 'edit', -1, 'zerobs_quo_template', true ), JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP ); ?>;
+			var zbsObjectEditLinkPrefixInvoice = <?php echo wp_json_encode( jpcrm_esc_link( 'edit', -1, 'zerobs_invoice', true ), JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP ); ?>;
+			var zbsObjectEditLinkPrefixTransaction = <?php echo wp_json_encode( jpcrm_esc_link( 'edit', -1, 'zerobs_transaction', true ), JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP ); ?>;
+			var zbsObjectEditLinkPrefixForm = <?php echo wp_json_encode( jpcrm_esc_link( 'edit', -1, ZBS_TYPE_FORM, true ), JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP ); ?>;
+			var zbsObjectEditLinkPrefixSegment = <?php echo wp_json_encode( jpcrm_esc_link( 'edit', -1, ZBS_TYPE_SEGMENT, true ), JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP ); ?>;
 
-                            $c++;
-                            
-                } 
+			var jpcrm_segment_export_url_prefix = <?php echo wp_json_encode( jpcrm_esc_link( $zbs->slugs['export-tools'] . '&segment-id=' ), JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP ); ?>;
 
-            ?>]; // for v2.2 this is only lot that will show sort, until we redo db this'll be hard
-            var zbsBulkActions = [<?php $bulkCount = 0; if (count($this->bulkActions) > 0) foreach ($this->bulkActions as $bulkActionStr) {
-
-                        if ($bulkCount > 0) echo ',';
-
-                        echo "'". esc_html( $bulkActionStr ) ."'";
-
-                        $bulkCount++;
-
-            } ?>]; // :D
-            var zbsListViewData = []; var zbsListViewCount = 0;
-            var zbsDrawListViewBlocker = false;
-            var zbsDrawListViewAJAXBlocker = false;
-            var zbsDrawListViewColUpdateBlocker = false;
-            var zbsDrawListViewColUpdateAJAXBlocker = false;
-
-            var zbsObjectEmailLinkPrefix = '<?php 
-
-                // this assumes is contact for now, just sends to prefill - perhaps later add mailto: optional (wh wants lol)
-                echo jpcrm_esc_link( 'email',-1,'zerobs_customer',true );
-
-            ?>';
-            var zbsObjectViewLinkPrefixCustomer = '<?php echo jpcrm_esc_link( 'view',-1,'zerobs_customer',true ); ?>';
-            var zbsObjectViewLinkPrefixCompany = '<?php echo jpcrm_esc_link( 'view',-1,'zerobs_company',true ); ?>';
-            var zbsObjectViewLinkPrefixQuote = '<?php echo jpcrm_esc_link( 'edit',-1,'zerobs_quote',true ); ?>';
-            var zbsObjectViewLinkPrefixInvoice = '<?php echo jpcrm_esc_link( 'edit',-1,'zerobs_invoice',true ); ?>';
-            var zbsObjectViewLinkPrefixTransaction = '<?php echo jpcrm_esc_link( 'edit',-1,'zerobs_transaction',true ); ?>';
-            var zbsObjectViewLinkPrefixForm = '<?php echo jpcrm_esc_link( 'edit',-1,ZBS_TYPE_FORM,true ); ?>';
-            var zbsObjectViewLinkPrefixSegment = '<?php echo jpcrm_esc_link( 'edit',-1,ZBS_TYPE_SEGMENT,true ); ?>';
-            var zbsObjectViewLinkPrefixTask = '<?php echo jpcrm_esc_link( 'edit', -1, ZBS_TYPE_TASK, true  ); ?>';
-
-            var zbsObjectEditLinkPrefixCustomer = '<?php echo jpcrm_esc_link( 'edit',-1,'zerobs_customer',true ); ?>';
-            var zbsObjectEditLinkPrefixCompany = '<?php echo jpcrm_esc_link( 'edit',-1,'zerobs_company',true ); ?>';
-            var zbsObjectEditLinkPrefixQuote = '<?php echo jpcrm_esc_link( 'edit',-1,'zerobs_quote',true ); ?>';
-            var zbsObjectEditLinkPrefixQuoteTemplate = '<?php echo jpcrm_esc_link( 'edit',-1,'zerobs_quo_template',true ); ?>';
-            var zbsObjectEditLinkPrefixInvoice = '<?php echo jpcrm_esc_link( 'edit',-1,'zerobs_invoice',true ); ?>';
-            var zbsObjectEditLinkPrefixTransaction = '<?php echo jpcrm_esc_link( 'edit',-1,'zerobs_transaction',true ); ?>';
-            var zbsObjectEditLinkPrefixForm = '<?php echo jpcrm_esc_link( 'edit',-1,ZBS_TYPE_FORM,true ); ?>';
-            var zbsObjectEditLinkPrefixSegment = '<?php echo jpcrm_esc_link( 'edit',-1,ZBS_TYPE_SEGMENT,true ); ?>';
-
-            var jpcrm_segment_export_url_prefix = '<?php echo jpcrm_esc_link( $zbs->slugs['export-tools'] . '&segment-id=' ); ?>';
-
-						var zbsListViewLink = '<?php echo esc_url( admin_url( 'admin.php?page=' . $this->postPage ) ); /* phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase */ ?>';
-            var zbsExportPostURL = '<?php echo esc_url( zeroBSCRM_getAdminURL($zbs->slugs['export-tools']) ); ?>';
-						var zbsTagSkipLinkPrefix = zbsListViewLink + '&zbs_tag=';
-            var zbsListViewObjName = '<?php
-
-                switch ($this->postType){
-
-
-                    case 'zerobs_customer':
-                        zeroBSCRM_slashOut(__('Contact',"zero-bs-crm"));
-                        break;
-
-                    case 'zerobs_company':
-                        zeroBSCRM_slashOut(jpcrm_label_company());
-                        break;
-
-                    case 'zerobs_quote':
-                        zeroBSCRM_slashOut(__('Quote',"zero-bs-crm"));
-                        break;
-
-                    case 'zerobs_invoice':
-                        zeroBSCRM_slashOut(__('Invoice',"zero-bs-crm"));
-                        break;
-
-                    case 'zerobs_transaction':
-                        zeroBSCRM_slashOut(__('Transaction',"zero-bs-crm"));
-                        break;
-
-                    case 'zerobs_form':
-                        zeroBSCRM_slashOut(__('Form',"zero-bs-crm"));
-                        break;
-
-                    case 'zerobs_quotetemplate':
-                        zeroBSCRM_slashOut(__('Quote Template',"zero-bs-crm"));
-                        break;
-
-                    default:
-                        zeroBSCRM_slashOut(__('Item',"zero-bs-crm"));
-                        break;
-
-
-
-                } 
-
-            ?>';
-            var zbsClick2CallType = parseInt('<?php echo esc_url( zeroBSCRM_getSetting('clicktocalltype') ); ?>');
+						var zbsListViewLink = <?php echo wp_json_encode( esc_url( admin_url( 'admin.php?page=' . $this->postPage ) ), JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP ); /* phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase */ ?>;
+			var zbsExportPostURL = <?php echo wp_json_encode( esc_url( zeroBSCRM_getAdminURL( $zbs->slugs['export-tools'] ) ), JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP ); ?>;
+			var zbsTagSkipLinkPrefix = zbsListViewLink + '&zbs_tag=';
+			var zbsClick2CallType = <?php echo (int) zeroBSCRM_getSetting( 'clicktocalltype' ); ?>;
+			var zbsListViewObjName = <?php echo wp_json_encode( $zbs_list_view_obj_name, JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP ); ?>;
 
 			<?php
 			$jpcrm_listview_lang_labels = array();
@@ -591,84 +594,60 @@ class zeroBSCRM_list{
 
 			}
 			?>
-			var zbsListViewLangLabels = <?php echo wp_json_encode( $jpcrm_listview_lang_labels ); ?>;
-			var zbsTagsForBulkActions = <?php
-				// the linter was having issues with these indents, so disabling for this block
-				// phpcs:disable Generic.WhiteSpace.ScopeIndent.IncorrectExact,Generic.WhiteSpace.ScopeIndent.Incorrect
-				$tags = $zbs->DAL->getTagsForObjType( // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
-					array(
-						'objtypeid'    => $this->objTypeID, // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
-						'withCount'    => true,
-						'excludeEmpty' => false,
-						'ignoreowner'  => true,
-					)
-				);
+			var zbsListViewLangLabels = <?php echo wp_json_encode( $jpcrm_listview_lang_labels, JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP ); ?>;
+			<?php
+			$tags = $zbs->DAL->getTagsForObjType(
+				array(
+					'objtypeid'    => $this->objTypeID, // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+					'withCount'    => true,
+					'excludeEmpty' => false,
+					'ignoreowner'  => true,
+				)
+			);
 
-				// make simplified
-				$simple_tags = array();
-				if ( is_array( $tags ) && count( $tags ) > 0 ) {
-					foreach ( $tags as $t ) {
-						$simple_tags[] = array(
-							'id'   => $t['id'],
-							'name' => $t['name'],
-							'slug' => $t['slug'],
-						);
-					}
+			// make simplified
+			$simple_tags = array();
+			if ( is_array( $tags ) ) {
+				foreach ( $tags as $t ) {
+					$simple_tags[] = array(
+						'id'   => $t['id'],
+						'name' => $t['name'],
+						'slug' => $t['slug'],
+					);
 				}
-
-				$zbs_tags_for_bulk_actions = wp_json_encode( $simple_tags );
-				echo ( $zbs_tags_for_bulk_actions ? $zbs_tags_for_bulk_actions : '[]' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-
-				?>;
+			}
+			?>
+			var zbsTagsForBulkActions = <?php echo wp_json_encode( $simple_tags, JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP ); ?>;
 				var zbsListViewIcos = {};
+				<?php
+				// MUST be a better way than this to get customer statuses...
+				// phpcs:disable WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
+				global $zbsCustomerFields;
+				$zbs_customer_statuses = is_array( $zbsCustomerFields['status'][3] ) ? $zbsCustomerFields['status'][3] : array();
+				// phpcs:enable WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
+				// hardcoded customer perms atm
+				$zbs_possible_owners = zeroBS_getPossibleOwners( array( 'zerobs_admin', 'zerobs_customermgr' ), true );
+				$zbs_possible_owners = is_array( $zbs_possible_owners ) ? $zbs_possible_owners : array();
+				$zbs_inline_edit     = array(
+					'customer' => array( 'statuses' => $zbs_customer_statuses ),
+					'owners'   => $zbs_possible_owners,
+				);
+				?>
 				// gives data used by inline editor
-				var zbsListViewInlineEdit = {
-
-					// for now just put contacts in here
-					customer: {
-						statuses: <?php
-							// MUST be a better way than this to get customer statuses...
-							// phpcs:disable WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
-							global $zbsCustomerFields;
-							if ( is_array( $zbsCustomerFields['status'][3] ) ) {
-								echo wp_json_encode( $zbsCustomerFields['status'][3] );
-							} else {
-								echo '[]';
-							}
-							// phpcs:enable WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
-						?>
-					},
-
-					owners: <?php
-
-						// hardcoded customer perms atm
-						$possible_owners = zeroBS_getPossibleOwners( array( 'zerobs_admin', 'zerobs_customermgr' ), true );
-						if ( ! is_array( $possible_owners ) ) {
-								echo wp_json_encode( array() );
-						} else {
-							echo wp_json_encode( $possible_owners );
-						}
-
-					?>
-
-					};
+				var zbsListViewInlineEdit = <?php echo wp_json_encode( $zbs_inline_edit, JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP ); ?>;
+					var zbscrmjs_secToken = <?php echo wp_json_encode( wp_create_nonce( 'zbscrmjs-ajax-nonce' ), JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP ); ?>;
 					<?php
-					// Nonce for AJAX
-					echo 'var zbscrmjs_secToken = "' . esc_js( wp_create_nonce( 'zbscrmjs-ajax-nonce' ) ) . '";';
 
 					// any last JS?
 					if ( isset( $this->extraJS ) && ! empty( $this->extraJS ) ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 						echo $this->extraJS; // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase,WordPress.Security.EscapeOutput.OutputNotEscaped
 					}
-					// phpcs:enable Generic.WhiteSpace.ScopeIndent.IncorrectExact,Generic.WhiteSpace.ScopeIndent.Incorrect
 					?>
 					</script>
+					<?php // phpcs:enable Generic.WhiteSpace.ScopeIndent.IncorrectExact, Generic.Formatting.DisallowMultipleStatements.SameLine, Squiz.PHP.EmbeddedPhp ?>
 
 					<?php
-					// phpcs:enable Squiz.PHP.EmbeddedPhp.ContentBeforeOpen
-					// phpcs:enable Squiz.PHP.EmbeddedPhp.ContentAfterEnd
-
-    } // /draw func
+	} // /draw func
 
 	/**
 	 * Draws listview header that contains search, bulk actions, and filter dropdowns
@@ -800,7 +779,7 @@ function jpcrm_listview_language_labels( $language_array ) { // phpcs:ignore Uni
 		'couldntupdate'      => esc_html__( 'Could not update', 'zero-bs-crm' ),
 		'couldntupdatedeets' => esc_html__( 'This record could not be updated. Please try again, if this persists please let admin know.', 'zero-bs-crm' ),
 		/* translators: Placeholders are the range of the current record result and the total object count. */
-		'listview_counts'    => esc_html__( 'Showing %s of %s items', 'zero-bs-crm' ), // phpcs:ignore WordPress.WP.I18n.UnorderedPlaceholdersText
+		'listview_counts'    => esc_html__( 'Showing %1$s of %2$s items', 'zero-bs-crm' ),
 	);
 
 	return array_merge( $language_array, $jpcrm_listview_lang_labels );

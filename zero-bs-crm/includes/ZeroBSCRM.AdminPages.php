@@ -1,6 +1,5 @@
 <?php
 /*
-!
  * Jetpack CRM
  * https://jetpackcrm.com
  * V1.20
@@ -145,15 +144,6 @@ function zeroBSCRM_pages_admin_view_page_company( $id = -1 ) {
 	jpcrm_render_company_view_page( $id );
 }
 
-/**
- * Load the Automations admin page
- *
- * @return void
- */
-function jpcrm_pages_automations() {
-	jpcrm_load_admin_page( 'automations/main' );
-}
-
 /*
 ======================================================
 	/ Page loading
@@ -214,7 +204,7 @@ function zeroBSCRM_post_updated_messages( $messages ) {
 		3  => __( 'Custom field deleted.', 'zero-bs-crm' ),
 		4  => __( 'Task updated.', 'zero-bs-crm' ),
 		/* translators: %s: date and time of the revision */
-		5  => isset( $_GET['revision'] ) ? sprintf( __( 'Task restored to revision from %s', 'zero-bs-crm' ), wp_post_revision_title( (int) sanitize_text_field( $_GET['revision'] ), false ) ) : false, // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
+		5  => isset( $_GET['revision'] ) ? sprintf( __( 'Task restored to revision from %s', 'zero-bs-crm' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false, // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		6  => __( 'Task saved.', 'zero-bs-crm' ),
 		7  => __( 'Task saved.', 'zero-bs-crm' ),
 		8  => __( 'Task submitted.', 'zero-bs-crm' ),
@@ -463,7 +453,7 @@ function zeroBSCRM_pages_home() {
 
 	global $wpdb, $zbs; // } Req
 
-	if ( ! current_user_can( 'admin_zerobs_manage_options' ) ) {
+	if ( ! jpcrm_perms_manage_options() ) {
 		wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'zero-bs-crm' ) ); }
 
 	// } Homepage
@@ -484,7 +474,7 @@ function zeroBSCRM_pages_extensions() {
 
 	global $wpdb, $zbs; // } Req
 
-	if ( ! current_user_can( 'admin_zerobs_manage_options' ) ) {
+	if ( ! jpcrm_perms_manage_options() ) {
 		wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'zero-bs-crm' ) ); }
 
 	// } page
@@ -497,9 +487,7 @@ function zeroBSCRM_pages_extensions() {
 // Modules page
 function jpcrm_pages_modules() {
 
-	global $wpdb, $zbs;
-
-	if ( ! current_user_can( 'admin_zerobs_manage_options' ) ) {
+	if ( ! jpcrm_perms_manage_options() ) {
 		wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'zero-bs-crm' ) ); }
 
 	jpcrm_html_modules();
@@ -512,7 +500,7 @@ function zeroBSCRM_pages_admin_system_emails() {
 
 	global $zbs;
 
-	if ( ! current_user_can( 'admin_zerobs_manage_options' ) ) {
+	if ( ! jpcrm_perms_manage_options() ) {
 		wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'zero-bs-crm' ) ); }
 
 	// for now put this here, should probs be stored against template:
@@ -707,7 +695,7 @@ function zeroBSCRM_pages_admin_system_emails() {
 	if ( isset( $_GET['zbs_template_id'] ) && ! empty( $_GET['zbs_template_id'] ) ) {
 		$em_templates = 'active';
 		$rec_ac       = '';
-		$template_id  = (int) sanitize_text_field( $_GET['zbs_template_id'] );
+		$template_id  = (int) $_GET['zbs_template_id'];
 		$tem_set      = '';
 	} elseif ( isset( $_GET['zbs_template_editor'] ) && ! empty( $_GET['zbs_template_editor'] ) ) {
 		$em_templates = '';
@@ -902,7 +890,7 @@ function zeroBSCRM_pages_admin_system_emails() {
 
 					if ( isset( $_GET['zbs_template_id'] ) ) {
 
-						$updateID = (int) sanitize_text_field( $_GET['zbs_template_id'] );
+						$updateID = (int) $_GET['zbs_template_id'];
 
 						// wh simplified for del methods
 						// zeroBSCRM_updateEmailTemplate($updateID,$zbsfromname,$zbsfromaddress,$zbsreplyto, $zbsccto, $zbsbccto,$zbssubject, $zbscontent );
@@ -916,7 +904,7 @@ function zeroBSCRM_pages_admin_system_emails() {
 				if ( isset( $_GET['zbs_template_id'] ) && ! empty( $_GET['zbs_template_id'] ) ) {
 
 					// the tab number matches the template ID.
-					$emailtab = (int) sanitize_text_field( $_GET['zbs_template_id'] );
+					$emailtab = (int) $_GET['zbs_template_id'];
 
 					$form = '';
 
@@ -1001,22 +989,22 @@ function zeroBSCRM_pages_admin_system_emails() {
 							if ( $form->zbsmail_active ) {
 								// 1 = active, 0 = inactive..
 								echo '<div class="ui buttons tiny" style="float: right;
-                                        position: absolute;
-                                        top: 19px;
-                                        right: 20px;">
-                                        <button class="ui positive button zbs-turn-active" id="the-positive-button-' . esc_attr( $emailtab ) . '" data-emid="' . esc_attr( $emailtab ) . '">Active</button>
-                                        <div class="or"></div>
-                                        <button class="ui button zbs-turn-inactive" id="active-to-inactive-' . esc_attr( $emailtab ) . '" data-emid="' . esc_attr( $emailtab ) . '">Inactive</button>
-                                      </div>';
+										position: absolute;
+										top: 19px;
+										right: 20px;">
+										<button class="ui positive button zbs-turn-active" id="the-positive-button-' . esc_attr( $emailtab ) . '" data-emid="' . esc_attr( $emailtab ) . '">Active</button>
+										<div class="or"></div>
+										<button class="ui button zbs-turn-inactive" id="active-to-inactive-' . esc_attr( $emailtab ) . '" data-emid="' . esc_attr( $emailtab ) . '">Inactive</button>
+									  </div>';
 							} else {
 								echo '<div class="ui buttons tiny" style="float: right;
-                                        position: absolute;
-                                        top: 19px;
-                                        right: 20px;">
-                                        <button class="ui button zbs-turn-active" id="the-positive-button-' . esc_attr( $emailtab ) . '" data-emid="' . esc_attr( $emailtab ) . '">Active</button>
-                                        <div class="or"></div>
-                                        <button class="ui button zbs-turn-inactive negative" id="active-to-inactive-' . esc_attr( $emailtab ) . '" data-emid="' . esc_attr( $emailtab ) . '">Inactive</button>
-                                      </div>';
+										position: absolute;
+										top: 19px;
+										right: 20px;">
+										<button class="ui button zbs-turn-active" id="the-positive-button-' . esc_attr( $emailtab ) . '" data-emid="' . esc_attr( $emailtab ) . '">Active</button>
+										<div class="or"></div>
+										<button class="ui button zbs-turn-inactive negative" id="active-to-inactive-' . esc_attr( $emailtab ) . '" data-emid="' . esc_attr( $emailtab ) . '">Inactive</button>
+									  </div>';
 							}
 						}
 
@@ -1193,9 +1181,7 @@ function zeroBSCRM_pages_admin_system_emails() {
 // } Data Tools Page
 function zeroBSCRM_pages_datatools() {
 
-	global $wpdb, $zbs; // } Req
-
-	if ( ! current_user_can( 'admin_zerobs_manage_options' ) ) {
+	if ( ! jpcrm_perms_manage_options() ) {
 		wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'zero-bs-crm' ) ); }
 
 	// } Settings
@@ -1209,9 +1195,7 @@ function zeroBSCRM_pages_datatools() {
 // } Install Extensions helper page
 function zeroBSCRM_pages_installextensionshelper() {
 
-	global $wpdb, $zbs;  // } Req
-
-	if ( ! current_user_can( 'admin_zerobs_manage_options' ) ) {
+	if ( ! jpcrm_perms_manage_options() ) {
 		wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'zero-bs-crm' ) ); }
 	// } Settings
 	zeroBSCRM_html_installextensionshelper();
@@ -2081,8 +2065,8 @@ function zeroBSCRM_html_extensions() {
 				usort(
 					$top_woo_extensions,
 					function (
-					$str1,
-					$str2
+						$str1,
+						$str2
 					) {
 						return strcasecmp( $str1->name, $str2->name );
 					}
@@ -2092,8 +2076,8 @@ function zeroBSCRM_html_extensions() {
 			usort(
 				$extensions_to_display,
 				function (
-				$str1,
-				$str2
+					$str1,
+					$str2
 				) {
 					return strcasecmp( $str1->name, $str2->name );
 				}
