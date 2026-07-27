@@ -363,15 +363,15 @@ return array(
 		'path'    => $vendorDir . '/thecodingmachine/safe/generated/zlib.php'
 	),
 	'0174385c3be07e86008907d06ee66531' => array(
-		'version' => '9.3.0.0',
+		'version' => '9.4.0.0',
 		'path'    => $vendorDir . '/sabberworm/php-css-parser/src/Rule/Rule.php'
 	),
 	'98aea6e41b9cb79b379b10f37ba1f0b7' => array(
-		'version' => '9.3.0.0',
+		'version' => '9.4.0.0',
 		'path'    => $vendorDir . '/sabberworm/php-css-parser/src/RuleSet/RuleContainer.php'
 	),
 	'3773ef3f09c37da5478d578e32b03a4b' => array(
-		'version' => '4.3.38.0',
+		'version' => '4.4.6.0',
 		'path'    => $baseDir . '/jetpack_vendor/automattic/jetpack-assets/actions.php'
 	),
 );

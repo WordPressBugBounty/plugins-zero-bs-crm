@@ -2,7 +2,7 @@
 Contributors: automattic, kallehauge, cleacos, diegogarciarodrigues, bradshawtm, wpkaren, robertf4, woodyhayday, mikemayhem3030
 Tags: CRM, Woocommerce CRM, Client Portal, Marketing Automation, Lead Generation
 Tested up to: 7.0
-Stable tag: 6.8.1
+Stable tag: 6.8.2
 Requires at least: 6.0
 Requires PHP: 7.4
 License: GPLv2
@@ -362,6 +362,9 @@ We offer a full, no-hassle refund within 14 days. You can read more about that, 
 
 
 == Changelog ==
+### 6.8.2 - 2026-07-27
+* Improve remote image handling in PDF generation (#10)
+
 ### 6.8.1 - 2026-05-28
 #### Changed
 - Remove unneeded development and documentation files from the published plugin.
@@ -369,4 +372,3 @@ We offer a full, no-hassle refund within 14 days. You can read more about that, 
 
 #### Fixed
 - Client Portal: Prevent PHP fatal when downloading PDFs.
-
