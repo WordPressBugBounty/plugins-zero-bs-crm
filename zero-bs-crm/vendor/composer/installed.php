@@ -3,7 +3,7 @@
         'name' => 'automattic/jetpackcrm',
         'pretty_version' => 'dev-trunk',
         'version' => 'dev-trunk',
-        'reference' => '11f267c29125a935a497fae58862c15b4e77eb43',
+        'reference' => '8a7117016df1b7f5dff47093bf654ebec65a0e2e',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -58,7 +58,7 @@
         'automattic/jetpackcrm' => array(
             'pretty_version' => 'dev-trunk',
             'version' => 'dev-trunk',
-            'reference' => '11f267c29125a935a497fae58862c15b4e77eb43',
+            'reference' => '8a7117016df1b7f5dff47093bf654ebec65a0e2e',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
