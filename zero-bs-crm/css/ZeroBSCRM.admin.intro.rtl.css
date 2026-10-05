@@ -6,6 +6,12 @@
   margin: 0 auto;
   max-width: 720px;
   padding: 0;
+  /*
+   * The card is what the layout below responds to, not the window: its
+   * width depends on whether WordPress' admin sidebar is expanded, folded
+   * or off-canvas.
+   */
+  container-type: inline-size;
 }
 .admin_page_zerobscrm-plugin #zbs-welcome .container .intro {
   background-color: #fff;
@@ -50,6 +56,27 @@
   text-align: center;
   margin: 0;
 }
+.admin_page_zerobscrm-plugin {
+  /*
+   * The two hero logos. The padding is deliberately uneven because the eye
+   * measures ink to ink: the card already contributes 20px above the mark
+   * (.intro's 40px plus .block's 30px, less the 50px the block is pulled up
+   * by), and the h6 below starts its glyphs 11px into a 25.6px line box.
+   * Each mark gets 50px of visual space above and below, less those two
+   * amounts; Woo gets 60px for its clear-space rule (i/welcome-to-zbs/LOGOS.md).
+   */
+}
+.admin_page_zerobscrm-plugin .jpcrm-dash-hero-logo {
+  box-sizing: content-box;
+  max-width: 100%;
+  height: auto;
+}
+.admin_page_zerobscrm-plugin #jetpack-crm-welcome {
+  padding: 30px 0 39px;
+}
+.admin_page_zerobscrm-plugin #woocommerce-logo {
+  padding: 40px 0 49px;
+}
 .admin_page_zerobscrm-plugin #zbs-welcome #first-customer {
   border-right: 2px solid #e1e1e1;
   border-left: 2px solid #e1e1e1;
@@ -82,6 +109,19 @@
 .admin_page_zerobscrm-plugin .zbs-button-wrap {
   text-align: center;
 }
+.admin_page_zerobscrm-plugin {
+  /*
+   * .jpcrm-button is the plugin-wide component and sets `white-space: nowrap`,
+   * which holds the WooCommerce card's long label on one 380px line -- wider
+   * than a phone. Relaxed for this page only; the component is shared, and the
+   * same problem on other pages is not this change's to fix.
+   */
+}
+.admin_page_zerobscrm-plugin #zbs-welcome .jpcrm-button {
+  max-width: 100%;
+  white-space: normal;
+  text-wrap: balance;
+}
 .admin_page_zerobscrm-plugin .zbs-button-wrap .btn-cta {
   background-color: #00b1ff;
   border-color: #00b1ff;
@@ -102,14 +142,21 @@
   font-weight: 600;
   padding: 16px 28px;
 }
+.admin_page_zerobscrm-plugin {
+  /*
+   * These two halves carry the welcome card's button pair, one button each,
+   * centred within its half. They were 60/40, which put the buttons 135px and
+   * 203px from the card's centre rather than an equal distance either side.
+   */
+}
 .admin_page_zerobscrm-plugin .left {
   float: right;
-  width: 60%;
+  width: 50%;
   padding-left: 10px;
 }
 .admin_page_zerobscrm-plugin .right {
   float: left;
-  width: 40%;
+  width: 50%;
   padding-right: 10px;
 }
 .admin_page_zerobscrm-plugin .clear {
@@ -217,7 +264,7 @@
 .admin_page_zerobscrm-plugin .pro {
   font-size: 10px;
   background: #00b2ff;
-  margin-right: 5px;
+  margin-right: 0;
   padding: 2px;
   color: #fff;
   border-radius: 2px;
@@ -276,4 +323,39 @@
 }
 .admin_page_zerobscrm-plugin .final-block .zbs-button-wrap {
   margin-top: 40px;
+}
+.admin_page_zerobscrm-plugin {
+  /*
+   * Below this the card is too narrow for anything two-up: the feature blocks
+   * would be left with about 190px of text beside a 46px image and a 68px
+   * indent, and the button pair's halves would be narrower than the buttons
+   * standing in them. Everything goes to one column together -- the pair reads
+   * fine stacked on a card this narrow, and one threshold is easier to keep
+   * honest than three.
+   */
+}
+@container (max-width: 560px) {
+  .admin_page_zerobscrm-plugin .zbs-button-wrap .left,
+  .admin_page_zerobscrm-plugin .zbs-button-wrap .right {
+    float: none;
+    width: 100%;
+    padding: 0;
+  }
+  .admin_page_zerobscrm-plugin .zbs-button-wrap .left {
+    margin-bottom: 16px;
+  }
+  .admin_page_zerobscrm-plugin .zbs-features .feature-block,
+  .admin_page_zerobscrm-plugin .zbs-features .feature-block.first,
+  .admin_page_zerobscrm-plugin .zbs-features .feature-block.last {
+    float: none;
+    width: 100%;
+    padding-right: 0;
+    padding-left: 0;
+  }
+  .admin_page_zerobscrm-plugin #zbs-welcome .upgrade-cta .upgrade-cta__features {
+    max-width: 100%;
+  }
+  .admin_page_zerobscrm-plugin #zbs-welcome .upgrade-cta ul li {
+    width: 100%;
+  }
 }

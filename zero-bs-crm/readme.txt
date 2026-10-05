@@ -2,7 +2,7 @@
 Contributors: automattic, kallehauge, cleacos, diegogarciarodrigues, bradshawtm, wpkaren, robertf4, woodyhayday, mikemayhem3030
 Tags: CRM, Woocommerce CRM, Client Portal, Marketing Automation, Lead Generation
 Tested up to: 7.1
-Stable tag: 6.8.4
+Stable tag: 6.8.5
 Requires at least: 6.0
 Requires PHP: 7.4
 License: GPLv2
@@ -362,6 +362,15 @@ We offer a full, no-hassle refund within 14 days. You can read more about that, 
 
 
 == Changelog ==
+### 6.8.5 - 2026-10-05
+* Restore the wizard's desktop layout and tidy the audit stack (#64)
+* Replace the bundle banner's outdated logos (#63)
+* Make the setup wizard's toggles usable and legible (#62)
+* Update the CRM dashboard logos and make the dashboard responsive (#61)
+* Make the setup wizard responsive on mobile (#58)
+* Align the contact list's inline editing and bulk actions with the contact edit page's assignment rules
+* Remove an unusable messaging control from the client portal and My Account forms
+
 ### 6.8.4 - 2026-09-02
 * Allow assigning a transaction to a company invoice (#52)
 * Fix the revenue chart's 12-month window start and current-month zero-prefill (#51)
