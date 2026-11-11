@@ -629,8 +629,8 @@ function zeroBSCRM_createClientPortalUser( $cID = -1, $email = '', $passwordLeng
 	// any extra assigned role? (from settings)
 	$extraRole = zeroBSCRM_getSetting( 'portalusers_extrarole' );
 
-	// add role(s)
-	if ( ! empty( $extraRole ) ) {
+	// Add role(s), re-checking the setting in case it was saved before the check existed.
+	if ( ! empty( $extraRole ) && jpcrm_portal_extra_role_is_allowed( $extraRole ) ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
 		// Set the WP role first, then the JPCRM role
 		$user->set_role( $extraRole );
 		$user->add_role( 'zerobs_customer' );
@@ -2735,14 +2735,42 @@ function zeroBS_buildObjArr( $arraySource = array(), $startingArray = array(), $
 						$retArray[ $outputPrefix . $fK ] = sanitize_textarea_field( $arraySource[ $fieldPrefix . $fK ] );
 						break;
 
+					// #jpcrmidempotentdates
+					// The date and datetime branches below accept an already-converted UTS and pass it
+					// through untouched, so that normalising twice matches normalising once.
+					//
+					// The contact and company create/update API endpoints normalise their payload here,
+					// then hand the result to zeroBS_addUpdateCustomer()/zeroBS_addUpdateCompany(), which
+					// normalise it a second time with $removeEmpties on. Without the pass-through the
+					// second pass cannot read the timestamp the first pass produced: the conversion fails,
+					// and the field is stripped before it reaches the DAL, silently dropping the value.
+					//
+					// The check has to come before conversion rather than after it. zeroBSCRM_locale_dateToUTS()
+					// falls back to strtotime(), which reads a negative timestamp as a relative offset and
+					// returns roughly the current time, so a pre-1970 datetime would never reach a
+					// post-conversion guard.
 					case 'date':
-						$safe_text = sanitize_text_field( $arraySource[ $fieldPrefix . $fK ] ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
+						$raw_value = $arraySource[ $fieldPrefix . $fK ]; // phpcs:ignore WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
+
+						if ( jpcrm_value_is_uts( $raw_value ) ) {
+							$retArray[ $outputPrefix . $fK ] = (int) $raw_value; // phpcs:ignore WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
+							break;
+						}
+
+						$safe_text = sanitize_text_field( $raw_value );
 
 						$retArray[ $outputPrefix . $fK ] = jpcrm_date_str_to_uts( $safe_text, '!Y-m-d', true ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
 						break;
 
 					case 'datetime':
-						$retArray[ $outputPrefix . $fK ] = sanitize_text_field( $arraySource[ $fieldPrefix . $fK ] );
+						$raw_value = $arraySource[ $fieldPrefix . $fK ]; // phpcs:ignore WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
+
+						if ( jpcrm_value_is_uts( $raw_value ) ) {
+							$retArray[ $outputPrefix . $fK ] = (int) $raw_value; // phpcs:ignore WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
+							break;
+						}
+
+						$retArray[ $outputPrefix . $fK ] = sanitize_text_field( $raw_value ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
 
 						// translate datetime to UTS (without time)
 						// ... by default from DAL3.0
@@ -5437,6 +5465,11 @@ function zeroBS_addUpdateEvent( $eventID = -1, $eventFields = array(), $reminder
 		$args['data']['companies'] = array( $eventFields['company'] );
 	}
 
+	// tags (array of tag names or IDs; the DAL creates missing ones).
+	if ( isset( $eventFields['tags'] ) && is_array( $eventFields['tags'] ) ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
+		$args['data']['tags'] = $eventFields['tags']; // phpcs:ignore WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
+	}
+
 	$args['data']['reminders'] = array();
 
 	// reminders into new DAL2 eventreminder format:
@@ -6631,7 +6664,13 @@ function zeroBSCRM_taxRates_deleteTaxRate( $args = array() ) {
 	#} Check ID & Delete :)
 	$id = (int) $id;
 	if ( ! empty( $id ) && $id > 0 ) {
-		return zeroBSCRM_db2_deleteGeneric( $id, 'tax' );
+		$deleted = zeroBSCRM_db2_deleteGeneric( $id, 'tax' );
+
+		// The duplicate check in zeroBSCRM_taxRates_addUpdateTaxRate() caches every rate;
+		// clear it as add and update do, so a deleted rate can be added again.
+		wp_cache_delete( 'all_tax_rates', 'zbscrm_tax_rates' );
+
+		return $deleted;
 	}
 
 	return false;
